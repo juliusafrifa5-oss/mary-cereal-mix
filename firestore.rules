@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function userDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function admin() { return signedIn() && userDoc().role == "admin"; }
+    function approvedWholesale() {
+      return signedIn() && userDoc().accountType == "wholesale"
+        && userDoc().wholesaleStatus == "approved";
+    }
+
+    match /users/{uid} {
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.role == "customer"
+        && request.resource.data.accountType in ["retail", "wholesale"]
+        && (request.resource.data.accountType != "wholesale"
+            || request.resource.data.wholesaleStatus == "pending");
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow update, delete: if admin();
+    }
+
+    match /products/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /retailPrices/{id} {
+      allow read: if signedIn() && (admin() ||
+        (userDoc().accountType == "retail" && userDoc().role == "customer"));
+      allow write: if admin();
+    }
+    match /wholesalePrices/{id} {
+      allow read: if admin() || approvedWholesale();
+      allow write: if admin();
+    }
+
+    // Customer requests contain product IDs/names and quantities only.
+    // They contain no trusted prices, totals, credit approval or payment fields.
+    match /orderRequests/{id} {
+      allow create: if signedIn()
+        && request.resource.data.customerUid == request.auth.uid
+        && request.resource.data.status == "awaiting_admin_review"
+        && !("total" in request.resource.data)
+        && !("paid" in request.resource.data)
+        && !("balance" in request.resource.data)
+        && !("creditApproved" in request.resource.data);
+      allow read: if admin() || (signedIn() && resource.data.customerUid == request.auth.uid);
+      allow update, delete: if admin();
+    }
+
+    match /confirmedOrders/{id} {
+      allow read: if admin() || (signedIn() && resource.data.customerUid == request.auth.uid);
+      allow create, update, delete: if admin();
+    }
+    match /payments/{id} {
+      allow read: if admin() || (signedIn() && resource.data.customerUid == request.auth.uid);
+      allow create, update, delete: if admin();
+    }
+  }
+}
