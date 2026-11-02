@@ -11,7 +11,7 @@
   --green:#174b3a;
   --green2:#246b50;
   --light:#f2f7f3;
-  --gold:#e6b84a;
+  --gold:#d5a52e;
   --red:#b83232;
   --border:#dce5de;
 }
@@ -25,12 +25,12 @@ body {
 header {
   background:var(--green);
   color:white;
-  padding:18px;
+  padding:20px;
   text-align:center;
 }
-header h1 {margin:0;font-size:23px}
-header p {margin:6px 0 0;font-size:13px}
-main {max-width:1100px;margin:20px auto;padding:12px}
+header h1 {margin:0;font-size:25px}
+header p {margin:7px 0 0}
+main {max-width:1150px;margin:20px auto;padding:12px}
 .card {
   background:white;
   border-radius:12px;
@@ -58,16 +58,16 @@ button {
 button:hover {background:var(--green2)}
 button.secondary {background:#64746a}
 button.danger {background:var(--red)}
-button.gold {background:#b88922}
+button.gold {background:var(--gold);color:#222}
 button.small {
   width:auto;
   padding:8px 12px;
-  margin:3px;
   font-size:13px;
+  margin:3px;
 }
 .grid {
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:12px;
 }
 .hidden {display:none!important}
@@ -77,7 +77,7 @@ button.small {
   gap:7px;
   margin-bottom:15px;
 }
-.nav button {width:auto;flex:1;min-width:110px}
+.nav button {width:auto;flex:1;min-width:105px}
 table {
   width:100%;
   border-collapse:collapse;
@@ -110,6 +110,12 @@ th {background:#edf4ef}
   border-radius:7px;
   font-size:13px;
 }
+.productImage {
+  width:85px;
+  height:85px;
+  object-fit:cover;
+  border-radius:8px;
+}
 footer {
   text-align:center;
   padding:20px;
@@ -135,44 +141,9 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
 
 <main>
 
-<!-- FIREBASE CONFIGURATION -->
-<section id="configSection" class="card">
-  <h2>System Configuration</h2>
-  <p>Enter your Firebase Web App configuration details.</p>
-
-  <div class="grid">
-    <div>
-      <label>API Key</label>
-      <input id="apiKey" placeholder="Firebase API Key">
-    </div>
-    <div>
-      <label>Auth Domain</label>
-      <input id="authDomain" placeholder="your-project.firebaseapp.com">
-    </div>
-    <div>
-      <label>Project ID</label>
-      <input id="projectId" placeholder="Firebase Project ID">
-    </div>
-    <div>
-      <label>Storage Bucket</label>
-      <input id="storageBucket" placeholder="Storage Bucket">
-    </div>
-    <div>
-      <label>Messaging Sender ID</label>
-      <input id="messagingSenderId" placeholder="Sender ID">
-    </div>
-    <div>
-      <label>App ID</label>
-      <input id="appId" placeholder="Firebase App ID">
-    </div>
-  </div>
-
-  <button id="saveConfig">Save Configuration & Connect</button>
-  <p id="configMessage"></p>
-</section>
-
 <!-- LOGIN -->
-<section id="loginSection" class="card hidden">
+
+<section id="loginSection" class="card">
   <h2>Customer / Admin Login</h2>
 
   <label>Email Address</label>
@@ -182,10 +153,7 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
   <input id="password" type="password" placeholder="Enter password">
 
   <button id="loginBtn">Login</button>
-
-  <button id="resetPassword" class="secondary">
-    Forgot Password?
-  </button>
+  <button id="resetPassword" class="secondary">Forgot Password?</button>
 
   <hr>
 
@@ -193,7 +161,9 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
   <button id="showRegister" class="gold">Create Customer Account</button>
 </section>
 
+
 <!-- REGISTRATION -->
+
 <section id="registerSection" class="card hidden">
   <h2>Customer Registration</h2>
 
@@ -207,7 +177,7 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
   <input id="regEmail" type="email" placeholder="Email address">
 
   <label>Password</label>
-  <input id="regPassword" type="password" placeholder="Create password">
+  <input id="regPassword" type="password" placeholder="Minimum 6 characters">
 
   <label>Customer Type</label>
   <select id="regAccountType">
@@ -219,12 +189,14 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
   <button id="backToLogin" class="secondary">Back to Login</button>
 
   <p class="notice">
-    Wholesale accounts require administrator approval before wholesale
-    prices become available.
+    Wholesale customers must be approved by the administrator before
+    accessing wholesale prices.
   </p>
 </section>
 
+
 <!-- APPLICATION -->
+
 <section id="appSection" class="hidden">
 
   <div class="card">
@@ -234,53 +206,53 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
   </div>
 
   <!-- CUSTOMER NAVIGATION -->
+
   <div class="nav" id="customerNav">
     <button data-page="catalogPage">Products & Order</button>
     <button data-page="ordersPage">My Orders</button>
   </div>
 
   <!-- ADMIN NAVIGATION -->
+
   <div class="nav hidden" id="adminNav">
     <button data-page="adminDashboard">Dashboard</button>
     <button data-page="adminOrders">Order Requests</button>
-    <button data-page="adminProducts">Products & Prices</button>
+    <button data-page="adminProducts">Products</button>
     <button data-page="adminCustomers">Customers</button>
     <button data-page="adminPayments">Payments & Debts</button>
+    <button data-page="adminReports">Sales Reports</button>
   </div>
 
+
   <!-- CUSTOMER CATALOGUE -->
+
   <section id="catalogPage" class="page card">
     <h2>Available Products</h2>
     <p id="priceMessage"></p>
 
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Unit</th>
-            <th>Price (GH₵)</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody id="catalogBody"></tbody>
-      </table>
-    </div>
+    <div id="catalogList" class="grid"></div>
 
     <h3>Place Order Request</h3>
+    <div id="selectedItems"></div>
+
     <label>Order Notes</label>
     <textarea id="orderNotes" placeholder="Additional instructions"></textarea>
+
     <button id="submitOrder">Submit Order Request</button>
   </section>
 
-  <!-- CUSTOMER ORDERS -->
+
+  <!-- CUSTOMER ORDER HISTORY -->
+
   <section id="ordersPage" class="page card hidden">
     <h2>My Order History</h2>
     <button id="refreshMyOrders" class="secondary">Refresh Orders</button>
     <div id="myOrders"></div>
   </section>
 
+
   <!-- ADMIN DASHBOARD -->
+
   <section id="adminDashboard" class="page card hidden">
     <h2>Administrator Dashboard</h2>
 
@@ -289,31 +261,48 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
         Total Customers
         <strong id="totalCustomers">0</strong>
       </div>
+
       <div class="stat">
         Order Requests
         <strong id="totalRequests">0</strong>
       </div>
+
       <div class="stat">
         Confirmed Orders
         <strong id="totalConfirmed">0</strong>
       </div>
+
       <div class="stat">
-        Outstanding Balance
+        Outstanding Debt
         <strong id="totalDebt">GH₵0.00</strong>
+      </div>
+
+      <div class="stat">
+        Total Sales
+        <strong id="totalSales">GH₵0.00</strong>
+      </div>
+
+      <div class="stat">
+        Total Payments
+        <strong id="totalPayments">GH₵0.00</strong>
       </div>
     </div>
 
     <button id="refreshDashboard" class="secondary">Refresh Dashboard</button>
   </section>
 
+
   <!-- ADMIN ORDER REQUESTS -->
+
   <section id="adminOrders" class="page card hidden">
     <h2>Customer Order Requests</h2>
     <button id="refreshRequests" class="secondary">Refresh Requests</button>
     <div id="requestsList"></div>
   </section>
 
+
   <!-- ADMIN PRODUCTS -->
+
   <section id="adminProducts" class="page card hidden">
     <h2>Product Management</h2>
 
@@ -325,6 +314,9 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
 
     <label>Description</label>
     <textarea id="productDescription"></textarea>
+
+    <label>Product Picture</label>
+    <input id="productImage" type="file" accept="image/*">
 
     <label>Retail Price (GH₵)</label>
     <input id="retailPrice" type="number" min="0" step="0.01">
@@ -339,16 +331,20 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
     <div id="productsList"></div>
   </section>
 
+
   <!-- ADMIN CUSTOMERS -->
+
   <section id="adminCustomers" class="page card hidden">
     <h2>Customer Management</h2>
     <button id="refreshCustomers" class="secondary">Refresh Customers</button>
     <div id="customersList"></div>
   </section>
 
-  <!-- ADMIN PAYMENTS -->
+
+  <!-- PAYMENTS -->
+
   <section id="adminPayments" class="page card hidden">
-    <h2>Payments & Debts</h2>
+    <h2>Record Customer Payment</h2>
 
     <label>Select Customer</label>
     <select id="paymentCustomer"></select>
@@ -373,24 +369,55 @@ hr {border:0;border-top:1px solid var(--border);margin:18px 0}
     <button id="recordPayment">Record Payment</button>
 
     <hr>
-    <h3>Confirmed Orders & Balances</h3>
+    <h3>Confirmed Orders & Outstanding Balances</h3>
     <div id="debtsList"></div>
   </section>
 
-</section>
 
+  <!-- SALES REPORTS -->
+
+  <section id="adminReports" class="page card hidden">
+    <h2>Sales & Payment Reports</h2>
+
+    <div class="grid">
+      <div class="stat">
+        Total Confirmed Sales
+        <strong id="reportSales">GH₵0.00</strong>
+      </div>
+
+      <div class="stat">
+        Total Money Received
+        <strong id="reportReceived">GH₵0.00</strong>
+      </div>
+
+      <div class="stat">
+        Outstanding Debt
+        <strong id="reportDebt">GH₵0.00</strong>
+      </div>
+    </div>
+
+    <h3>Sales by Customer</h3>
+    <div id="customerSalesReport"></div>
+
+    <h3>Payment Records</h3>
+    <div id="paymentReport"></div>
+
+    <button id="printReport">Print Report</button>
+    <button id="refreshReports" class="secondary">Refresh Reports</button>
+  </section>
+
+</section>
 </main>
 
 <footer>
-  Mary Cereal Mix | Customer & Sales Management
+  Mary Cereal Mix | Customer Ordering & Sales Management
 </footer>
 
 
 <script type="module">
 
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getAuth,
@@ -399,7 +426,8 @@ import {
   signOut,
   onAuthStateChanged,
   sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
@@ -415,23 +443,50 @@ import {
   where,
   serverTimestamp,
   runTransaction
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* FIREBASE CONFIGURATION */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAH5WgA9zPVtOm1S8xYp0JhRXXprtyOxNA",
+  authDomain: "mary-cereal-mix.firebaseapp.com",
+  projectId: "mary-cereal-mix",
+  storageBucket: "mary-cereal-mix.firebasestorage.app",
+  messagingSenderId: "108550919620",
+  appId: "1:108550919620:web:23ccc6c818165870870091"
+};
+
+
+/* ADMIN ACCOUNT */
+
+const ADMIN_UID = "BzTy6OPheYNFPfhEBgRZavmm0cu2";
+
+
+/* CLOUDINARY IMAGE UPLOAD SETTINGS */
+
+const CLOUDINARY_NAME = "d5jjbbjp";
+const CLOUDINARY_PRESET = "mary_cereal_upload";
+
+
+/* INITIALISE FIREBASE */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 
 const $ = id => document.getElementById(id);
 
-const ADMIN_UID = "BzTy6OPheYNFPfhEBgRZavmm0cu2";
-
-let app;
-let auth;
-let db;
 let currentUser = null;
 let me = null;
 let isAdmin = false;
+
 let products = [];
 let customers = [];
 let confirmedOrders = [];
-let selectedOrderItems = [];
+let selectedItems = [];
 
 
 function show(id, visible=true) {
@@ -456,98 +511,33 @@ function readableError(error) {
   const messages = {
     "auth/invalid-credential":"Incorrect email or password.",
     "auth/email-already-in-use":"This email already has an account.",
-    "auth/weak-password":"Password should contain at least 6 characters.",
+    "auth/weak-password":"Password must contain at least 6 characters.",
     "auth/invalid-email":"Please enter a valid email address.",
     "auth/user-not-found":"No account was found with this email.",
-    "auth/too-many-requests":"Too many attempts. Please try again later.",
-    "auth/network-request-failed":"Network problem. Check your internet connection.",
-    "permission-denied":"Permission denied. Please check your Firestore security rules."
+    "auth/too-many-requests":"Too many attempts. Try again later.",
+    "auth/network-request-failed":"Check your internet connection.",
+    "permission-denied":"Permission denied. Check your Firestore security rules."
   };
 
-  return messages[error.code] ||
-    error.message ||
-    "Something went wrong.";
+  return messages[error.code] || error.message || "Something went wrong.";
 }
 
 
-function loadSavedConfig() {
-  const saved = localStorage.getItem("marySecureConfig");
-  if (!saved) return;
-
-  try {
-    const c = JSON.parse(saved);
-    $("apiKey").value = c.apiKey || "";
-    $("authDomain").value = c.authDomain || "";
-    $("projectId").value = c.projectId || "";
-    $("storageBucket").value = c.storageBucket || "";
-    $("messagingSenderId").value = c.messagingSenderId || "";
-    $("appId").value = c.appId || "";
-  } catch {}
-}
-
-
-async function connectFirebase() {
-  const config = {
-    apiKey:$("apiKey").value.trim(),
-    authDomain:$("authDomain").value.trim(),
-    projectId:$("projectId").value.trim(),
-    storageBucket:$("storageBucket").value.trim(),
-    messagingSenderId:$("messagingSenderId").value.trim(),
-    appId:$("appId").value.trim()
-  };
-
-  if (Object.values(config).some(v => !v)) {
-    alert("Please complete all Firebase configuration fields.");
-    return;
-  }
-
-  try {
-    localStorage.setItem("marySecureConfig", JSON.stringify(config));
-
-    app = initializeApp(config);
-    auth = getAuth(app);
-    db = getFirestore(app);
-
-    $("configMessage").textContent = "Firebase connected successfully.";
-    show("loginSection", true);
-    show("registerSection", false);
-
-    onAuthStateChanged(auth, async user => {
-      currentUser = user;
-
-      if (user) {
-        await loadUserProfile(user);
-      } else {
-        me = null;
-        show("appSection", false);
-        show("loginSection", true);
-      }
-    });
-
-  } catch (error) {
-    $("configMessage").textContent = readableError(error);
-  }
-}
-
-
-$("saveConfig").onclick = connectFirebase;
-
+/* PAGE NAVIGATION */
 
 function openPage(pageId) {
-  document.querySelectorAll(".page").forEach(page =>
-    page.classList.add("hidden")
+  document.querySelectorAll(".page").forEach(p =>
+    p.classList.add("hidden")
   );
-
   show(pageId);
 }
 
-
 document.querySelectorAll("[data-page]").forEach(button => {
-  button.addEventListener("click", () => {
-    openPage(button.dataset.page);
-  });
+  button.onclick = () => openPage(button.dataset.page);
 });
 
+
+/* LOGIN AND REGISTRATION */
 
 $("showRegister").onclick = () => {
   show("loginSection", false);
@@ -568,7 +558,7 @@ $("registerBtn").onclick = async () => {
   const accountType = $("regAccountType").value;
 
   if (!name || !phone || !email || !password) {
-    alert("Please complete all registration fields.");
+    alert("Complete all registration fields.");
     return;
   }
 
@@ -582,25 +572,22 @@ $("registerBtn").onclick = async () => {
       auth, email, password
     );
 
-    const uid = credential.user.uid;
-
-    await setDoc(doc(db, "users", uid), {
+    await setDoc(doc(db, "users", credential.user.uid), {
       name,
       phone,
       email,
       accountType,
-      wholesaleStatus:accountType === "wholesale" ? "pending" : "not_applicable",
+      wholesaleStatus: accountType === "wholesale"
+        ? "pending" : "not_applicable",
       role:"customer",
       createdAt:serverTimestamp()
     });
 
-    alert(
-      accountType === "wholesale"
-        ? "Account created. Your wholesale account is awaiting approval."
-        : "Your customer account has been created."
-    );
+    alert(accountType === "wholesale"
+      ? "Account created. Awaiting wholesale approval."
+      : "Customer account created successfully.");
 
-  } catch (error) {
+  } catch(error) {
     alert(readableError(error));
   }
 };
@@ -617,7 +604,7 @@ $("loginBtn").onclick = async () => {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {
+  } catch(error) {
     alert(readableError(error));
   }
 };
@@ -635,41 +622,60 @@ $("resetPassword").onclick = async () => {
   try {
     await sendPasswordResetEmail(auth, email);
     alert("Password reset email sent. Check your inbox and spam folder.");
-  } catch (error) {
+  } catch(error) {
     alert(readableError(error));
   }
 };
 
 
-$("logoutBtn").onclick = async () => {
-  await signOut(auth);
-};
+$("logoutBtn").onclick = () => signOut(auth);
+
+
+/* AUTHENTICATION STATE */
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+
+  if (!user) {
+    me = null;
+    isAdmin = false;
+    show("appSection", false);
+    show("registerSection", false);
+    show("loginSection", true);
+    return;
+  }
+
+  await loadUserProfile(user);
+});
 
 
 async function loadUserProfile(user) {
   try {
-    const profileRef = doc(db, "users", user.uid);
-    const profileSnap = await getDoc(profileRef);
+    const profileSnap = await getDoc(doc(db, "users", user.uid));
 
     if (!profileSnap.exists()) {
-      alert("Your Firebase login exists, but your customer profile is missing. Contact the administrator.");
+      alert("Your login exists, but your customer profile is missing. Contact the administrator.");
       await signOut(auth);
       return;
     }
 
     me = profileSnap.data();
+
     isAdmin = user.uid === ADMIN_UID && me.role === "admin";
 
     show("loginSection", false);
     show("registerSection", false);
     show("appSection", true);
 
-    $("welcome").textContent = "Welcome, " + (me.name || user.email);
-    $("accountInfo").textContent =
-      (isAdmin ? "Administrator" : (me.accountType || "Customer")) +
-      (me.accountType === "wholesale"
-        ? " | Wholesale status: " + (me.wholesaleStatus || "pending")
-        : "");
+    $("welcome").textContent =
+      "Welcome, " + (me.name || user.email);
+
+    $("accountInfo").textContent = isAdmin
+      ? "Administrator"
+      : (me.accountType || "Customer") +
+        (me.accountType === "wholesale"
+          ? " | Status: " + (me.wholesaleStatus || "pending")
+          : "");
 
     show("adminNav", isAdmin);
     show("customerNav", !isAdmin);
@@ -683,18 +689,21 @@ async function loadUserProfile(user) {
       await loadMyOrders();
     }
 
-  } catch (error) {
+  } catch(error) {
     alert(readableError(error));
   }
 }
 
 
-// CUSTOMER CATALOGUE
+/* PRODUCT CATALOGUE */
 
 async function loadCatalog() {
   try {
-    const snapshot = await getDocs(collection(db, "products"));
-    products = snapshot.docs.map(d => ({id:d.id, ...d.data()}));
+    const snap = await getDocs(collection(db, "products"));
+
+    products = snap.docs
+      .map(d => ({id:d.id, ...d.data()}))
+      .filter(p => p.active !== false);
 
     const retail = me.accountType === "retail";
     const wholesaleApproved =
@@ -703,56 +712,57 @@ async function loadCatalog() {
 
     if (me.accountType === "wholesale" && !wholesaleApproved) {
       $("priceMessage").textContent =
-        "Your wholesale account is awaiting administrator approval. Wholesale prices are not yet available.";
+        "Your wholesale account is awaiting administrator approval.";
     } else {
-      $("priceMessage").textContent = "Select products and quantities to request an order.";
+      $("priceMessage").textContent =
+        "Select your products and quantities below.";
     }
 
-    let priceCollection = retail
-      ? "retailPrices"
-      : "wholesalePrices";
+    const priceCollection = retail
+      ? "retailPrices" : "wholesalePrices";
 
     let priceMap = {};
 
     if (retail || wholesaleApproved) {
-      const priceSnapshot = await getDocs(collection(db, priceCollection));
-      priceSnapshot.forEach(d => priceMap[d.id] = d.data());
+      const prices = await getDocs(collection(db, priceCollection));
+      prices.forEach(d => priceMap[d.id] = d.data());
     }
 
-    const body = $("catalogBody");
-    body.innerHTML = "";
+    $("catalogList").innerHTML = products.map(p => {
+      const priceData = priceMap[p.id] || {};
+      const price = retail || wholesaleApproved
+        ? priceData.price : null;
 
-    products.forEach(product => {
-      const priceData = priceMap[product.id] || {};
-      const price = retail
-        ? priceData.price
-        : wholesaleApproved ? priceData.price : null;
+      return `
+        <div class="card">
+          ${p.imageUrl
+            ? `<img class="productImage" src="${escapeHTML(p.imageUrl)}" alt="">`
+            : ""}
+          <h3>${escapeHTML(p.name)}</h3>
+          <p>${escapeHTML(p.description || "")}</p>
+          <p>Unit: ${escapeHTML(p.unit || "")}</p>
+          <p><b>${price === null || price === undefined
+            ? "Price pending approval" : money(price)}</b></p>
 
-      const tr = document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>${escapeHTML(product.name)}</td>
-        <td>${escapeHTML(product.unit || "")}</td>
-        <td>${price === null || price === undefined ? "Pending approval" : money(price)}</td>
-        <td>
+          <label>Quantity</label>
           <input type="number" min="0" step="1"
             class="quantityInput"
-            data-id="${escapeHTML(product.id)}"
-            data-name="${escapeHTML(product.name)}"
-            data-unit="${escapeHTML(product.unit || "")}"
+            data-id="${escapeHTML(p.id)}"
+            data-name="${escapeHTML(p.name)}"
+            data-unit="${escapeHTML(p.unit || "")}"
             data-price="${price ?? ""}"
             value="0">
-        </td>
+        </div>
       `;
+    }).join("") || "<p>No products available.</p>";
 
-      body.appendChild(tr);
-    });
-
-  } catch (error) {
+  } catch(error) {
     alert("Could not load products: " + readableError(error));
   }
 }
 
+
+/* SUBMIT CUSTOMER ORDER */
 
 $("submitOrder").onclick = async () => {
   if (!currentUser || !me) return;
@@ -762,6 +772,7 @@ $("submitOrder").onclick = async () => {
 
   inputs.forEach(input => {
     const quantity = Number(input.value);
+
     if (quantity > 0) {
       items.push({
         productId:input.dataset.id,
@@ -769,14 +780,13 @@ $("submitOrder").onclick = async () => {
         unit:input.dataset.unit,
         quantity,
         unitPrice:input.dataset.price === ""
-          ? null
-          : Number(input.dataset.price)
+          ? null : Number(input.dataset.price)
       });
     }
   });
 
   if (!items.length) {
-    alert("Please select at least one product and quantity.");
+    alert("Select at least one product.");
     return;
   }
 
@@ -792,16 +802,20 @@ $("submitOrder").onclick = async () => {
       createdAt:serverTimestamp()
     });
 
-    alert("Your order request has been submitted successfully.");
+    alert("Your order request has been submitted.");
+
     $("orderNotes").value = "";
     inputs.forEach(input => input.value = 0);
+
     await loadMyOrders();
 
-  } catch (error) {
-    alert("Order submission failed: " + readableError(error));
+  } catch(error) {
+    alert("Order failed: " + readableError(error));
   }
 };
 
+
+/* CUSTOMER ORDER HISTORY */
 
 async function loadMyOrders() {
   if (!currentUser) return;
@@ -812,64 +826,37 @@ async function loadMyOrders() {
       where("customerUid", "==", currentUser.uid)
     );
 
-    const snapshot = await getDocs(q);
-    const orders = snapshot.docs.map(d => ({id:d.id, ...d.data()}));
+    const requests = await getDocs(q);
 
     const confirmedQuery = query(
       collection(db, "confirmedOrders"),
       where("customerUid", "==", currentUser.uid)
     );
 
-    const confirmedSnapshot = await getDocs(confirmedQuery);
-    const confirmed = confirmedSnapshot.docs.map(d => ({
-      id:d.id, ...d.data()
-    }));
+    const confirmed = await getDocs(confirmedQuery);
 
     $("myOrders").innerHTML = `
       <h3>Order Requests</h3>
-      ${orders.map(o => `
-        <div class="card">
-          <b>Request:</b> ${escapeHTML(o.id)}<br>
-          <b>Status:</b> <span class="badge">${escapeHTML(o.status)}</span>
-          <p>${(o.items || []).map(i =>
-            `${escapeHTML(i.productName)} × ${Number(i.quantity)}`
-          ).join("<br>")}</p>
-          <small>${escapeHTML(o.notes || "")}</small>
-        </div>
-      `).join("") || "<p>No order requests yet.</p>"}
+
+      ${requests.docs.map(d => {
+        const o = d.data();
+
+        return `
+          <div class="card">
+            <b>Request ID:</b> ${escapeHTML(d.id)}
+            <p>Status: <span class="badge">${escapeHTML(o.status)}</span></p>
+            ${(o.items || []).map(i =>
+              `<p>${escapeHTML(i.productName)} × ${Number(i.quantity)}</p>`
+            ).join("")}
+          </div>
+        `;
+      }).join("") || "<p>No order requests.</p>"}
 
       <h3>Confirmed Orders</h3>
-      ${confirmed.map(o => `
-        <div class="card">
-          <b>Order:</b> ${escapeHTML(o.id)}<br>
-          <b>Total:</b> ${money(o.total)}<br>
-          <b>Paid:</b> ${money(o.paid)}<br>
-          <b>Balance:</b> ${money(o.balance)}
-        </div>
-      `).join("") || "<p>No confirmed orders yet.</p>"}
-    `;
 
-  } catch (error) {
-    $("myOrders").textContent = readableError(error);
-  }
-}
+      ${confirmed.docs.map(d => {
+        const o = d.data();
 
-$("refreshMyOrders").onclick = loadMyOrders;
-
-
-// ADMIN FUNCTIONS
-
-async function refreshAdmin() {
-  if (!isAdmin) return;
-
-  await Promise.all([
-    loadAdminRequests(),
-    loadAdminProducts(),
-    loadAdminCustomers(),
-    loadDebts()
-  ]);
-
-  const requests = await getDocs(collection(db, "orderRequests"));
-  const confirmed = await getDocs(collection(db, "confirmedOrders"));
-
-  $("totalRequests
+        return `
+          <div class="card">
+            <b>Order:</b> ${escapeHTML
