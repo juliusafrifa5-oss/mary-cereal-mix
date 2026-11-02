@@ -1,17 +1,9 @@
 <!doctype html>
 <html lang="en">
- <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("./sw.js");
-  });
-}
-</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#174b3a">
-<link rel="manifest" href="manifest.webmanifest">
 <title>Mary Cereal Mix</title>
 <style>
 :root{--g:#174b3a;--g2:#246b50;--bg:#f2f7f3;--line:#dce5de;--red:#b83232;--gold:#d5a52e}
@@ -31,6 +23,16 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;bord
 @media(max-width:600px){main{padding:8px}.card{padding:13px}th,td{padding:7px;font-size:12px}}
 @media print{header,#adminNav,#customerNav,button{display:none!important}body{background:white}.card{box-shadow:none}}
 </style>
+<link rel="manifest" href="./manifest.webmanifest">
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").catch(function (error) {
+      console.error("Service worker registration failed:", error);
+    });
+  });
+}
+</script>
 </head>
 <body>
 <header><h1>MARY CEREAL MIX</h1><p>Customer Ordering &amp; Sales Management System</p></header>
