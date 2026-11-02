@@ -29,10 +29,7 @@ color:white;
 padding:18px;
 }
 
-header h1{
-margin:0;
-font-size:21px;
-}
+header h1{margin:0;font-size:22px}
 
 main{
 max-width:1050px;
@@ -44,7 +41,7 @@ padding:0 14px 50px;
 background:white;
 border:1px solid var(--line);
 border-radius:14px;
-padding:16px;
+padding:18px;
 margin:12px 0;
 }
 
@@ -57,10 +54,10 @@ gap:12px;
 input,select,textarea{
 display:block;
 width:100%;
-padding:11px;
+padding:12px;
 border:1px solid #d8c9bd;
 border-radius:8px;
-margin:5px 0 12px;
+margin:6px 0 14px;
 font:inherit;
 }
 
@@ -69,7 +66,7 @@ background:var(--brown);
 color:white;
 border:0;
 border-radius:8px;
-padding:11px 14px;
+padding:12px 16px;
 font:inherit;
 font-weight:650;
 margin:3px;
@@ -78,7 +75,6 @@ cursor:pointer;
 
 button:disabled{
 opacity:.6;
-cursor:wait;
 }
 
 .secondary{
@@ -86,9 +82,7 @@ background:#eee2d8;
 color:var(--brown);
 }
 
-.danger{
-background:#a9342d;
-}
+.danger{background:#a9342d}
 
 label{
 font-weight:650;
@@ -130,23 +124,6 @@ background:#eee;
 
 .product div{padding:12px}
 
-table{
-border-collapse:collapse;
-width:100%;
-min-width:580px;
-}
-
-td,th{
-text-align:left;
-padding:9px;
-border-bottom:1px solid var(--line);
-font-size:13px;
-}
-
-th{background:#f6eee6}
-
-.scroll{overflow:auto}
-
 .note{
 padding:12px;
 background:#fff3d8;
@@ -172,108 +149,101 @@ border-radius:9px;
 <h2>Connect Firebase</h2>
 
 <p class="muted">
-Enter your Firebase Web App configuration.
+Enter Firebase Web App configuration from Project Settings.
 </p>
 
 <div class="grid">
 
-<div>
-<label>apiKey</label>
-<input id="apiKey">
-</div>
+<div><label>API Key</label><input id="apiKey"></div>
 
-<div>
-<label>authDomain</label>
-<input id="authDomain">
-</div>
+<div><label>Auth Domain</label><input id="authDomain"></div>
 
-<div>
-<label>projectId</label>
-<input id="projectId">
-</div>
+<div><label>Project ID</label><input id="projectId"></div>
 
-<div>
-<label>storageBucket</label>
-<input id="storageBucket">
-</div>
+<div><label>Storage Bucket</label><input id="storageBucket"></div>
 
-<div>
-<label>messagingSenderId</label>
-<input id="messagingSenderId">
-</div>
+<div><label>Messaging Sender ID</label><input id="messagingSenderId"></div>
 
-<div>
-<label>appId</label>
-<input id="appId">
-</div>
+<div><label>App ID</label><input id="appId"></div>
 
-<div>
-<label>Cloudinary Cloud Name</label>
-<input id="cloudName" value="d5jjbbjp">
-</div>
+<div><label>Cloudinary Cloud Name</label>
+<input id="cloudName" value="d5jjbbjp"></div>
 
-<div>
-<label>Cloudinary unsigned preset</label>
-<input id="preset" value="mary_cereal_upload">
-</div>
+<div><label>Cloudinary Upload Preset</label>
+<input id="preset" value="mary_cereal_upload"></div>
 
 </div>
 
-<button id="connect">Save and connect</button>
+<button id="connect">Save and Connect</button>
 </section>
 
 
-<!-- AUTHENTICATION -->
+<!-- LOGIN -->
 
 <section id="auth" class="card hidden">
 
-<div class="grid">
+<div id="loginPanel">
 
-<div>
+<h2>Customer Login</h2>
 
-<h2>Sign in</h2>
-
-<label>Email</label>
-<input id="email" type="email">
+<label>Email Address</label>
+<input id="email" type="email" autocomplete="username">
 
 <label>Password</label>
-<input id="password" type="password">
+<input id="password" type="password" autocomplete="current-password">
 
-<button id="signin">Sign in</button>
+<button id="signin">Sign In</button>
+
+<hr>
+
+<p>New to Mary Cereal Mix?</p>
+
+<button id="showRegister" class="secondary">
+Create New Customer Account
+</button>
 
 </div>
 
 
-<div>
+<!-- REGISTRATION FORM -->
 
-<h2>Create customer account</h2>
+<div id="registerPanel" class="hidden">
 
-<label>Name</label>
-<input id="name">
+<h2>Create Customer Account</h2>
 
-<label>Phone</label>
-<input id="phone">
+<p class="muted">
+Register to view products, submit orders and monitor your orders.
+</p>
 
-<label>Email</label>
-<input id="newEmail" type="email">
+<label>Full Name</label>
+<input id="name" placeholder="Enter your full name">
 
-<label>Password</label>
-<input id="newPassword" type="password">
+<label>Phone Number</label>
+<input id="phone" type="tel" placeholder="Enter phone number">
 
-<label>Account type</label>
+<label>Email Address</label>
+<input id="newEmail" type="email" placeholder="Enter email">
+
+<label>Create Password</label>
+<input id="newPassword" type="password"
+placeholder="At least 6 characters">
+
+<label>Customer Account Type</label>
 
 <select id="kind">
-<option value="retail">Retail buyer</option>
-<option value="wholesale">Wholesale buyer</option>
+<option value="retail">Retail Buyer</option>
+<option value="wholesale">Wholesale Buyer (Approval Required)</option>
 </select>
 
-<button id="signup">Register</button>
+<button id="signup">Register Account</button>
+
+<button id="backLogin" class="secondary">
+Back to Login
+</button>
 
 </div>
 
-</div>
-
-<p id="authMessage" class="muted"></p>
+<p id="authMessage" class="muted" aria-live="polite"></p>
 
 </section>
 
@@ -287,7 +257,7 @@ Enter your Firebase Web App configuration.
 <span id="who"></span>
 
 <button id="logout" class="secondary" style="float:right">
-Sign out
+Sign Out
 </button>
 
 <p id="state" class="muted"></p>
@@ -295,32 +265,38 @@ Sign out
 </div>
 
 
-<!-- CUSTOMER AND ADMIN NAVIGATION -->
+<!-- NAVIGATION -->
 
 <div class="tabs">
 
 <button class="active" data-tab="catalog">
-Products & order
+Products & Order
 </button>
 
 <button data-tab="mine">
-My orders
+My Orders
 </button>
 
-<button id="adminButton" data-tab="admin" class="hidden">
-Admin dashboard
+<button id="adminButton"
+data-tab="admin"
+class="hidden">
+Admin
 </button>
 
 </div>
 
 
-<!-- PRODUCT CATALOGUE -->
+<!-- PRODUCTS -->
 
 <section id="catalog">
 
 <div class="card">
 
 <h2>Products</h2>
+
+<p class="muted">
+View available products and the price list assigned to your account.
+</p>
 
 <div id="catalogue" class="grid"></div>
 
@@ -329,18 +305,16 @@ Admin dashboard
 
 <div class="card">
 
-<h2>Order request</h2>
+<h2>Order Request</h2>
 
-<div id="basket">
-No items selected.
-</div>
+<div id="basket">No items selected.</div>
 
-<label>Delivery details / notes</label>
+<label>Delivery Details / Notes</label>
 
 <textarea id="notes"></textarea>
 
 <button id="sendOrder">
-Submit order request
+Submit Order Request
 </button>
 
 </div>
@@ -354,7 +328,7 @@ Submit order request
 
 <div class="card">
 
-<h2>My order requests</h2>
+<h2>My Orders</h2>
 
 <div id="myOrders"></div>
 
@@ -363,16 +337,16 @@ Submit order request
 </section>
 
 
-<!-- ADMIN DASHBOARD: HIDDEN BY DEFAULT -->
+<!-- ADMIN DASHBOARD -->
 
 <section id="admin" class="hidden">
 
 <div class="card">
 
-<h2>Admin dashboard</h2>
+<h2>Administrator Dashboard</h2>
 
 <p class="note">
-Administrator access is restricted to the authorized administrator account.
+Administrator access is restricted to Julius's authorized account.
 </p>
 
 <div id="summary"></div>
@@ -383,11 +357,11 @@ Administrator access is restricted to the authorized administrator account.
 <div class="tabs">
 
 <button class="active" data-panel="requests">
-Order requests
+Order Requests
 </button>
 
 <button data-panel="products">
-Products & prices
+Products & Prices
 </button>
 
 <button data-panel="buyers">
@@ -395,116 +369,105 @@ Customers
 </button>
 
 <button data-panel="accounts">
-Payments & debts
+Payments & Debts
 </button>
 
 </div>
 
 
-<!-- REQUESTS -->
-
 <div id="requests" class="card">
 
-<h3>Incoming requests</h3>
+<h3>Incoming Requests</h3>
 
 <div id="requestsList"></div>
 
 </div>
 
 
-<!-- PRODUCTS -->
-
 <div id="products" class="card hidden">
 
-<h3>Add product</h3>
+<h3>Add New Product</h3>
 
-<label>Product name</label>
+<label>Product Name</label>
 <input id="prodName">
 
 <label>Description</label>
 <textarea id="prodDesc"></textarea>
 
-<label>Pack size / unit</label>
-<input id="prodUnit">
+<label>Pack Size / Unit</label>
+<input id="prodUnit" placeholder="e.g. 500g pouch">
 
-<label>Retail price (GH₵)</label>
+<label>Retail Price (GH₵)</label>
 <input id="retail" type="number" min="0" step=".01">
 
-<label>Wholesale price (GH₵)</label>
+<label>Wholesale Price (GH₵)</label>
 <input id="wholesale" type="number" min="0" step=".01">
 
-<label>Stock quantity</label>
+<label>Stock Quantity</label>
 <input id="stock" type="number" min="0">
 
-<label>Product photo</label>
-<input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+<label>Product Picture</label>
+<input id="photo" type="file"
+accept="image/jpeg,image/png,image/webp">
 
-<button id="addProduct">
-Save product
-</button>
+<button id="addProduct">Save Product</button>
 
 <div id="adminProducts"></div>
 
 </div>
 
 
-<!-- CUSTOMERS -->
-
 <div id="buyers" class="card hidden">
 
-<h3>Customer accounts</h3>
+<h3>Customer Accounts</h3>
 
 <div id="buyersList"></div>
 
 </div>
 
 
-<!-- PAYMENTS -->
-
 <div id="accounts" class="card hidden">
 
-<h3>Confirm order, payment and debt</h3>
+<h3>Confirm Orders, Payments & Debts</h3>
 
-<label>Order document ID</label>
+<label>Order Document ID</label>
 <input id="orderId">
 
-<label>Confirmed total (GH₵)</label>
+<label>Confirmed Total (GH₵)</label>
 <input id="confirmedTotal" type="number" min="0" step=".01">
 
-<label>Credit approval</label>
+<label>Credit Approval</label>
 
 <select id="creditApproval">
-<option value="no">No — payment before supply</option>
-<option value="yes">Yes — approve credit</option>
+<option value="no">No — Payment Before Supply</option>
+<option value="yes">Yes — Approve Credit</option>
 </select>
 
-<button id="confirmOrder">
-Confirm order
-</button>
+<button id="confirmOrder">Confirm Order</button>
 
 <hr>
 
-<label>Confirmed order ID for payment</label>
+<h3>Record Payment</h3>
+
+<label>Confirmed Order ID</label>
 <input id="paymentOrder">
 
-<label>Payment amount received (GH₵)</label>
+<label>Payment Amount (GH₵)</label>
 <input id="amount" type="number" min=".01" step=".01">
 
-<label>Payment method</label>
+<label>Payment Method</label>
 
 <select id="method">
 <option>Cash</option>
 <option>Mobile Money</option>
-<option>Bank transfer</option>
+<option>Bank Transfer</option>
 <option>Other</option>
 </select>
 
-<label>Reference / notes</label>
+<label>Reference / Notes</label>
 <input id="reference">
 
-<button id="addPayment">
-Record payment
-</button>
+<button id="addPayment">Record Payment</button>
 
 <div id="balances"></div>
 
@@ -515,8 +478,6 @@ Record payment
 </section>
 
 </main>
-
-
 <script type="module">
 
 import {initializeApp}
@@ -575,9 +536,7 @@ const show=(id,v)=>{
 $(id).classList.toggle("hidden",!v);
 };
 
-function alertMsg(s){
-alert(s);
-}
+function alertMsg(s){alert(s);}
 
 function authMsg(s){
 $("authMessage").textContent=s;
@@ -591,15 +550,13 @@ const messages={
 
 "auth/invalid-credential":"Email or password is incorrect.",
 
-"auth/wrong-password":"Email or password is incorrect.",
+"auth/email-already-in-use":"This email already has an account. Sign in instead.",
 
-"auth/user-not-found":"No account was found.",
+"auth/weak-password":"Password must contain at least 6 characters.",
 
 "auth/invalid-email":"Enter a valid email address.",
 
-"auth/email-already-in-use":"This email already has an account.",
-
-"auth/weak-password":"Use a password with at least 6 characters.",
+"auth/network-request-failed":"Check your internet connection.",
 
 "permission-denied":"Firebase blocked access. Check Firestore rules.",
 
@@ -612,6 +569,8 @@ return messages[code]||e?.message||"Something went wrong.";
 }
 
 
+/* CONFIGURATION */
+
 function conf(){
 
 return JSON.parse(
@@ -619,7 +578,6 @@ localStorage.getItem("marySecureConfig")||"null"
 );
 
 }
-
 
 $("connect").onclick=()=>{
 
@@ -651,6 +609,29 @@ location.reload();
 };
 
 
+/* LOGIN AND REGISTRATION SWITCH */
+
+$("showRegister").onclick=()=>{
+
+show("loginPanel",false);
+show("registerPanel",true);
+
+authMsg("");
+
+};
+
+$("backLogin").onclick=()=>{
+
+show("registerPanel",false);
+show("loginPanel",true);
+
+authMsg("");
+
+};
+
+
+/* FIREBASE INITIALIZATION */
+
 function boot(c){
 
 settings=c;
@@ -673,7 +654,6 @@ auth=getAuth(app);
 db=getFirestore(app);
 
 show("config",false);
-
 show("auth",true);
 
 onAuthStateChanged(auth,u=>{
@@ -686,14 +666,13 @@ authRun++;
 
 user=null;
 me=null;
+basket=[];
 
 show("workspace",false);
 show("auth",true);
 
 show("admin",false);
 show("adminButton",false);
-
-authMsg("");
 
 return;
 
@@ -704,7 +683,6 @@ loadSignedInUser(u);
 },e=>{
 
 console.error(e);
-
 authMsg(readableError(e));
 
 });
@@ -721,12 +699,13 @@ alertMsg(readableError(e));
 
 }
 
+let savedConfig=conf();
 
-let c=conf();
-
-if(c)boot(c);
+if(savedConfig)boot(savedConfig);
 else show("config",true);
 
+
+/* LOAD CUSTOMER OR ADMIN PROFILE */
 
 async function loadSignedInUser(u){
 
@@ -748,7 +727,7 @@ show("adminButton",false);
 show("auth",true);
 
 authMsg(
-"Your Firebase login exists, but your Firestore profile is missing."
+"Your Firebase login exists, but your customer profile is missing."
 );
 
 return;
@@ -756,47 +735,28 @@ return;
 }
 
 me=s.data();
-
 user=u;
 
-
-/* VERIFY ACCOUNT ROLE */
-
 if(!["admin","customer"].includes(me.role)){
-
 throw Error("Invalid account role.");
-
 }
 
-
-/* ADMIN ACCESS REQUIRES THE AUTHORIZED UID */
-
-const isAdministrator=
+const isAdmin=
 me.role==="admin" &&
 u.uid===ADMIN_UID;
 
-
-/* DISPLAY WORKSPACE */
-
 show("auth",false);
-
 show("workspace",true);
-
-
-/* CUSTOMER/ADMIN IDENTIFICATION */
 
 $("who").textContent=
 "Signed in: "+(me.name||u.email);
 
-
 $("state").textContent=
 
-isAdministrator
-
+isAdmin
 ?"Administrator"
 
 :me.accountType==="wholesale"
-
 ?(me.wholesaleStatus==="approved"
 ?"Approved wholesale buyer"
 :"Wholesale approval pending")
@@ -804,18 +764,16 @@ isAdministrator
 :"Retail buyer";
 
 
-/* CRITICAL VISIBILITY CORRECTION */
+/* ACCESS CONTROL */
 
-show("adminButton",isAdministrator);
-
-show("admin",isAdministrator);
+show("adminButton",isAdmin);
+show("admin",isAdmin);
 
 show("catalog",true);
-
 show("mine",true);
 
 
-/* RESET ACTIVE TAB */
+/* RESET NAVIGATION */
 
 document.querySelectorAll("[data-tab]").forEach(b=>{
 b.classList.toggle("active",b.dataset.tab==="catalog");
@@ -824,8 +782,10 @@ b.classList.toggle("active",b.dataset.tab==="catalog");
 show("catalog",true);
 show("mine",false);
 
-
-/* LOAD DATA */
+show("requests",true);
+show("products",false);
+show("buyers",false);
+show("accounts",false);
 
 await refreshCatalog();
 
@@ -835,7 +795,7 @@ await refreshMine();
 
 if(run!==authRun)return;
 
-if(isAdministrator){
+if(isAdmin){
 
 await refreshAdmin();
 
@@ -859,7 +819,7 @@ authMsg(readableError(e));
 }
 
 
-/* SIGN UP */
+/* CUSTOMER REGISTRATION */
 
 $("signup").onclick=async()=>{
 
@@ -869,18 +829,14 @@ btn.disabled=true;
 
 creatingAccount=true;
 
-authMsg("Creating account...");
+authMsg("Creating your account...");
 
 try{
 
 const name=$("name").value.trim();
-
 const phone=$("phone").value.trim();
-
 const email=$("newEmail").value.trim();
-
 const password=$("newPassword").value;
-
 const type=$("kind").value;
 
 if(!name||!phone||!email||!password){
@@ -907,9 +863,9 @@ await setDoc(
 doc(db,"users",cr.user.uid),
 {
 
-name,
-phone,
-email,
+name:name,
+phone:phone,
+email:email,
 
 accountType:type,
 
@@ -925,15 +881,26 @@ createdAt:serverTimestamp()
 
 creatingAccount=false;
 
+authMsg("Registration successful.");
+
 await loadSignedInUser(cr.user);
 
-alertMsg("Registration successful.");
+alertMsg(
+type==="wholesale"
+?"Account created. Wholesale access is pending approval."
+:"Your customer account has been created successfully."
+);
+
+$("name").value="";
+$("phone").value="";
+$("newEmail").value="";
+$("newPassword").value="";
 
 }catch(e){
 
 creatingAccount=false;
 
-console.error(e);
+console.error("Registration error:",e);
 
 authMsg(readableError(e));
 
@@ -948,7 +915,7 @@ btn.disabled=false;
 };
 
 
-/* SIGN IN */
+/* CUSTOMER AND ADMIN LOGIN */
 
 $("signin").onclick=async()=>{
 
@@ -961,12 +928,11 @@ authMsg("Signing in...");
 try{
 
 const email=$("email").value.trim();
-
 const password=$("password").value;
 
 if(!email||!password){
 
-throw Error("Enter email and password.");
+throw Error("Enter your email and password.");
 
 }
 
@@ -993,11 +959,13 @@ btn.disabled=false;
 };
 
 
-/* LOGOUT */
+/* SIGN OUT */
 
 $("logout").onclick=async()=>{
 
 try{
+
+basket=[];
 
 await signOut(auth);
 
@@ -1010,7 +978,7 @@ alertMsg(readableError(e));
 };
 
 
-/* PRODUCTS */
+/* LOAD PRODUCTS */
 
 async function refreshCatalog(){
 
@@ -1026,26 +994,24 @@ id:d.id,
 let priceCol=
 
 me.role==="admin"
-
 ?"retailPrices"
 
 :me.accountType==="wholesale"
-
 ?(me.wholesaleStatus==="approved"
 ?"wholesalePrices":null)
 
 :"retailPrices";
 
-let map={};
+let priceMap={};
 
 if(priceCol){
 
-let prices=await getDocs(
+const prices=await getDocs(
 collection(db,priceCol)
 );
 
 prices.docs.forEach(d=>{
-map[d.id]=d.data().price;
+priceMap[d.id]=d.data().price;
 });
 
 }
@@ -1056,30 +1022,36 @@ items.filter(x=>x.active!==false).map(x=>`
 
 <div class="product">
 
-<img src="${esc(x.imageUrl||"")}" alt="">
+<img src="${esc(x.imageUrl||"")}"
+alt="${esc(x.name)}"
+onerror="this.style.display='none'">
 
 <div>
 
-<b>${esc(x.name)}</b>
+<h3>${esc(x.name)}</h3>
 
 <p>${esc(x.description||"")}</p>
 
-<small>${esc(x.unit||"")}</small>
+<p>${esc(x.unit||"")}</p>
 
 <p>
 ${
-priceCol&&map[x.id]!==undefined
-?money(map[x.id])
+priceCol&&priceMap[x.id]!==undefined
+?money(priceMap[x.id])
 :"Price available after approval / confirmation"
 }
 </p>
 
 <label>Quantity</label>
 
-<input id="q${x.id}" type="number" min="1" value="1">
+<input
+id="q${x.id}"
+type="number"
+min="1"
+value="1">
 
 <button onclick="window.add('${x.id}')">
-Add
+Add to Order
 </button>
 
 </div>
@@ -1091,21 +1063,33 @@ Add
 }
 
 
-/* ADD TO BASKET */
+/* ADD PRODUCTS TO BASKET */
 
 window.add=id=>{
 
-let p=items.find(x=>x.id===id);
+const p=items.find(x=>x.id===id);
 
-let q=Math.floor(+$("q"+id).value);
+const input=$("q"+id);
 
-if(!p||q<1)return;
+const q=Math.floor(Number(input?.value));
 
-let old=basket.find(x=>x.productId===id);
+if(!p||!Number.isInteger(q)||q<1){
 
-if(old)old.quantity+=q;
+alertMsg("Enter a valid quantity.");
 
-else basket.push({
+return;
+
+}
+
+const old=basket.find(x=>x.productId===id);
+
+if(old){
+
+old.quantity+=q;
+
+}else{
+
+basket.push({
 
 productId:id,
 name:p.name,
@@ -1114,30 +1098,52 @@ quantity:q
 
 });
 
-$("basket").innerHTML=basket.map(x=>
-`${esc(x.name)} — ${x.quantity} ${esc(x.unit)}`
-).join("<br>");
+}
+
+$("basket").innerHTML=basket.map(x=>`
+
+<p>
+${esc(x.name)} — ${x.quantity} ${esc(x.unit)}
+</p>
+
+`).join("");
 
 };
 
 
-/* SUBMIT ORDER */
+/* SUBMIT CUSTOMER ORDER */
 
 $("sendOrder").onclick=async()=>{
 
+const btn=$("sendOrder");
+
+btn.disabled=true;
+
 try{
 
-if(me.role!=="customer" && user.uid!==ADMIN_UID){
+if(!user||!me){
 
-throw Error("Account not authorized.");
+throw Error("Please sign in first.");
+
+}
+
+if(me.role!=="customer"){
+
+throw Error("Only customer accounts can submit customer orders.");
 
 }
 
 if(!basket.length){
 
-throw Error("Add products first.");
+throw Error("Add products before submitting.");
 
 }
+
+const customerPhone=
+String(me.phone||me.Phone||"");
+
+const customerName=
+String(me.name||user.displayName||user.email||"");
 
 await addDoc(
 collection(db,"orderRequests"),
@@ -1145,9 +1151,9 @@ collection(db,"orderRequests"),
 
 customerUid:user.uid,
 
-customerName:me.name,
+customerName:customerName,
 
-customerPhone:me.phone,
+customerPhone:customerPhone,
 
 accountType:me.accountType,
 
@@ -1168,24 +1174,30 @@ $("basket").textContent="No items selected.";
 
 $("notes").value="";
 
-alertMsg("Order request submitted successfully.");
+alertMsg("Your order request has been submitted successfully.");
 
 await refreshMine();
 
 }catch(e){
 
+console.error("Order submission error:",e);
+
 alertMsg(readableError(e));
+
+}finally{
+
+btn.disabled=false;
 
 }
 
 };
 
 
-/* CUSTOMER ORDERS */
+/* CUSTOMER ORDER HISTORY */
 
 async function refreshMine(){
 
-let s=await getDocs(
+const s=await getDocs(
 
 query(
 collection(db,"orderRequests"),
@@ -1198,7 +1210,7 @@ $("myOrders").innerHTML=
 
 s.docs.map(d=>{
 
-let x=d.data();
+const x=d.data();
 
 return `
 
@@ -1233,7 +1245,7 @@ throw Error("Administrator access denied.");
 
 }
 
-let [rs,us,ps,os]=await Promise.all([
+const [rs,us,ps,os]=await Promise.all([
 
 getDocs(collection(db,"orderRequests")),
 
@@ -1245,19 +1257,16 @@ getDocs(collection(db,"confirmedOrders"))
 
 ]);
 
-let req=rs.docs.map(d=>({
-id:d.id,
-...d.data()
+const req=rs.docs.map(d=>({
+id:d.id,...d.data()
 }));
 
-let buyers=us.docs.map(d=>({
-id:d.id,
-...d.data()
+const buyers=us.docs.map(d=>({
+id:d.id,...d.data()
 }));
 
-let orders=os.docs.map(d=>({
-id:d.id,
-...d.data()
+const orders=os.docs.map(d=>({
+id:d.id,...d.data()
 }));
 
 $("summary").textContent=
@@ -1265,7 +1274,7 @@ $("summary").textContent=
 `Requests: ${req.length} | Confirmed orders: ${orders.length} | Outstanding balances: ${money(orders.reduce((a,o)=>a+Number(o.balance||0),0))}`;
 
 
-/* REQUESTS */
+/* INCOMING REQUESTS */
 
 $("requestsList").innerHTML=
 
@@ -1286,7 +1295,7 @@ esc(i.name)+" × "+i.quantity
 <small>Request ID: ${esc(r.id)}</small>
 
 <button onclick="window.chooseReq('${r.id}')">
-Use this request
+Use This Request
 </button>
 
 ${
@@ -1294,7 +1303,7 @@ r.accountType==="wholesale" &&
 buyers.find(b=>b.id===r.customerUid)?.wholesaleStatus!=="approved"
 
 ?`<button onclick="window.approveBuyer('${r.customerUid}')">
-Approve wholesale buyer
+Approve Wholesale Buyer
 </button>`
 
 :""
@@ -1306,7 +1315,7 @@ Approve wholesale buyer
 `).join("")||"No requests.";
 
 
-/* CUSTOMERS */
+/* CUSTOMER LIST */
 
 $("buyersList").innerHTML=
 
@@ -1316,7 +1325,7 @@ buyers.map(b=>`
 
 <b>${esc(b.name)}</b>
 
-<p>${esc(b.phone)}</p>
+<p>${esc(b.phone||b.Phone||"")}</p>
 
 <p>${esc(b.email)}</p>
 
@@ -1330,7 +1339,7 @@ b.accountType==="wholesale" &&
 b.wholesaleStatus!=="approved"
 
 ?`<button onclick="window.approveBuyer('${b.id}')">
-Approve
+Approve Wholesale
 </button>`
 
 :""
@@ -1342,15 +1351,19 @@ Approve
 `).join("");
 
 
-/* PRODUCTS */
+/* PRODUCT LIST */
 
 $("adminProducts").innerHTML=
 
 ps.docs.map(d=>`
 
-<p>
-${esc(d.data().name)} — ${esc(d.id)}
-</p>
+<div class="card">
+
+<b>${esc(d.data().name)}</b>
+
+<p>Product ID: ${esc(d.id)}</p>
+
+</div>
 
 `).join("");
 
@@ -1359,7 +1372,7 @@ ${esc(d.data().name)} — ${esc(d.id)}
 
 $("balances").innerHTML=
 
-"<h3>Confirmed orders and balances</h3>"+
+"<h3>Confirmed Orders and Balances</h3>"+
 
 orders.map(o=>`
 
@@ -1371,7 +1384,7 @@ orders.map(o=>`
 
 <p>Paid: ${money(o.paid)}</p>
 
-<p>Due: ${money(o.balance)}</p>
+<p>Outstanding: ${money(o.balance)}</p>
 
 <p>Order ID: ${esc(o.id)}</p>
 
@@ -1382,7 +1395,7 @@ orders.map(o=>`
 }
 
 
-/* CHOOSE ORDER */
+/* SELECT REQUEST */
 
 window.chooseReq=id=>{
 
@@ -1391,7 +1404,7 @@ $("orderId").value=id;
 };
 
 
-/* APPROVE WHOLESALE */
+/* APPROVE WHOLESALE CUSTOMER */
 
 window.approveBuyer=async uid=>{
 
@@ -1399,7 +1412,7 @@ try{
 
 if(user.uid!==ADMIN_UID||me.role!=="admin"){
 
-throw Error("Admin only.");
+throw Error("Administrator access required.");
 
 }
 
@@ -1410,7 +1423,7 @@ wholesaleStatus:"approved"
 }
 );
 
-alertMsg("Wholesale buyer approved.");
+alertMsg("Wholesale customer approved.");
 
 await refreshAdmin();
 
@@ -1431,36 +1444,40 @@ try{
 
 if(user.uid!==ADMIN_UID||me.role!=="admin"){
 
-throw Error("Admin only.");
+throw Error("Administrator access required.");
 
 }
 
-let name=$("prodName").value.trim();
+const name=$("prodName").value.trim();
+
+const retailValue=$("retail").value;
+const wholesaleValue=$("wholesale").value;
+
+const retail=Number(retailValue);
+const wholesale=Number(wholesaleValue);
 
 if(!name){
 
-throw Error("Enter a product name.");
+throw Error("Enter product name.");
 
 }
 
-let retail=Number($("retail").value);
-
-let wholesale=Number($("wholesale").value);
-
 if(
-$("retail").value===""||
-$("wholesale").value===""||
+retailValue===""||
+wholesaleValue===""||
+!Number.isFinite(retail)||
+!Number.isFinite(wholesale)||
 retail<0||
 wholesale<0
 ){
 
-throw Error("Enter valid prices.");
+throw Error("Enter valid product prices.");
 
 }
 
 let imageUrl="";
 
-let f=$("photo").files[0];
+const f=$("photo").files[0];
 
 if(f){
 
@@ -1469,25 +1486,27 @@ f.size>5*1024*1024||
 !["image/jpeg","image/png","image/webp"].includes(f.type)
 ){
 
-throw Error("Choose JPG, PNG or WEBP up to 5MB.");
+throw Error("Use JPG, PNG or WEBP up to 5MB.");
 
 }
 
-let fd=new FormData();
+const fd=new FormData();
 
 fd.append("file",f);
-
 fd.append("upload_preset",settings.preset);
 
-let res=await fetch(
+const res=await fetch(
+
 `https://api.cloudinary.com/v1_1/${encodeURIComponent(settings.cloudName)}/image/upload`,
+
 {
 method:"POST",
 body:fd
 }
+
 );
 
-let j=await res.json();
+const j=await res.json();
 
 if(!res.ok){
 
@@ -1499,22 +1518,16 @@ imageUrl=j.secure_url;
 
 }
 
-let ref=await addDoc(
+const ref=await addDoc(
 collection(db,"products"),
 {
 
 name,
-
 description:$("prodDesc").value,
-
 unit:$("prodUnit").value,
-
 stock:Number($("stock").value||0),
-
 imageUrl,
-
 active:true,
-
 createdAt:serverTimestamp()
 
 }
@@ -1534,13 +1547,23 @@ price:wholesale
 }
 );
 
-alertMsg("Product and price lists saved.");
+alertMsg("Product and price lists saved successfully.");
+
+$("prodName").value="";
+$("prodDesc").value="";
+$("prodUnit").value="";
+$("retail").value="";
+$("wholesale").value="";
+$("stock").value="";
+$("photo").value="";
 
 await refreshCatalog();
 
 await refreshAdmin();
 
 }catch(e){
+
+console.error(e);
 
 alertMsg(readableError(e));
 
@@ -1557,17 +1580,19 @@ try{
 
 if(user.uid!==ADMIN_UID||me.role!=="admin"){
 
-throw Error("Admin only.");
+throw Error("Administrator access required.");
 
 }
 
-let id=$("orderId").value.trim();
+const id=$("orderId").value.trim();
 
-let total=Number($("confirmedTotal").value);
+const totalValue=$("confirmedTotal").value;
 
-if(!id||$("confirmedTotal").value===""||total<0){
+const total=Number(totalValue);
 
-throw Error("Enter request ID and confirmed total.");
+if(!id||totalValue===""||!Number.isFinite(total)||total<0){
+
+throw Error("Enter order ID and valid confirmed total.");
 
 }
 
@@ -1587,13 +1612,13 @@ tx.get(orderRef)
 
 if(!requestSnap.exists()){
 
-throw Error("Request not found.");
+throw Error("Order request not found.");
 
 }
 
 if(existingSnap.exists()){
 
-throw Error("This order has already been confirmed.");
+throw Error("This request has already been confirmed.");
 
 }
 
@@ -1607,11 +1632,11 @@ customerUid:r.customerUid,
 
 customerName:r.customerName,
 
-customerPhone:r.customerPhone,
+customerPhone:r.customerPhone||"",
 
 items:r.items,
 
-total,
+total:total,
 
 paid:0,
 
@@ -1631,11 +1656,13 @@ status:"confirmed"
 
 });
 
-alertMsg("Order confirmed.");
+alertMsg("Order confirmed successfully.");
 
 await refreshAdmin();
 
 }catch(e){
+
+console.error(e);
 
 alertMsg(readableError(e));
 
@@ -1652,25 +1679,25 @@ try{
 
 if(user.uid!==ADMIN_UID||me.role!=="admin"){
 
-throw Error("Admin only.");
+throw Error("Administrator access required.");
 
 }
 
-let id=$("paymentOrder").value.trim();
+const id=$("paymentOrder").value.trim();
 
-let amt=Number($("amount").value);
+const amt=Number($("amount").value);
 
 if(!id||!Number.isFinite(amt)||amt<=0){
 
-throw Error("Enter order ID and valid payment.");
+throw Error("Enter order ID and valid payment amount.");
 
 }
 
 await runTransaction(db,async tx=>{
 
-let ref=doc(db,"confirmedOrders",id);
+const ref=doc(db,"confirmedOrders",id);
 
-let s=await tx.get(ref);
+const s=await tx.get(ref);
 
 if(!s.exists()){
 
@@ -1678,13 +1705,13 @@ throw Error("Confirmed order not found.");
 
 }
 
-let o=s.data();
+const o=s.data();
 
-let bal=Number(o.balance||0);
+const bal=Number(o.balance||0);
 
 if(amt>bal){
 
-throw Error("Payment exceeds balance.");
+throw Error("Payment exceeds outstanding balance.");
 
 }
 
@@ -1698,7 +1725,7 @@ status:bal-amt===0?"paid":"part_paid"
 
 });
 
-let p=doc(collection(db,"payments"));
+const p=doc(collection(db,"payments"));
 
 tx.set(p,{
 
@@ -1723,14 +1750,15 @@ recordedBy:user.uid
 });
 
 $("amount").value="";
-
 $("reference").value="";
 
-alertMsg("Payment recorded.");
+alertMsg("Payment recorded successfully.");
 
 await refreshAdmin();
 
 }catch(e){
+
+console.error(e);
 
 alertMsg(readableError(e));
 
@@ -1750,7 +1778,6 @@ if(b.dataset.tab==="admin"){
 if(user?.uid!==ADMIN_UID||me?.role!=="admin"){
 
 show("admin",false);
-
 show("adminButton",false);
 
 return;
@@ -1776,7 +1803,7 @@ show(k,k===b.dataset.tab);
 });
 
 
-/* ADMIN SUB-NAVIGATION */
+/* ADMIN SUB NAVIGATION */
 
 document.querySelectorAll("[data-panel]").forEach(b=>{
 
@@ -1805,6 +1832,5 @@ show(k,k===b.dataset.panel);
 });
 
 </script>
-
 </body>
 </html>
