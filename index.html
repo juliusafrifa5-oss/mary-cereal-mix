@@ -1,1836 +1,875 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#713b22">
-<title>MARY CEREAL MIX</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#174b3a">
+<title>Mary Cereal Mix</title>
 
 <style>
-:root{
---brown:#713b22;
---cream:#fff8ef;
---line:#eadfd5;
---muted:#76685f;
+:root {
+  --green:#174b3a;
+  --green2:#246b50;
+  --light:#f2f7f3;
+  --gold:#e6b84a;
+  --red:#b83232;
+  --border:#dce5de;
 }
-
-*{box-sizing:border-box}
-
-body{
-margin:0;
-background:var(--cream);
-color:#2c211b;
-font:15px system-ui;
+* {box-sizing:border-box}
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--light);
+  color:#25352b;
 }
-
-header{
-background:var(--brown);
-color:white;
-padding:18px;
+header {
+  background:var(--green);
+  color:white;
+  padding:18px;
+  text-align:center;
 }
-
-header h1{margin:0;font-size:22px}
-
-main{
-max-width:1050px;
-margin:20px auto;
-padding:0 14px 50px;
+header h1 {margin:0;font-size:23px}
+header p {margin:6px 0 0;font-size:13px}
+main {max-width:1100px;margin:20px auto;padding:12px}
+.card {
+  background:white;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px #0000000c;
 }
-
-.card{
-background:white;
-border:1px solid var(--line);
-border-radius:14px;
-padding:18px;
-margin:12px 0;
+h2,h3 {color:var(--green)}
+input,select,textarea,button {
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:7px;
+  border:1px solid var(--border);
+  font-size:15px;
 }
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:12px;
+textarea {min-height:75px}
+button {
+  background:var(--green);
+  color:white;
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
 }
-
-input,select,textarea{
-display:block;
-width:100%;
-padding:12px;
-border:1px solid #d8c9bd;
-border-radius:8px;
-margin:6px 0 14px;
-font:inherit;
+button:hover {background:var(--green2)}
+button.secondary {background:#64746a}
+button.danger {background:var(--red)}
+button.gold {background:#b88922}
+button.small {
+  width:auto;
+  padding:8px 12px;
+  margin:3px;
+  font-size:13px;
 }
-
-button{
-background:var(--brown);
-color:white;
-border:0;
-border-radius:8px;
-padding:12px 16px;
-font:inherit;
-font-weight:650;
-margin:3px;
-cursor:pointer;
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
 }
-
-button:disabled{
-opacity:.6;
+.hidden {display:none!important}
+.nav {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:15px;
 }
-
-.secondary{
-background:#eee2d8;
-color:var(--brown);
+.nav button {width:auto;flex:1;min-width:110px}
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
 }
-
-.danger{background:#a9342d}
-
-label{
-font-weight:650;
-font-size:13px;
+th,td {
+  padding:10px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
 }
-
-.muted{color:var(--muted)}
-
-.hidden{display:none!important}
-
-.tabs{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
+th {background:#edf4ef}
+.tablewrap {overflow-x:auto}
+.stat {
+  background:#edf5ef;
+  border-left:4px solid var(--green);
+  padding:15px;
+  border-radius:7px;
 }
-
-.tabs button{
-background:#eadfd5;
-color:var(--brown);
+.stat strong {font-size:22px;display:block;margin-top:6px}
+.badge {
+  display:inline-block;
+  background:#e8f1e9;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:12px;
 }
-
-.tabs button.active{
-background:var(--brown);
-color:white;
+.notice {
+  padding:12px;
+  background:#fff8df;
+  border-radius:7px;
+  font-size:13px;
 }
-
-.product{
-border:1px solid var(--line);
-border-radius:12px;
-overflow:hidden;
+footer {
+  text-align:center;
+  padding:20px;
+  color:#68766c;
+  font-size:12px;
 }
-
-.product img{
-width:100%;
-height:160px;
-object-fit:cover;
-background:#eee;
+label {font-weight:bold;font-size:13px}
+hr {border:0;border-top:1px solid var(--border);margin:18px 0}
+@media(max-width:600px) {
+  main {padding:8px}
+  .card {padding:13px}
+  th,td {padding:7px;font-size:12px}
 }
-
-.product div{padding:12px}
-
-.note{
-padding:12px;
-background:#fff3d8;
-border:1px solid #ecd69e;
-border-radius:9px;
-}
-
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>MARY CEREAL MIX</h1>
-<div>Customer Orders & Sales Management</div>
+  <h1>MARY CEREAL MIX</h1>
+  <p>Customer Ordering & Sales Management System</p>
 </header>
 
 <main>
 
 <!-- FIREBASE CONFIGURATION -->
+<section id="configSection" class="card">
+  <h2>System Configuration</h2>
+  <p>Enter your Firebase Web App configuration details.</p>
 
-<section id="config" class="card">
-<h2>Connect Firebase</h2>
+  <div class="grid">
+    <div>
+      <label>API Key</label>
+      <input id="apiKey" placeholder="Firebase API Key">
+    </div>
+    <div>
+      <label>Auth Domain</label>
+      <input id="authDomain" placeholder="your-project.firebaseapp.com">
+    </div>
+    <div>
+      <label>Project ID</label>
+      <input id="projectId" placeholder="Firebase Project ID">
+    </div>
+    <div>
+      <label>Storage Bucket</label>
+      <input id="storageBucket" placeholder="Storage Bucket">
+    </div>
+    <div>
+      <label>Messaging Sender ID</label>
+      <input id="messagingSenderId" placeholder="Sender ID">
+    </div>
+    <div>
+      <label>App ID</label>
+      <input id="appId" placeholder="Firebase App ID">
+    </div>
+  </div>
 
-<p class="muted">
-Enter Firebase Web App configuration from Project Settings.
-</p>
-
-<div class="grid">
-
-<div><label>API Key</label><input id="apiKey"></div>
-
-<div><label>Auth Domain</label><input id="authDomain"></div>
-
-<div><label>Project ID</label><input id="projectId"></div>
-
-<div><label>Storage Bucket</label><input id="storageBucket"></div>
-
-<div><label>Messaging Sender ID</label><input id="messagingSenderId"></div>
-
-<div><label>App ID</label><input id="appId"></div>
-
-<div><label>Cloudinary Cloud Name</label>
-<input id="cloudName" value="d5jjbbjp"></div>
-
-<div><label>Cloudinary Upload Preset</label>
-<input id="preset" value="mary_cereal_upload"></div>
-
-</div>
-
-<button id="connect">Save and Connect</button>
+  <button id="saveConfig">Save Configuration & Connect</button>
+  <p id="configMessage"></p>
 </section>
-
 
 <!-- LOGIN -->
+<section id="loginSection" class="card hidden">
+  <h2>Customer / Admin Login</h2>
 
-<section id="auth" class="card hidden">
+  <label>Email Address</label>
+  <input id="email" type="email" placeholder="Enter email">
 
-<div id="loginPanel">
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Enter password">
 
-<h2>Customer Login</h2>
+  <button id="loginBtn">Login</button>
 
-<label>Email Address</label>
-<input id="email" type="email" autocomplete="username">
+  <button id="resetPassword" class="secondary">
+    Forgot Password?
+  </button>
 
-<label>Password</label>
-<input id="password" type="password" autocomplete="current-password">
+  <hr>
 
-<button id="signin">Sign In</button>
-
-<hr>
-
-<p>New to Mary Cereal Mix?</p>
-
-<button id="showRegister" class="secondary">
-Create New Customer Account
-</button>
-
-</div>
-
-
-<!-- REGISTRATION FORM -->
-
-<div id="registerPanel" class="hidden">
-
-<h2>Create Customer Account</h2>
-
-<p class="muted">
-Register to view products, submit orders and monitor your orders.
-</p>
-
-<label>Full Name</label>
-<input id="name" placeholder="Enter your full name">
-
-<label>Phone Number</label>
-<input id="phone" type="tel" placeholder="Enter phone number">
-
-<label>Email Address</label>
-<input id="newEmail" type="email" placeholder="Enter email">
-
-<label>Create Password</label>
-<input id="newPassword" type="password"
-placeholder="At least 6 characters">
-
-<label>Customer Account Type</label>
-
-<select id="kind">
-<option value="retail">Retail Buyer</option>
-<option value="wholesale">Wholesale Buyer (Approval Required)</option>
-</select>
-
-<button id="signup">Register Account</button>
-
-<button id="backLogin" class="secondary">
-Back to Login
-</button>
-
-</div>
-
-<p id="authMessage" class="muted" aria-live="polite"></p>
-
+  <h3>New Customer?</h3>
+  <button id="showRegister" class="gold">Create Customer Account</button>
 </section>
 
+<!-- REGISTRATION -->
+<section id="registerSection" class="card hidden">
+  <h2>Customer Registration</h2>
 
-<!-- MAIN WORKSPACE -->
+  <label>Full Name</label>
+  <input id="regName" placeholder="Full name">
 
-<section id="workspace" class="hidden">
+  <label>Phone Number</label>
+  <input id="regPhone" placeholder="Phone number">
 
-<div class="card">
+  <label>Email Address</label>
+  <input id="regEmail" type="email" placeholder="Email address">
 
-<span id="who"></span>
+  <label>Password</label>
+  <input id="regPassword" type="password" placeholder="Create password">
 
-<button id="logout" class="secondary" style="float:right">
-Sign Out
-</button>
+  <label>Customer Type</label>
+  <select id="regAccountType">
+    <option value="retail">Retail Customer</option>
+    <option value="wholesale">Wholesale Customer</option>
+  </select>
 
-<p id="state" class="muted"></p>
+  <button id="registerBtn">Register Account</button>
+  <button id="backToLogin" class="secondary">Back to Login</button>
 
-</div>
-
-
-<!-- NAVIGATION -->
-
-<div class="tabs">
-
-<button class="active" data-tab="catalog">
-Products & Order
-</button>
-
-<button data-tab="mine">
-My Orders
-</button>
-
-<button id="adminButton"
-data-tab="admin"
-class="hidden">
-Admin
-</button>
-
-</div>
-
-
-<!-- PRODUCTS -->
-
-<section id="catalog">
-
-<div class="card">
-
-<h2>Products</h2>
-
-<p class="muted">
-View available products and the price list assigned to your account.
-</p>
-
-<div id="catalogue" class="grid"></div>
-
-</div>
-
-
-<div class="card">
-
-<h2>Order Request</h2>
-
-<div id="basket">No items selected.</div>
-
-<label>Delivery Details / Notes</label>
-
-<textarea id="notes"></textarea>
-
-<button id="sendOrder">
-Submit Order Request
-</button>
-
-</div>
-
+  <p class="notice">
+    Wholesale accounts require administrator approval before wholesale
+    prices become available.
+  </p>
 </section>
 
+<!-- APPLICATION -->
+<section id="appSection" class="hidden">
+
+  <div class="card">
+    <h3 id="welcome"></h3>
+    <p id="accountInfo"></p>
+    <button id="logoutBtn" class="danger">Logout</button>
+  </div>
+
+  <!-- CUSTOMER NAVIGATION -->
+  <div class="nav" id="customerNav">
+    <button data-page="catalogPage">Products & Order</button>
+    <button data-page="ordersPage">My Orders</button>
+  </div>
+
+  <!-- ADMIN NAVIGATION -->
+  <div class="nav hidden" id="adminNav">
+    <button data-page="adminDashboard">Dashboard</button>
+    <button data-page="adminOrders">Order Requests</button>
+    <button data-page="adminProducts">Products & Prices</button>
+    <button data-page="adminCustomers">Customers</button>
+    <button data-page="adminPayments">Payments & Debts</button>
+  </div>
+
+  <!-- CUSTOMER CATALOGUE -->
+  <section id="catalogPage" class="page card">
+    <h2>Available Products</h2>
+    <p id="priceMessage"></p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Unit</th>
+            <th>Price (GH₵)</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody id="catalogBody"></tbody>
+      </table>
+    </div>
+
+    <h3>Place Order Request</h3>
+    <label>Order Notes</label>
+    <textarea id="orderNotes" placeholder="Additional instructions"></textarea>
+    <button id="submitOrder">Submit Order Request</button>
+  </section>
+
+  <!-- CUSTOMER ORDERS -->
+  <section id="ordersPage" class="page card hidden">
+    <h2>My Order History</h2>
+    <button id="refreshMyOrders" class="secondary">Refresh Orders</button>
+    <div id="myOrders"></div>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  <section id="adminDashboard" class="page card hidden">
+    <h2>Administrator Dashboard</h2>
+
+    <div class="grid">
+      <div class="stat">
+        Total Customers
+        <strong id="totalCustomers">0</strong>
+      </div>
+      <div class="stat">
+        Order Requests
+        <strong id="totalRequests">0</strong>
+      </div>
+      <div class="stat">
+        Confirmed Orders
+        <strong id="totalConfirmed">0</strong>
+      </div>
+      <div class="stat">
+        Outstanding Balance
+        <strong id="totalDebt">GH₵0.00</strong>
+      </div>
+    </div>
+
+    <button id="refreshDashboard" class="secondary">Refresh Dashboard</button>
+  </section>
+
+  <!-- ADMIN ORDER REQUESTS -->
+  <section id="adminOrders" class="page card hidden">
+    <h2>Customer Order Requests</h2>
+    <button id="refreshRequests" class="secondary">Refresh Requests</button>
+    <div id="requestsList"></div>
+  </section>
+
+  <!-- ADMIN PRODUCTS -->
+  <section id="adminProducts" class="page card hidden">
+    <h2>Product Management</h2>
+
+    <label>Product Name</label>
+    <input id="productName" placeholder="Product name">
+
+    <label>Unit / Package</label>
+    <input id="productUnit" placeholder="e.g. 1kg, 500g, bag">
+
+    <label>Description</label>
+    <textarea id="productDescription"></textarea>
 
-<!-- CUSTOMER ORDERS -->
+    <label>Retail Price (GH₵)</label>
+    <input id="retailPrice" type="number" min="0" step="0.01">
 
-<section id="mine" class="hidden">
+    <label>Wholesale Price (GH₵)</label>
+    <input id="wholesalePrice" type="number" min="0" step="0.01">
 
-<div class="card">
+    <button id="addProduct">Add Product</button>
 
-<h2>My Orders</h2>
+    <hr>
+    <h3>Existing Products</h3>
+    <div id="productsList"></div>
+  </section>
 
-<div id="myOrders"></div>
+  <!-- ADMIN CUSTOMERS -->
+  <section id="adminCustomers" class="page card hidden">
+    <h2>Customer Management</h2>
+    <button id="refreshCustomers" class="secondary">Refresh Customers</button>
+    <div id="customersList"></div>
+  </section>
 
-</div>
+  <!-- ADMIN PAYMENTS -->
+  <section id="adminPayments" class="page card hidden">
+    <h2>Payments & Debts</h2>
 
-</section>
+    <label>Select Customer</label>
+    <select id="paymentCustomer"></select>
 
+    <label>Confirmed Order</label>
+    <select id="paymentOrder"></select>
 
-<!-- ADMIN DASHBOARD -->
+    <label>Amount Paid (GH₵)</label>
+    <input id="paymentAmount" type="number" min="0" step="0.01">
 
-<section id="admin" class="hidden">
+    <label>Payment Method</label>
+    <select id="paymentMethod">
+      <option>Cash</option>
+      <option>Mobile Money</option>
+      <option>Bank Transfer</option>
+      <option>Other</option>
+    </select>
 
-<div class="card">
+    <label>Payment Reference / Notes</label>
+    <input id="paymentReference" placeholder="Optional reference">
 
-<h2>Administrator Dashboard</h2>
+    <button id="recordPayment">Record Payment</button>
 
-<p class="note">
-Administrator access is restricted to Julius's authorized account.
-</p>
-
-<div id="summary"></div>
-
-</div>
-
-
-<div class="tabs">
-
-<button class="active" data-panel="requests">
-Order Requests
-</button>
-
-<button data-panel="products">
-Products & Prices
-</button>
-
-<button data-panel="buyers">
-Customers
-</button>
-
-<button data-panel="accounts">
-Payments & Debts
-</button>
-
-</div>
-
-
-<div id="requests" class="card">
-
-<h3>Incoming Requests</h3>
-
-<div id="requestsList"></div>
-
-</div>
-
-
-<div id="products" class="card hidden">
-
-<h3>Add New Product</h3>
-
-<label>Product Name</label>
-<input id="prodName">
-
-<label>Description</label>
-<textarea id="prodDesc"></textarea>
-
-<label>Pack Size / Unit</label>
-<input id="prodUnit" placeholder="e.g. 500g pouch">
-
-<label>Retail Price (GH₵)</label>
-<input id="retail" type="number" min="0" step=".01">
-
-<label>Wholesale Price (GH₵)</label>
-<input id="wholesale" type="number" min="0" step=".01">
-
-<label>Stock Quantity</label>
-<input id="stock" type="number" min="0">
-
-<label>Product Picture</label>
-<input id="photo" type="file"
-accept="image/jpeg,image/png,image/webp">
-
-<button id="addProduct">Save Product</button>
-
-<div id="adminProducts"></div>
-
-</div>
-
-
-<div id="buyers" class="card hidden">
-
-<h3>Customer Accounts</h3>
-
-<div id="buyersList"></div>
-
-</div>
-
-
-<div id="accounts" class="card hidden">
-
-<h3>Confirm Orders, Payments & Debts</h3>
-
-<label>Order Document ID</label>
-<input id="orderId">
-
-<label>Confirmed Total (GH₵)</label>
-<input id="confirmedTotal" type="number" min="0" step=".01">
-
-<label>Credit Approval</label>
-
-<select id="creditApproval">
-<option value="no">No — Payment Before Supply</option>
-<option value="yes">Yes — Approve Credit</option>
-</select>
-
-<button id="confirmOrder">Confirm Order</button>
-
-<hr>
-
-<h3>Record Payment</h3>
-
-<label>Confirmed Order ID</label>
-<input id="paymentOrder">
-
-<label>Payment Amount (GH₵)</label>
-<input id="amount" type="number" min=".01" step=".01">
-
-<label>Payment Method</label>
-
-<select id="method">
-<option>Cash</option>
-<option>Mobile Money</option>
-<option>Bank Transfer</option>
-<option>Other</option>
-</select>
-
-<label>Reference / Notes</label>
-<input id="reference">
-
-<button id="addPayment">Record Payment</button>
-
-<div id="balances"></div>
-
-</div>
-
-</section>
+    <hr>
+    <h3>Confirmed Orders & Balances</h3>
+    <div id="debtsList"></div>
+  </section>
 
 </section>
 
 </main>
+
+<footer>
+  Mary Cereal Mix | Customer & Sales Management
+</footer>
+
+
 <script type="module">
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut,
-updateProfile
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-getFirestore,
-doc,
-setDoc,
-getDoc,
-collection,
-addDoc,
-getDocs,
-query,
-where,
-serverTimestamp,
-updateDoc,
-runTransaction
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  serverTimestamp,
+  runTransaction
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const $=id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-let app,auth,db,user,me,settings;
+const ADMIN_UID = "BzTy6OPheYNFPfhEBgRZavmm0cu2";
 
-let items=[];
-let basket=[];
+let app;
+let auth;
+let db;
+let currentUser = null;
+let me = null;
+let isAdmin = false;
+let products = [];
+let customers = [];
+let confirmedOrders = [];
+let selectedOrderItems = [];
 
-let creatingAccount=false;
-let authRun=0;
 
-const ADMIN_UID="BzTy6OPheYNFPfhEBgRZavmm0cu2";
-
-const money=n=>"GH₵"+Number(n||0).toFixed(2);
-
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
-
-const show=(id,v)=>{
-$(id).classList.toggle("hidden",!v);
-};
-
-function alertMsg(s){alert(s);}
-
-function authMsg(s){
-$("authMessage").textContent=s;
+function show(id, visible=true) {
+  $(id)?.classList.toggle("hidden", !visible);
 }
 
-function readableError(e){
+function money(value) {
+  return "GH₵" + Number(value || 0).toFixed(2);
+}
 
-const code=e?.code||"";
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[c]);
+}
 
-const messages={
+function readableError(error) {
+  const messages = {
+    "auth/invalid-credential":"Incorrect email or password.",
+    "auth/email-already-in-use":"This email already has an account.",
+    "auth/weak-password":"Password should contain at least 6 characters.",
+    "auth/invalid-email":"Please enter a valid email address.",
+    "auth/user-not-found":"No account was found with this email.",
+    "auth/too-many-requests":"Too many attempts. Please try again later.",
+    "auth/network-request-failed":"Network problem. Check your internet connection.",
+    "permission-denied":"Permission denied. Please check your Firestore security rules."
+  };
 
-"auth/invalid-credential":"Email or password is incorrect.",
-
-"auth/email-already-in-use":"This email already has an account. Sign in instead.",
-
-"auth/weak-password":"Password must contain at least 6 characters.",
-
-"auth/invalid-email":"Enter a valid email address.",
-
-"auth/network-request-failed":"Check your internet connection.",
-
-"permission-denied":"Firebase blocked access. Check Firestore rules.",
-
-"unavailable":"Firebase is temporarily unavailable."
-
-};
-
-return messages[code]||e?.message||"Something went wrong.";
-
+  return messages[error.code] ||
+    error.message ||
+    "Something went wrong.";
 }
 
 
-/* CONFIGURATION */
-
-function conf(){
-
-return JSON.parse(
-localStorage.getItem("marySecureConfig")||"null"
-);
-
-}
-
-$("connect").onclick=()=>{
-
-let c={};
-
-[
-"apiKey",
-"authDomain",
-"projectId",
-"storageBucket",
-"messagingSenderId",
-"appId",
-"cloudName",
-"preset"
-].forEach(k=>c[k]=$(k).value.trim());
-
-if(Object.values(c).some(x=>!x)){
-alertMsg("Complete all configuration fields.");
-return;
-}
-
-localStorage.setItem(
-"marySecureConfig",
-JSON.stringify(c)
-);
-
-location.reload();
-
-};
-
-
-/* LOGIN AND REGISTRATION SWITCH */
-
-$("showRegister").onclick=()=>{
-
-show("loginPanel",false);
-show("registerPanel",true);
-
-authMsg("");
-
-};
-
-$("backLogin").onclick=()=>{
-
-show("registerPanel",false);
-show("loginPanel",true);
-
-authMsg("");
-
-};
-
-
-/* FIREBASE INITIALIZATION */
-
-function boot(c){
-
-settings=c;
-
-try{
-
-app=initializeApp({
-
-apiKey:c.apiKey,
-authDomain:c.authDomain,
-projectId:c.projectId,
-storageBucket:c.storageBucket,
-messagingSenderId:c.messagingSenderId,
-appId:c.appId
-
-},"marySecure");
-
-auth=getAuth(app);
-
-db=getFirestore(app);
-
-show("config",false);
-show("auth",true);
-
-onAuthStateChanged(auth,u=>{
-
-if(creatingAccount)return;
-
-if(!u){
-
-authRun++;
-
-user=null;
-me=null;
-basket=[];
-
-show("workspace",false);
-show("auth",true);
-
-show("admin",false);
-show("adminButton",false);
-
-return;
-
-}
-
-loadSignedInUser(u);
-
-},e=>{
-
-console.error(e);
-authMsg(readableError(e));
-
-});
-
-}catch(e){
-
-console.error(e);
-
-show("config",true);
-
-alertMsg(readableError(e));
-
-}
-
-}
-
-let savedConfig=conf();
-
-if(savedConfig)boot(savedConfig);
-else show("config",true);
-
-
-/* LOAD CUSTOMER OR ADMIN PROFILE */
-
-async function loadSignedInUser(u){
-
-const run=++authRun;
-
-try{
-
-const s=await getDoc(
-doc(db,"users",u.uid)
-);
-
-if(run!==authRun)return;
-
-if(!s.exists()){
-
-show("workspace",false);
-show("admin",false);
-show("adminButton",false);
-show("auth",true);
-
-authMsg(
-"Your Firebase login exists, but your customer profile is missing."
-);
-
-return;
-
-}
-
-me=s.data();
-user=u;
-
-if(!["admin","customer"].includes(me.role)){
-throw Error("Invalid account role.");
-}
-
-const isAdmin=
-me.role==="admin" &&
-u.uid===ADMIN_UID;
-
-show("auth",false);
-show("workspace",true);
-
-$("who").textContent=
-"Signed in: "+(me.name||u.email);
-
-$("state").textContent=
-
-isAdmin
-?"Administrator"
-
-:me.accountType==="wholesale"
-?(me.wholesaleStatus==="approved"
-?"Approved wholesale buyer"
-:"Wholesale approval pending")
-
-:"Retail buyer";
-
-
-/* ACCESS CONTROL */
-
-show("adminButton",isAdmin);
-show("admin",isAdmin);
-
-show("catalog",true);
-show("mine",true);
-
-
-/* RESET NAVIGATION */
-
-document.querySelectorAll("[data-tab]").forEach(b=>{
-b.classList.toggle("active",b.dataset.tab==="catalog");
-});
-
-show("catalog",true);
-show("mine",false);
-
-show("requests",true);
-show("products",false);
-show("buyers",false);
-show("accounts",false);
-
-await refreshCatalog();
-
-if(run!==authRun)return;
-
-await refreshMine();
-
-if(run!==authRun)return;
-
-if(isAdmin){
-
-await refreshAdmin();
-
-}
-
-}catch(e){
-
-if(run!==authRun)return;
-
-console.error(e);
-
-show("workspace",false);
-show("admin",false);
-show("adminButton",false);
-show("auth",true);
-
-authMsg(readableError(e));
-
-}
-
+function loadSavedConfig() {
+  const saved = localStorage.getItem("marySecureConfig");
+  if (!saved) return;
+
+  try {
+    const c = JSON.parse(saved);
+    $("apiKey").value = c.apiKey || "";
+    $("authDomain").value = c.authDomain || "";
+    $("projectId").value = c.projectId || "";
+    $("storageBucket").value = c.storageBucket || "";
+    $("messagingSenderId").value = c.messagingSenderId || "";
+    $("appId").value = c.appId || "";
+  } catch {}
 }
 
 
-/* CUSTOMER REGISTRATION */
-
-$("signup").onclick=async()=>{
-
-const btn=$("signup");
-
-btn.disabled=true;
-
-creatingAccount=true;
-
-authMsg("Creating your account...");
-
-try{
-
-const name=$("name").value.trim();
-const phone=$("phone").value.trim();
-const email=$("newEmail").value.trim();
-const password=$("newPassword").value;
-const type=$("kind").value;
-
-if(!name||!phone||!email||!password){
-
-throw Error("Complete all registration fields.");
-
-}
-
-if(password.length<6){
-
-throw Error("Password must have at least 6 characters.");
-
-}
-
-const cr=await createUserWithEmailAndPassword(
-auth,email,password
-);
-
-await updateProfile(cr.user,{
-displayName:name
-});
-
-await setDoc(
-doc(db,"users",cr.user.uid),
-{
-
-name:name,
-phone:phone,
-email:email,
-
-accountType:type,
-
-wholesaleStatus:
-type==="wholesale"?"pending":"not_applicable",
-
-role:"customer",
-
-createdAt:serverTimestamp()
-
-}
-);
-
-creatingAccount=false;
-
-authMsg("Registration successful.");
-
-await loadSignedInUser(cr.user);
-
-alertMsg(
-type==="wholesale"
-?"Account created. Wholesale access is pending approval."
-:"Your customer account has been created successfully."
-);
-
-$("name").value="";
-$("phone").value="";
-$("newEmail").value="";
-$("newPassword").value="";
-
-}catch(e){
-
-creatingAccount=false;
-
-console.error("Registration error:",e);
-
-authMsg(readableError(e));
-
-alertMsg(readableError(e));
-
-}finally{
-
-btn.disabled=false;
-
-}
-
-};
-
-
-/* CUSTOMER AND ADMIN LOGIN */
-
-$("signin").onclick=async()=>{
-
-const btn=$("signin");
-
-btn.disabled=true;
-
-authMsg("Signing in...");
-
-try{
-
-const email=$("email").value.trim();
-const password=$("password").value;
-
-if(!email||!password){
-
-throw Error("Enter your email and password.");
-
-}
-
-const cr=await signInWithEmailAndPassword(
-auth,email,password
-);
-
-await loadSignedInUser(cr.user);
-
-}catch(e){
-
-console.error(e);
-
-authMsg(readableError(e));
-
-alertMsg(readableError(e));
-
-}finally{
-
-btn.disabled=false;
-
-}
-
-};
-
-
-/* SIGN OUT */
-
-$("logout").onclick=async()=>{
-
-try{
-
-basket=[];
-
-await signOut(auth);
-
-}catch(e){
-
-alertMsg(readableError(e));
-
-}
-
-};
-
-
-/* LOAD PRODUCTS */
-
-async function refreshCatalog(){
-
-const p=await getDocs(
-collection(db,"products")
-);
-
-items=p.docs.map(d=>({
-id:d.id,
-...d.data()
-}));
-
-let priceCol=
-
-me.role==="admin"
-?"retailPrices"
-
-:me.accountType==="wholesale"
-?(me.wholesaleStatus==="approved"
-?"wholesalePrices":null)
-
-:"retailPrices";
-
-let priceMap={};
-
-if(priceCol){
-
-const prices=await getDocs(
-collection(db,priceCol)
-);
-
-prices.docs.forEach(d=>{
-priceMap[d.id]=d.data().price;
-});
-
-}
-
-$("catalogue").innerHTML=
-
-items.filter(x=>x.active!==false).map(x=>`
-
-<div class="product">
-
-<img src="${esc(x.imageUrl||"")}"
-alt="${esc(x.name)}"
-onerror="this.style.display='none'">
-
-<div>
-
-<h3>${esc(x.name)}</h3>
-
-<p>${esc(x.description||"")}</p>
-
-<p>${esc(x.unit||"")}</p>
-
-<p>
-${
-priceCol&&priceMap[x.id]!==undefined
-?money(priceMap[x.id])
-:"Price available after approval / confirmation"
-}
-</p>
-
-<label>Quantity</label>
-
-<input
-id="q${x.id}"
-type="number"
-min="1"
-value="1">
-
-<button onclick="window.add('${x.id}')">
-Add to Order
-</button>
-
-</div>
-
-</div>
-
-`).join("")||"Products will appear here.";
-
+async function connectFirebase() {
+  const config = {
+    apiKey:$("apiKey").value.trim(),
+    authDomain:$("authDomain").value.trim(),
+    projectId:$("projectId").value.trim(),
+    storageBucket:$("storageBucket").value.trim(),
+    messagingSenderId:$("messagingSenderId").value.trim(),
+    appId:$("appId").value.trim()
+  };
+
+  if (Object.values(config).some(v => !v)) {
+    alert("Please complete all Firebase configuration fields.");
+    return;
+  }
+
+  try {
+    localStorage.setItem("marySecureConfig", JSON.stringify(config));
+
+    app = initializeApp(config);
+    auth = getAuth(app);
+    db = getFirestore(app);
+
+    $("configMessage").textContent = "Firebase connected successfully.";
+    show("loginSection", true);
+    show("registerSection", false);
+
+    onAuthStateChanged(auth, async user => {
+      currentUser = user;
+
+      if (user) {
+        await loadUserProfile(user);
+      } else {
+        me = null;
+        show("appSection", false);
+        show("loginSection", true);
+      }
+    });
+
+  } catch (error) {
+    $("configMessage").textContent = readableError(error);
+  }
 }
 
 
-/* ADD PRODUCTS TO BASKET */
+$("saveConfig").onclick = connectFirebase;
 
-window.add=id=>{
 
-const p=items.find(x=>x.id===id);
+function openPage(pageId) {
+  document.querySelectorAll(".page").forEach(page =>
+    page.classList.add("hidden")
+  );
 
-const input=$("q"+id);
-
-const q=Math.floor(Number(input?.value));
-
-if(!p||!Number.isInteger(q)||q<1){
-
-alertMsg("Enter a valid quantity.");
-
-return;
-
-}
-
-const old=basket.find(x=>x.productId===id);
-
-if(old){
-
-old.quantity+=q;
-
-}else{
-
-basket.push({
-
-productId:id,
-name:p.name,
-unit:p.unit||"",
-quantity:q
-
-});
-
-}
-
-$("basket").innerHTML=basket.map(x=>`
-
-<p>
-${esc(x.name)} — ${x.quantity} ${esc(x.unit)}
-</p>
-
-`).join("");
-
-};
-
-
-/* SUBMIT CUSTOMER ORDER */
-
-$("sendOrder").onclick=async()=>{
-
-const btn=$("sendOrder");
-
-btn.disabled=true;
-
-try{
-
-if(!user||!me){
-
-throw Error("Please sign in first.");
-
-}
-
-if(me.role!=="customer"){
-
-throw Error("Only customer accounts can submit customer orders.");
-
-}
-
-if(!basket.length){
-
-throw Error("Add products before submitting.");
-
-}
-
-const customerPhone=
-String(me.phone||me.Phone||"");
-
-const customerName=
-String(me.name||user.displayName||user.email||"");
-
-await addDoc(
-collection(db,"orderRequests"),
-{
-
-customerUid:user.uid,
-
-customerName:customerName,
-
-customerPhone:customerPhone,
-
-accountType:me.accountType,
-
-items:basket,
-
-notes:$("notes").value.trim(),
-
-status:"awaiting_admin_review",
-
-createdAt:serverTimestamp()
-
-}
-);
-
-basket=[];
-
-$("basket").textContent="No items selected.";
-
-$("notes").value="";
-
-alertMsg("Your order request has been submitted successfully.");
-
-await refreshMine();
-
-}catch(e){
-
-console.error("Order submission error:",e);
-
-alertMsg(readableError(e));
-
-}finally{
-
-btn.disabled=false;
-
-}
-
-};
-
-
-/* CUSTOMER ORDER HISTORY */
-
-async function refreshMine(){
-
-const s=await getDocs(
-
-query(
-collection(db,"orderRequests"),
-where("customerUid","==",user.uid)
-)
-
-);
-
-$("myOrders").innerHTML=
-
-s.docs.map(d=>{
-
-const x=d.data();
-
-return `
-
-<div class="card">
-
-<b>Order ID:</b> ${esc(d.id)}
-
-<p>Status: ${esc(x.status)}</p>
-
-<p>
-${(x.items||[]).map(i=>
-esc(i.name)+" × "+i.quantity
-).join(", ")}
-</p>
-
-</div>
-
-`;
-
-}).join("")||"No order requests yet.";
-
+  show(pageId);
 }
 
 
-/* ADMIN DASHBOARD */
-
-async function refreshAdmin(){
-
-if(user.uid!==ADMIN_UID||me.role!=="admin"){
-
-throw Error("Administrator access denied.");
-
-}
-
-const [rs,us,ps,os]=await Promise.all([
-
-getDocs(collection(db,"orderRequests")),
-
-getDocs(collection(db,"users")),
-
-getDocs(collection(db,"products")),
-
-getDocs(collection(db,"confirmedOrders"))
-
-]);
-
-const req=rs.docs.map(d=>({
-id:d.id,...d.data()
-}));
-
-const buyers=us.docs.map(d=>({
-id:d.id,...d.data()
-}));
-
-const orders=os.docs.map(d=>({
-id:d.id,...d.data()
-}));
-
-$("summary").textContent=
-
-`Requests: ${req.length} | Confirmed orders: ${orders.length} | Outstanding balances: ${money(orders.reduce((a,o)=>a+Number(o.balance||0),0))}`;
-
-
-/* INCOMING REQUESTS */
-
-$("requestsList").innerHTML=
-
-req.map(r=>`
-
-<div class="card">
-
-<b>${esc(r.customerName)}</b>
-
-<p>${esc(r.accountType)}</p>
-
-<p>
-${(r.items||[]).map(i=>
-esc(i.name)+" × "+i.quantity
-).join("<br>")}
-</p>
-
-<small>Request ID: ${esc(r.id)}</small>
-
-<button onclick="window.chooseReq('${r.id}')">
-Use This Request
-</button>
-
-${
-r.accountType==="wholesale" &&
-buyers.find(b=>b.id===r.customerUid)?.wholesaleStatus!=="approved"
-
-?`<button onclick="window.approveBuyer('${r.customerUid}')">
-Approve Wholesale Buyer
-</button>`
-
-:""
-
-}
-
-</div>
-
-`).join("")||"No requests.";
-
-
-/* CUSTOMER LIST */
-
-$("buyersList").innerHTML=
-
-buyers.map(b=>`
-
-<div class="card">
-
-<b>${esc(b.name)}</b>
-
-<p>${esc(b.phone||b.Phone||"")}</p>
-
-<p>${esc(b.email)}</p>
-
-<p>
-${esc(b.accountType)} /
-${esc(b.wholesaleStatus||"")}
-</p>
-
-${
-b.accountType==="wholesale" &&
-b.wholesaleStatus!=="approved"
-
-?`<button onclick="window.approveBuyer('${b.id}')">
-Approve Wholesale
-</button>`
-
-:""
-
-}
-
-</div>
-
-`).join("");
-
-
-/* PRODUCT LIST */
-
-$("adminProducts").innerHTML=
-
-ps.docs.map(d=>`
-
-<div class="card">
-
-<b>${esc(d.data().name)}</b>
-
-<p>Product ID: ${esc(d.id)}</p>
-
-</div>
-
-`).join("");
-
-
-/* BALANCES */
-
-$("balances").innerHTML=
-
-"<h3>Confirmed Orders and Balances</h3>"+
-
-orders.map(o=>`
-
-<div class="card">
-
-<b>${esc(o.customerName)}</b>
-
-<p>Total: ${money(o.total)}</p>
-
-<p>Paid: ${money(o.paid)}</p>
-
-<p>Outstanding: ${money(o.balance)}</p>
-
-<p>Order ID: ${esc(o.id)}</p>
-
-</div>
-
-`).join("");
-
-}
-
-
-/* SELECT REQUEST */
-
-window.chooseReq=id=>{
-
-$("orderId").value=id;
-
-};
-
-
-/* APPROVE WHOLESALE CUSTOMER */
-
-window.approveBuyer=async uid=>{
-
-try{
-
-if(user.uid!==ADMIN_UID||me.role!=="admin"){
-
-throw Error("Administrator access required.");
-
-}
-
-await updateDoc(
-doc(db,"users",uid),
-{
-wholesaleStatus:"approved"
-}
-);
-
-alertMsg("Wholesale customer approved.");
-
-await refreshAdmin();
-
-}catch(e){
-
-alertMsg(readableError(e));
-
-}
-
-};
-
-
-/* ADD PRODUCT */
-
-$("addProduct").onclick=async()=>{
-
-try{
-
-if(user.uid!==ADMIN_UID||me.role!=="admin"){
-
-throw Error("Administrator access required.");
-
-}
-
-const name=$("prodName").value.trim();
-
-const retailValue=$("retail").value;
-const wholesaleValue=$("wholesale").value;
-
-const retail=Number(retailValue);
-const wholesale=Number(wholesaleValue);
-
-if(!name){
-
-throw Error("Enter product name.");
-
-}
-
-if(
-retailValue===""||
-wholesaleValue===""||
-!Number.isFinite(retail)||
-!Number.isFinite(wholesale)||
-retail<0||
-wholesale<0
-){
-
-throw Error("Enter valid product prices.");
-
-}
-
-let imageUrl="";
-
-const f=$("photo").files[0];
-
-if(f){
-
-if(
-f.size>5*1024*1024||
-!["image/jpeg","image/png","image/webp"].includes(f.type)
-){
-
-throw Error("Use JPG, PNG or WEBP up to 5MB.");
-
-}
-
-const fd=new FormData();
-
-fd.append("file",f);
-fd.append("upload_preset",settings.preset);
-
-const res=await fetch(
-
-`https://api.cloudinary.com/v1_1/${encodeURIComponent(settings.cloudName)}/image/upload`,
-
-{
-method:"POST",
-body:fd
-}
-
-);
-
-const j=await res.json();
-
-if(!res.ok){
-
-throw Error(j.error?.message||"Image upload failed.");
-
-}
-
-imageUrl=j.secure_url;
-
-}
-
-const ref=await addDoc(
-collection(db,"products"),
-{
-
-name,
-description:$("prodDesc").value,
-unit:$("prodUnit").value,
-stock:Number($("stock").value||0),
-imageUrl,
-active:true,
-createdAt:serverTimestamp()
-
-}
-);
-
-await setDoc(
-doc(db,"retailPrices",ref.id),
-{
-price:retail
-}
-);
-
-await setDoc(
-doc(db,"wholesalePrices",ref.id),
-{
-price:wholesale
-}
-);
-
-alertMsg("Product and price lists saved successfully.");
-
-$("prodName").value="";
-$("prodDesc").value="";
-$("prodUnit").value="";
-$("retail").value="";
-$("wholesale").value="";
-$("stock").value="";
-$("photo").value="";
-
-await refreshCatalog();
-
-await refreshAdmin();
-
-}catch(e){
-
-console.error(e);
-
-alertMsg(readableError(e));
-
-}
-
-};
-
-
-/* CONFIRM ORDER */
-
-$("confirmOrder").onclick=async()=>{
-
-try{
-
-if(user.uid!==ADMIN_UID||me.role!=="admin"){
-
-throw Error("Administrator access required.");
-
-}
-
-const id=$("orderId").value.trim();
-
-const totalValue=$("confirmedTotal").value;
-
-const total=Number(totalValue);
-
-if(!id||totalValue===""||!Number.isFinite(total)||total<0){
-
-throw Error("Enter order ID and valid confirmed total.");
-
-}
-
-const reqRef=doc(db,"orderRequests",id);
-
-const orderRef=doc(db,"confirmedOrders",id);
-
-await runTransaction(db,async tx=>{
-
-const [requestSnap,existingSnap]=await Promise.all([
-
-tx.get(reqRef),
-
-tx.get(orderRef)
-
-]);
-
-if(!requestSnap.exists()){
-
-throw Error("Order request not found.");
-
-}
-
-if(existingSnap.exists()){
-
-throw Error("This request has already been confirmed.");
-
-}
-
-const r=requestSnap.data();
-
-tx.set(orderRef,{
-
-requestId:id,
-
-customerUid:r.customerUid,
-
-customerName:r.customerName,
-
-customerPhone:r.customerPhone||"",
-
-items:r.items,
-
-total:total,
-
-paid:0,
-
-balance:total,
-
-creditApproved:$("creditApproval").value==="yes",
-
-status:"confirmed",
-
-createdAt:serverTimestamp()
-
-});
-
-tx.update(reqRef,{
-status:"confirmed"
-});
-
-});
-
-alertMsg("Order confirmed successfully.");
-
-await refreshAdmin();
-
-}catch(e){
-
-console.error(e);
-
-alertMsg(readableError(e));
-
-}
-
-};
-
-
-/* RECORD PAYMENT */
-
-$("addPayment").onclick=async()=>{
-
-try{
-
-if(user.uid!==ADMIN_UID||me.role!=="admin"){
-
-throw Error("Administrator access required.");
-
-}
-
-const id=$("paymentOrder").value.trim();
-
-const amt=Number($("amount").value);
-
-if(!id||!Number.isFinite(amt)||amt<=0){
-
-throw Error("Enter order ID and valid payment amount.");
-
-}
-
-await runTransaction(db,async tx=>{
-
-const ref=doc(db,"confirmedOrders",id);
-
-const s=await tx.get(ref);
-
-if(!s.exists()){
-
-throw Error("Confirmed order not found.");
-
-}
-
-const o=s.data();
-
-const bal=Number(o.balance||0);
-
-if(amt>bal){
-
-throw Error("Payment exceeds outstanding balance.");
-
-}
-
-tx.update(ref,{
-
-paid:Number(o.paid||0)+amt,
-
-balance:bal-amt,
-
-status:bal-amt===0?"paid":"part_paid"
-
-});
-
-const p=doc(collection(db,"payments"));
-
-tx.set(p,{
-
-orderId:id,
-
-customerUid:o.customerUid,
-
-customerName:o.customerName,
-
-amount:amt,
-
-method:$("method").value,
-
-reference:$("reference").value,
-
-createdAt:serverTimestamp(),
-
-recordedBy:user.uid
-
-});
-
-});
-
-$("amount").value="";
-$("reference").value="";
-
-alertMsg("Payment recorded successfully.");
-
-await refreshAdmin();
-
-}catch(e){
-
-console.error(e);
-
-alertMsg(readableError(e));
-
-}
-
-};
-
-
-/* MAIN NAVIGATION */
-
-document.querySelectorAll("[data-tab]").forEach(b=>{
-
-b.onclick=()=>{
-
-if(b.dataset.tab==="admin"){
-
-if(user?.uid!==ADMIN_UID||me?.role!=="admin"){
-
-show("admin",false);
-show("adminButton",false);
-
-return;
-
-}
-
-}
-
-document.querySelectorAll("[data-tab]").forEach(x=>{
-
-x.classList.toggle("active",x===b);
-
-});
-
-["catalog","mine","admin"].forEach(k=>{
-
-show(k,k===b.dataset.tab);
-
-});
-
-};
-
+document.querySelectorAll("[data-page]").forEach(button => {
+  button.addEventListener("click", () => {
+    openPage(button.dataset.page);
+  });
 });
 
 
-/* ADMIN SUB NAVIGATION */
-
-document.querySelectorAll("[data-panel]").forEach(b=>{
-
-b.onclick=()=>{
-
-if(user?.uid!==ADMIN_UID||me?.role!=="admin"){
-
-return;
-
-}
-
-document.querySelectorAll("[data-panel]").forEach(x=>{
-
-x.classList.toggle("active",x===b);
-
-});
-
-["requests","products","buyers","accounts"].forEach(k=>{
-
-show(k,k===b.dataset.panel);
-
-});
-
+$("showRegister").onclick = () => {
+  show("loginSection", false);
+  show("registerSection", true);
 };
 
-});
+$("backToLogin").onclick = () => {
+  show("registerSection", false);
+  show("loginSection", true);
+};
 
-</script>
-</body>
-</html>
+
+$("registerBtn").onclick = async () => {
+  const name = $("regName").value.trim();
+  const phone = $("regPhone").value.trim();
+  const email = $("regEmail").value.trim();
+  const password = $("regPassword").value;
+  const accountType = $("regAccountType").value;
+
+  if (!name || !phone || !email || !password) {
+    alert("Please complete all registration fields.");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Password must contain at least 6 characters.");
+    return;
+  }
+
+  try {
+    const credential = await createUserWithEmailAndPassword(
+      auth, email, password
+    );
+
+    const uid = credential.user.uid;
+
+    await setDoc(doc(db, "users", uid), {
+      name,
+      phone,
+      email,
+      accountType,
+      wholesaleStatus:accountType === "wholesale" ? "pending" : "not_applicable",
+      role:"customer",
+      createdAt:serverTimestamp()
+    });
+
+    alert(
+      accountType === "wholesale"
+        ? "Account created. Your wholesale account is awaiting approval."
+        : "Your customer account has been created."
+    );
+
+  } catch (error) {
+    alert(readableError(error));
+  }
+};
+
+
+$("loginBtn").onclick = async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if (!email || !password) {
+    alert("Enter your email and password.");
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    alert(readableError(error));
+  }
+};
+
+
+$("resetPassword").onclick = async () => {
+  const email = $("email").value.trim();
+
+  if (!email) {
+    alert("Enter your registered email address first.");
+    $("email").focus();
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset email sent. Check your inbox and spam folder.");
+  } catch (error) {
+    alert(readableError(error));
+  }
+};
+
+
+$("logoutBtn").onclick = async () => {
+  await signOut(auth);
+};
+
+
+async function loadUserProfile(user) {
+  try {
+    const profileRef = doc(db, "users", user.uid);
+    const profileSnap = await getDoc(profileRef);
+
+    if (!profileSnap.exists()) {
+      alert("Your Firebase login exists, but your customer profile is missing. Contact the administrator.");
+      await signOut(auth);
+      return;
+    }
+
+    me = profileSnap.data();
+    isAdmin = user.uid === ADMIN_UID && me.role === "admin";
+
+    show("loginSection", false);
+    show("registerSection", false);
+    show("appSection", true);
+
+    $("welcome").textContent = "Welcome, " + (me.name || user.email);
+    $("accountInfo").textContent =
+      (isAdmin ? "Administrator" : (me.accountType || "Customer")) +
+      (me.accountType === "wholesale"
+        ? " | Wholesale status: " + (me.wholesaleStatus || "pending")
+        : "");
+
+    show("adminNav", isAdmin);
+    show("customerNav", !isAdmin);
+
+    if (isAdmin) {
+      openPage("adminDashboard");
+      await refreshAdmin();
+    } else {
+      openPage("catalogPage");
+      await loadCatalog();
+      await loadMyOrders();
+    }
+
+  } catch (error) {
+    alert(readableError(error));
+  }
+}
+
+
+// CUSTOMER CATALOGUE
+
+async function loadCatalog() {
+  try {
+    const snapshot = await getDocs(collection(db, "products"));
+    products = snapshot.docs.map(d => ({id:d.id, ...d.data()}));
+
+    const retail = me.accountType === "retail";
+    const wholesaleApproved =
+      me.accountType === "wholesale" &&
+      me.wholesaleStatus === "approved";
+
+    if (me.accountType === "wholesale" && !wholesaleApproved) {
+      $("priceMessage").textContent =
+        "Your wholesale account is awaiting administrator approval. Wholesale prices are not yet available.";
+    } else {
+      $("priceMessage").textContent = "Select products and quantities to request an order.";
+    }
+
+    let priceCollection = retail
+      ? "retailPrices"
+      : "wholesalePrices";
+
+    let priceMap = {};
+
+    if (retail || wholesaleApproved) {
+      const priceSnapshot = await getDocs(collection(db, priceCollection));
+      priceSnapshot.forEach(d => priceMap[d.id] = d.data());
+    }
+
+    const body = $("catalogBody");
+    body.innerHTML = "";
+
+    products.forEach(product => {
+      const priceData = priceMap[product.id] || {};
+      const price = retail
+        ? priceData.price
+        : wholesaleApproved ? priceData.price : null;
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${escapeHTML(product.name)}</td>
+        <td>${escapeHTML(product.unit || "")}</td>
+        <td>${price === null || price === undefined ? "Pending approval" : money(price)}</td>
+        <td>
+          <input type="number" min="0" step="1"
+            class="quantityInput"
+            data-id="${escapeHTML(product.id)}"
+            data-name="${escapeHTML(product.name)}"
+            data-unit="${escapeHTML(product.unit || "")}"
+            data-price="${price ?? ""}"
+            value="0">
+        </td>
+      `;
+
+      body.appendChild(tr);
+    });
+
+  } catch (error) {
+    alert("Could not load products: " + readableError(error));
+  }
+}
+
+
+$("submitOrder").onclick = async () => {
+  if (!currentUser || !me) return;
+
+  const inputs = document.querySelectorAll(".quantityInput");
+  const items = [];
+
+  inputs.forEach(input => {
+    const quantity = Number(input.value);
+    if (quantity > 0) {
+      items.push({
+        productId:input.dataset.id,
+        productName:input.dataset.name,
+        unit:input.dataset.unit,
+        quantity,
+        unitPrice:input.dataset.price === ""
+          ? null
+          : Number(input.dataset.price)
+      });
+    }
+  });
+
+  if (!items.length) {
+    alert("Please select at least one product and quantity.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "orderRequests"), {
+      customerUid:currentUser.uid,
+      customerName:me.name || "",
+      customerPhone:String(me.phone || me.Phone || ""),
+      accountType:me.accountType || "retail",
+      items,
+      notes:$("orderNotes").value.trim(),
+      status:"awaiting_admin_review",
+      createdAt:serverTimestamp()
+    });
+
+    alert("Your order request has been submitted successfully.");
+    $("orderNotes").value = "";
+    inputs.forEach(input => input.value = 0);
+    await loadMyOrders();
+
+  } catch (error) {
+    alert("Order submission failed: " + readableError(error));
+  }
+};
+
+
+async function loadMyOrders() {
+  if (!currentUser) return;
+
+  try {
+    const q = query(
+      collection(db, "orderRequests"),
+      where("customerUid", "==", currentUser.uid)
+    );
+
+    const snapshot = await getDocs(q);
+    const orders = snapshot.docs.map(d => ({id:d.id, ...d.data()}));
+
+    const confirmedQuery = query(
+      collection(db, "confirmedOrders"),
+      where("customerUid", "==", currentUser.uid)
+    );
+
+    const confirmedSnapshot = await getDocs(confirmedQuery);
+    const confirmed = confirmedSnapshot.docs.map(d => ({
+      id:d.id, ...d.data()
+    }));
+
+    $("myOrders").innerHTML = `
+      <h3>Order Requests</h3>
+      ${orders.map(o => `
+        <div class="card">
+          <b>Request:</b> ${escapeHTML(o.id)}<br>
+          <b>Status:</b> <span class="badge">${escapeHTML(o.status)}</span>
+          <p>${(o.items || []).map(i =>
+            `${escapeHTML(i.productName)} × ${Number(i.quantity)}`
+          ).join("<br>")}</p>
+          <small>${escapeHTML(o.notes || "")}</small>
+        </div>
+      `).join("") || "<p>No order requests yet.</p>"}
+
+      <h3>Confirmed Orders</h3>
+      ${confirmed.map(o => `
+        <div class="card">
+          <b>Order:</b> ${escapeHTML(o.id)}<br>
+          <b>Total:</b> ${money(o.total)}<br>
+          <b>Paid:</b> ${money(o.paid)}<br>
+          <b>Balance:</b> ${money(o.balance)}
+        </div>
+      `).join("") || "<p>No confirmed orders yet.</p>"}
+    `;
+
+  } catch (error) {
+    $("myOrders").textContent = readableError(error);
+  }
+}
+
+$("refreshMyOrders").onclick = loadMyOrders;
+
+
+// ADMIN FUNCTIONS
+
+async function refreshAdmin() {
+  if (!isAdmin) return;
+
+  await Promise.all([
+    loadAdminRequests(),
+    loadAdminProducts(),
+    loadAdminCustomers(),
+    loadDebts()
+  ]);
+
+  const requests = await getDocs(collection(db, "orderRequests"));
+  const confirmed = await getDocs(collection(db, "confirmedOrders"));
+
+  $("totalRequests
