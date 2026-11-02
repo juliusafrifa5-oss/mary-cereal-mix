@@ -1,196 +1,1810 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#713b22"><title>MARY CEREAL MIX</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#713b22">
+<title>MARY CEREAL MIX</title>
+
 <style>
-:root{--brown:#713b22;--cream:#fff8ef;--line:#eadfd5;--muted:#76685f}
-*{box-sizing:border-box}body{margin:0;background:var(--cream);color:#2c211b;font:15px system-ui}
-header{background:var(--brown);color:white;padding:18px}header h1{margin:0;font-size:21px}
-main{max-width:1050px;margin:20px auto;padding:0 14px 50px}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select,textarea{display:block;width:100%;padding:11px;border:1px solid #d8c9bd;border-radius:8px;margin:5px 0 12px;font:inherit}
-button{background:var(--brown);color:white;border:0;border-radius:8px;padding:11px 14px;font:inherit;font-weight:650;margin:3px;cursor:pointer}
-button:disabled{opacity:.6;cursor:wait}
-.secondary{background:#eee2d8;color:var(--brown)}.danger{background:#a9342d}
-label{font-weight:650;font-size:13px}.muted{color:var(--muted)}.hidden{display:none!important}
-.tabs{display:flex;flex-wrap:wrap;gap:6px}.tabs button{background:#eadfd5;color:var(--brown)}.tabs button.active{background:var(--brown);color:white}
-.product{border:1px solid var(--line);border-radius:12px;overflow:hidden}.product img{width:100%;height:160px;object-fit:cover;background:#eee}.product div{padding:12px}
-table{border-collapse:collapse;width:100%;min-width:580px}td,th{text-align:left;padding:9px;border-bottom:1px solid var(--line);font-size:13px}th{background:#f6eee6}.scroll{overflow:auto}
-.note{padding:12px;background:#fff3d8;border:1px solid #ecd69e;border-radius:9px}
-</style></head>
+:root{
+--brown:#713b22;
+--cream:#fff8ef;
+--line:#eadfd5;
+--muted:#76685f;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:var(--cream);
+color:#2c211b;
+font:15px system-ui;
+}
+
+header{
+background:var(--brown);
+color:white;
+padding:18px;
+}
+
+header h1{
+margin:0;
+font-size:21px;
+}
+
+main{
+max-width:1050px;
+margin:20px auto;
+padding:0 14px 50px;
+}
+
+.card{
+background:white;
+border:1px solid var(--line);
+border-radius:14px;
+padding:16px;
+margin:12px 0;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:12px;
+}
+
+input,select,textarea{
+display:block;
+width:100%;
+padding:11px;
+border:1px solid #d8c9bd;
+border-radius:8px;
+margin:5px 0 12px;
+font:inherit;
+}
+
+button{
+background:var(--brown);
+color:white;
+border:0;
+border-radius:8px;
+padding:11px 14px;
+font:inherit;
+font-weight:650;
+margin:3px;
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.6;
+cursor:wait;
+}
+
+.secondary{
+background:#eee2d8;
+color:var(--brown);
+}
+
+.danger{
+background:#a9342d;
+}
+
+label{
+font-weight:650;
+font-size:13px;
+}
+
+.muted{color:var(--muted)}
+
+.hidden{display:none!important}
+
+.tabs{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+}
+
+.tabs button{
+background:#eadfd5;
+color:var(--brown);
+}
+
+.tabs button.active{
+background:var(--brown);
+color:white;
+}
+
+.product{
+border:1px solid var(--line);
+border-radius:12px;
+overflow:hidden;
+}
+
+.product img{
+width:100%;
+height:160px;
+object-fit:cover;
+background:#eee;
+}
+
+.product div{padding:12px}
+
+table{
+border-collapse:collapse;
+width:100%;
+min-width:580px;
+}
+
+td,th{
+text-align:left;
+padding:9px;
+border-bottom:1px solid var(--line);
+font-size:13px;
+}
+
+th{background:#f6eee6}
+
+.scroll{overflow:auto}
+
+.note{
+padding:12px;
+background:#fff3d8;
+border:1px solid #ecd69e;
+border-radius:9px;
+}
+
+</style>
+</head>
+
 <body>
-<header><h1>MARY CEREAL MIX</h1><div>Customer Orders & Sales Management</div></header>
+
+<header>
+<h1>MARY CEREAL MIX</h1>
+<div>Customer Orders & Sales Management</div>
+</header>
+
 <main>
-<section id="config" class="card"><h2>Connect Firebase</h2><p class="muted">Enter the Web App configuration from Firebase Console → Project settings → Your apps. These are public app identifiers. Never enter a private key or service-account file.</p>
+
+<!-- FIREBASE CONFIGURATION -->
+
+<section id="config" class="card">
+<h2>Connect Firebase</h2>
+
+<p class="muted">
+Enter your Firebase Web App configuration.
+</p>
+
 <div class="grid">
-<div><label>apiKey</label><input id="apiKey"></div><div><label>authDomain</label><input id="authDomain"></div>
-<div><label>projectId</label><input id="projectId"></div><div><label>storageBucket</label><input id="storageBucket"></div>
-<div><label>messagingSenderId</label><input id="messagingSenderId"></div><div><label>appId</label><input id="appId"></div>
-<div><label>Cloudinary Cloud Name</label><input id="cloudName" value="d5jjbbjp"></div><div><label>Cloudinary unsigned preset</label><input id="preset" value="mary_cereal_upload"></div>
-</div><button id="connect">Save and connect</button></section>
-<section id="auth" class="card hidden"><div class="grid">
-<div><h2>Sign in</h2><label>Email</label><input id="email" type="email" autocomplete="username"><label>Password</label><input id="password" type="password" autocomplete="current-password"><button id="signin">Sign in</button></div>
-<div><h2>Create customer account</h2><label>Name</label><input id="name"><label>Phone</label><input id="phone"><label>Email</label><input id="newEmail" type="email" autocomplete="username"><label>Password (at least 6 characters)</label><input id="newPassword" type="password" autocomplete="new-password"><label>Account type</label><select id="kind"><option value="retail">Retail buyer</option><option value="wholesale">Wholesale buyer (approval required)</option></select><button id="signup">Register</button></div>
-</div><p id="authMessage" class="muted" aria-live="polite"></p></section>
+
+<div>
+<label>apiKey</label>
+<input id="apiKey">
+</div>
+
+<div>
+<label>authDomain</label>
+<input id="authDomain">
+</div>
+
+<div>
+<label>projectId</label>
+<input id="projectId">
+</div>
+
+<div>
+<label>storageBucket</label>
+<input id="storageBucket">
+</div>
+
+<div>
+<label>messagingSenderId</label>
+<input id="messagingSenderId">
+</div>
+
+<div>
+<label>appId</label>
+<input id="appId">
+</div>
+
+<div>
+<label>Cloudinary Cloud Name</label>
+<input id="cloudName" value="d5jjbbjp">
+</div>
+
+<div>
+<label>Cloudinary unsigned preset</label>
+<input id="preset" value="mary_cereal_upload">
+</div>
+
+</div>
+
+<button id="connect">Save and connect</button>
+</section>
+
+
+<!-- AUTHENTICATION -->
+
+<section id="auth" class="card hidden">
+
+<div class="grid">
+
+<div>
+
+<h2>Sign in</h2>
+
+<label>Email</label>
+<input id="email" type="email">
+
+<label>Password</label>
+<input id="password" type="password">
+
+<button id="signin">Sign in</button>
+
+</div>
+
+
+<div>
+
+<h2>Create customer account</h2>
+
+<label>Name</label>
+<input id="name">
+
+<label>Phone</label>
+<input id="phone">
+
+<label>Email</label>
+<input id="newEmail" type="email">
+
+<label>Password</label>
+<input id="newPassword" type="password">
+
+<label>Account type</label>
+
+<select id="kind">
+<option value="retail">Retail buyer</option>
+<option value="wholesale">Wholesale buyer</option>
+</select>
+
+<button id="signup">Register</button>
+
+</div>
+
+</div>
+
+<p id="authMessage" class="muted"></p>
+
+</section>
+
+
+<!-- MAIN WORKSPACE -->
+
 <section id="workspace" class="hidden">
-<div class="card"><span id="who"></span><button id="logout" class="secondary" style="float:right">Sign out</button><p id="state" class="muted"></p></div>
-<div class="tabs"><button class="active" data-tab="catalog">Products & order</button><button data-tab="mine">My orders</button><button id="adminButton" data-tab="admin" class="hidden">Admin</button></div>
-<section id="catalog"><div class="card"><h2>Products</h2><p class="muted">Your account only receives the price list assigned to your approved customer category. Orders are submitted as requests; the business confirms the price and credit terms.</p><div id="catalogue" class="grid"></div></div>
-<div class="card"><h2>Order request</h2><div id="basket">No items selected.</div><label>Delivery details / notes</label><textarea id="notes"></textarea><button id="sendOrder">Submit order request</button></div></section>
-<section id="mine" class="hidden"><div class="card"><h2>My order requests</h2><div id="myOrders"></div></div></section>
+
+<div class="card">
+
+<span id="who"></span>
+
+<button id="logout" class="secondary" style="float:right">
+Sign out
+</button>
+
+<p id="state" class="muted"></p>
+
+</div>
+
+
+<!-- CUSTOMER AND ADMIN NAVIGATION -->
+
+<div class="tabs">
+
+<button class="active" data-tab="catalog">
+Products & order
+</button>
+
+<button data-tab="mine">
+My orders
+</button>
+
+<button id="adminButton" data-tab="admin" class="hidden">
+Admin dashboard
+</button>
+
+</div>
+
+
+<!-- PRODUCT CATALOGUE -->
+
+<section id="catalog">
+
+<div class="card">
+
+<h2>Products</h2>
+
+<div id="catalogue" class="grid"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Order request</h2>
+
+<div id="basket">
+No items selected.
+</div>
+
+<label>Delivery details / notes</label>
+
+<textarea id="notes"></textarea>
+
+<button id="sendOrder">
+Submit order request
+</button>
+
+</div>
+
+</section>
+
+
+<!-- CUSTOMER ORDERS -->
+
+<section id="mine" class="hidden">
+
+<div class="card">
+
+<h2>My order requests</h2>
+
+<div id="myOrders"></div>
+
+</div>
+
+</section>
+
+
+<!-- ADMIN DASHBOARD: HIDDEN BY DEFAULT -->
+
 <section id="admin" class="hidden">
-<div class="card"><h2>Admin dashboard</h2><p class="note">Only an administrator should be assigned role=admin in Firestore. Never allow customers to set their own role.</p><div id="summary"></div></div>
-<div class="tabs"><button class="active" data-panel="requests">Order requests</button><button data-panel="products">Products & prices</button><button data-panel="buyers">Customers</button><button data-panel="accounts">Payments & debts</button></div>
-<div id="requests" class="card"><h3>Incoming requests</h3><div id="requestsList"></div></div>
-<div id="products" class="card hidden"><h3>Add product</h3><label>Product name</label><input id="prodName"><label>Description</label><textarea id="prodDesc"></textarea><label>Pack size / unit</label><input id="prodUnit" placeholder="e.g. 500g pouch"><label>Retail price (GH₵)</label><input id="retail" type="number" min="0" step=".01"><label>Wholesale price (GH₵)</label><input id="wholesale" type="number" min="0" step=".01"><label>Stock quantity</label><input id="stock" type="number" min="0"><label>Product photo</label><input id="photo" type="file" accept="image/jpeg,image/png,image/webp"><button id="addProduct">Save product</button><div id="adminProducts"></div></div>
-<div id="buyers" class="card hidden"><h3>Customer accounts</h3><div id="buyersList"></div></div>
-<div id="accounts" class="card hidden"><h3>Confirm order, payment and debt</h3><p class="muted">Admin enters the agreed final order total after checking the current private price list. Customer-submitted requests never contain trusted prices or payment amounts.</p><label>Order document ID</label><input id="orderId"><label>Confirmed total (GH₵)</label><input id="confirmedTotal" type="number" min="0" step=".01"><label>Credit approval</label><select id="creditApproval"><option value="no">No — payment before supply</option><option value="yes">Yes — approve credit</option></select><button id="confirmOrder">Confirm order</button><hr><label>Confirmed order ID for payment</label><input id="paymentOrder"><label>Payment amount received (GH₵)</label><input id="amount" type="number" min=".01" step=".01"><label>Payment method</label><select id="method"><option>Cash</option><option>Mobile Money</option><option>Bank transfer</option><option>Other</option></select><label>Reference / notes</label><input id="reference"><button id="addPayment">Record payment</button><div id="balances"></div></div>
-</section></section>
+
+<div class="card">
+
+<h2>Admin dashboard</h2>
+
+<p class="note">
+Administrator access is restricted to the authorized administrator account.
+</p>
+
+<div id="summary"></div>
+
+</div>
+
+
+<div class="tabs">
+
+<button class="active" data-panel="requests">
+Order requests
+</button>
+
+<button data-panel="products">
+Products & prices
+</button>
+
+<button data-panel="buyers">
+Customers
+</button>
+
+<button data-panel="accounts">
+Payments & debts
+</button>
+
+</div>
+
+
+<!-- REQUESTS -->
+
+<div id="requests" class="card">
+
+<h3>Incoming requests</h3>
+
+<div id="requestsList"></div>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div id="products" class="card hidden">
+
+<h3>Add product</h3>
+
+<label>Product name</label>
+<input id="prodName">
+
+<label>Description</label>
+<textarea id="prodDesc"></textarea>
+
+<label>Pack size / unit</label>
+<input id="prodUnit">
+
+<label>Retail price (GH₵)</label>
+<input id="retail" type="number" min="0" step=".01">
+
+<label>Wholesale price (GH₵)</label>
+<input id="wholesale" type="number" min="0" step=".01">
+
+<label>Stock quantity</label>
+<input id="stock" type="number" min="0">
+
+<label>Product photo</label>
+<input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+
+<button id="addProduct">
+Save product
+</button>
+
+<div id="adminProducts"></div>
+
+</div>
+
+
+<!-- CUSTOMERS -->
+
+<div id="buyers" class="card hidden">
+
+<h3>Customer accounts</h3>
+
+<div id="buyersList"></div>
+
+</div>
+
+
+<!-- PAYMENTS -->
+
+<div id="accounts" class="card hidden">
+
+<h3>Confirm order, payment and debt</h3>
+
+<label>Order document ID</label>
+<input id="orderId">
+
+<label>Confirmed total (GH₵)</label>
+<input id="confirmedTotal" type="number" min="0" step=".01">
+
+<label>Credit approval</label>
+
+<select id="creditApproval">
+<option value="no">No — payment before supply</option>
+<option value="yes">Yes — approve credit</option>
+</select>
+
+<button id="confirmOrder">
+Confirm order
+</button>
+
+<hr>
+
+<label>Confirmed order ID for payment</label>
+<input id="paymentOrder">
+
+<label>Payment amount received (GH₵)</label>
+<input id="amount" type="number" min=".01" step=".01">
+
+<label>Payment method</label>
+
+<select id="method">
+<option>Cash</option>
+<option>Mobile Money</option>
+<option>Bank transfer</option>
+<option>Other</option>
+</select>
+
+<label>Reference / notes</label>
+<input id="reference">
+
+<button id="addPayment">
+Record payment
+</button>
+
+<div id="balances"></div>
+
+</div>
+
+</section>
+
+</section>
+
 </main>
+
+
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut,updateProfile}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import{getFirestore,doc,setDoc,getDoc,collection,addDoc,getDocs,query,where,serverTimestamp,updateDoc,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const $=x=>document.getElementById(x);let app,auth,db,user,me,settings,items=[],basket=[],creatingAccount=false,authRun=0;
-const money=n=>"GH₵"+Number(n||0).toFixed(2),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const show=(id,v)=>$(id).classList.toggle("hidden",!v);
-function alertMsg(s){alert(s)}
-function authMsg(s){$("authMessage").textContent=s}
-function readableError(e){const code=e?.code||"";const messages={"auth/invalid-credential":"Email or password is incorrect.","auth/wrong-password":"Email or password is incorrect.","auth/user-not-found":"No account was found for this email.","auth/invalid-email":"Enter a valid email address.","auth/email-already-in-use":"This email already has an account. Please sign in instead.","auth/weak-password":"Use a password with at least 6 characters.","auth/network-request-failed":"Network problem. Check your internet connection and try again.","permission-denied":"Firebase blocked access. Check your Firestore security rules.","unavailable":"Firebase is temporarily unavailable. Try again."};return messages[code]||e?.message||"Something went wrong. Please try again."}
-function conf(){return JSON.parse(localStorage.getItem("marySecureConfig")||"null")}
-$("connect").onclick=()=>{let c={};["apiKey","authDomain","projectId","storageBucket","messagingSenderId","appId","cloudName","preset"].forEach(k=>c[k]=$(k).value.trim());if(Object.values(c).some(x=>!x)){alertMsg("Complete all configuration fields.");return}localStorage.setItem("marySecureConfig",JSON.stringify(c));location.reload()};
-async function loadSignedInUser(u){
- const run=++authRun;
- try{
-  const s=await getDoc(doc(db,"users",u.uid));
-  if(run!==authRun)return;
-  if(!s.exists()){authMsg("Your Firebase login exists, but the customer profile is missing. Ask the administrator to create your users profile.");show("workspace",false);show("auth",true);return}
-  me=s.data();user=u;
-  if(!me.role)throw Error("Your user profile has no role field. Ask the administrator to check the Firestore users record.");
-  show("auth",false);show("workspace",true);
-  $("who").textContent="Signed in: "+(me.name||u.email);
-  $("state").textContent=me.role==="admin"?"Administrator":me.accountType==="wholesale"?(me.wholesaleStatus==="approved"?"Approved wholesale buyer":"Wholesale approval pending; wholesale prices are unavailable"):"Retail buyer";
-  show("adminButton",me.role==="admin");
-  await refreshCatalog();await refreshMine();if(me.role==="admin")await refreshAdmin();
-  if(run!==authRun)return;
- }catch(e){if(run!==authRun)return;console.error("Account loading error:",e);show("workspace",false);show("auth",true);authMsg("Signed in, but the app could not load your account data: "+readableError(e));}
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut,
+updateProfile
 }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+collection,
+addDoc,
+getDocs,
+query,
+where,
+serverTimestamp,
+updateDoc,
+runTransaction
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const $=id=>document.getElementById(id);
+
+let app,auth,db,user,me,settings;
+
+let items=[];
+let basket=[];
+
+let creatingAccount=false;
+let authRun=0;
+
+const ADMIN_UID="BzTy6OPheYNFPfhEBgRZavmm0cu2";
+
+const money=n=>"GH₵"+Number(n||0).toFixed(2);
+
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c]));
+
+const show=(id,v)=>{
+$(id).classList.toggle("hidden",!v);
+};
+
+function alertMsg(s){
+alert(s);
+}
+
+function authMsg(s){
+$("authMessage").textContent=s;
+}
+
+function readableError(e){
+
+const code=e?.code||"";
+
+const messages={
+
+"auth/invalid-credential":"Email or password is incorrect.",
+
+"auth/wrong-password":"Email or password is incorrect.",
+
+"auth/user-not-found":"No account was found.",
+
+"auth/invalid-email":"Enter a valid email address.",
+
+"auth/email-already-in-use":"This email already has an account.",
+
+"auth/weak-password":"Use a password with at least 6 characters.",
+
+"permission-denied":"Firebase blocked access. Check Firestore rules.",
+
+"unavailable":"Firebase is temporarily unavailable."
+
+};
+
+return messages[code]||e?.message||"Something went wrong.";
+
+}
+
+
+function conf(){
+
+return JSON.parse(
+localStorage.getItem("marySecureConfig")||"null"
+);
+
+}
+
+
+$("connect").onclick=()=>{
+
+let c={};
+
+[
+"apiKey",
+"authDomain",
+"projectId",
+"storageBucket",
+"messagingSenderId",
+"appId",
+"cloudName",
+"preset"
+].forEach(k=>c[k]=$(k).value.trim());
+
+if(Object.values(c).some(x=>!x)){
+alertMsg("Complete all configuration fields.");
+return;
+}
+
+localStorage.setItem(
+"marySecureConfig",
+JSON.stringify(c)
+);
+
+location.reload();
+
+};
+
+
 function boot(c){
- settings=c;
- try{
-  app=initializeApp({apiKey:c.apiKey,authDomain:c.authDomain,projectId:c.projectId,storageBucket:c.storageBucket,messagingSenderId:c.messagingSenderId,appId:c.appId},"marySecure");
-  auth=getAuth(app);db=getFirestore(app);show("config",false);show("auth",true);
-  onAuthStateChanged(auth,u=>{
-   if(creatingAccount)return;
-   if(!u){authRun++;user=null;me=null;show("workspace",false);show("auth",true);authMsg("");return}
-   loadSignedInUser(u);
-  },e=>{console.error(e);authMsg("Authentication error: "+readableError(e));});
- }catch(e){console.error(e);show("config",true);alertMsg("Could not connect Firebase: "+readableError(e));}
+
+settings=c;
+
+try{
+
+app=initializeApp({
+
+apiKey:c.apiKey,
+authDomain:c.authDomain,
+projectId:c.projectId,
+storageBucket:c.storageBucket,
+messagingSenderId:c.messagingSenderId,
+appId:c.appId
+
+},"marySecure");
+
+auth=getAuth(app);
+
+db=getFirestore(app);
+
+show("config",false);
+
+show("auth",true);
+
+onAuthStateChanged(auth,u=>{
+
+if(creatingAccount)return;
+
+if(!u){
+
+authRun++;
+
+user=null;
+me=null;
+
+show("workspace",false);
+show("auth",true);
+
+show("admin",false);
+show("adminButton",false);
+
+authMsg("");
+
+return;
+
 }
-let c=conf();if(c)boot(c);else show("config",true);
+
+loadSignedInUser(u);
+
+},e=>{
+
+console.error(e);
+
+authMsg(readableError(e));
+
+});
+
+}catch(e){
+
+console.error(e);
+
+show("config",true);
+
+alertMsg(readableError(e));
+
+}
+
+}
+
+
+let c=conf();
+
+if(c)boot(c);
+else show("config",true);
+
+
+async function loadSignedInUser(u){
+
+const run=++authRun;
+
+try{
+
+const s=await getDoc(
+doc(db,"users",u.uid)
+);
+
+if(run!==authRun)return;
+
+if(!s.exists()){
+
+show("workspace",false);
+show("admin",false);
+show("adminButton",false);
+show("auth",true);
+
+authMsg(
+"Your Firebase login exists, but your Firestore profile is missing."
+);
+
+return;
+
+}
+
+me=s.data();
+
+user=u;
+
+
+/* VERIFY ACCOUNT ROLE */
+
+if(!["admin","customer"].includes(me.role)){
+
+throw Error("Invalid account role.");
+
+}
+
+
+/* ADMIN ACCESS REQUIRES THE AUTHORIZED UID */
+
+const isAdministrator=
+me.role==="admin" &&
+u.uid===ADMIN_UID;
+
+
+/* DISPLAY WORKSPACE */
+
+show("auth",false);
+
+show("workspace",true);
+
+
+/* CUSTOMER/ADMIN IDENTIFICATION */
+
+$("who").textContent=
+"Signed in: "+(me.name||u.email);
+
+
+$("state").textContent=
+
+isAdministrator
+
+?"Administrator"
+
+:me.accountType==="wholesale"
+
+?(me.wholesaleStatus==="approved"
+?"Approved wholesale buyer"
+:"Wholesale approval pending")
+
+:"Retail buyer";
+
+
+/* CRITICAL VISIBILITY CORRECTION */
+
+show("adminButton",isAdministrator);
+
+show("admin",isAdministrator);
+
+show("catalog",true);
+
+show("mine",true);
+
+
+/* RESET ACTIVE TAB */
+
+document.querySelectorAll("[data-tab]").forEach(b=>{
+b.classList.toggle("active",b.dataset.tab==="catalog");
+});
+
+show("catalog",true);
+show("mine",false);
+
+
+/* LOAD DATA */
+
+await refreshCatalog();
+
+if(run!==authRun)return;
+
+await refreshMine();
+
+if(run!==authRun)return;
+
+if(isAdministrator){
+
+await refreshAdmin();
+
+}
+
+}catch(e){
+
+if(run!==authRun)return;
+
+console.error(e);
+
+show("workspace",false);
+show("admin",false);
+show("adminButton",false);
+show("auth",true);
+
+authMsg(readableError(e));
+
+}
+
+}
+
+
+/* SIGN UP */
+
 $("signup").onclick=async()=>{
- const btn=$("signup");btn.disabled=true;authMsg("Creating your account...");
- creatingAccount=true;
- try{
-  const name=$("name").value.trim(),phone=$("phone").value.trim(),email=$("newEmail").value.trim(),type=$("kind").value,password=$("newPassword").value;
-  if(!name||!phone||!email||!password)throw Error("Complete all registration fields.");
-  if(password.length<6)throw Error("Use a password with at least 6 characters.");
-  const cr=await createUserWithEmailAndPassword(auth,email,password);
-  await updateProfile(cr.user,{displayName:name});
-  await setDoc(doc(db,"users",cr.user.uid),{name,phone,email,accountType:type,wholesaleStatus:type==="wholesale"?"pending":"not_applicable",role:"customer",createdAt:serverTimestamp()});
-  creatingAccount=false;authMsg("Registration successful. Loading your account...");
-  await loadSignedInUser(cr.user);
-  alertMsg("Registration successful. Wholesale access requires admin approval.");
- }catch(e){creatingAccount=false;console.error("Registration error:",e);authMsg(readableError(e));alertMsg(readableError(e));}
- finally{btn.disabled=false;}
+
+const btn=$("signup");
+
+btn.disabled=true;
+
+creatingAccount=true;
+
+authMsg("Creating account...");
+
+try{
+
+const name=$("name").value.trim();
+
+const phone=$("phone").value.trim();
+
+const email=$("newEmail").value.trim();
+
+const password=$("newPassword").value;
+
+const type=$("kind").value;
+
+if(!name||!phone||!email||!password){
+
+throw Error("Complete all registration fields.");
+
+}
+
+if(password.length<6){
+
+throw Error("Password must have at least 6 characters.");
+
+}
+
+const cr=await createUserWithEmailAndPassword(
+auth,email,password
+);
+
+await updateProfile(cr.user,{
+displayName:name
+});
+
+await setDoc(
+doc(db,"users",cr.user.uid),
+{
+
+name,
+phone,
+email,
+
+accountType:type,
+
+wholesaleStatus:
+type==="wholesale"?"pending":"not_applicable",
+
+role:"customer",
+
+createdAt:serverTimestamp()
+
+}
+);
+
+creatingAccount=false;
+
+await loadSignedInUser(cr.user);
+
+alertMsg("Registration successful.");
+
+}catch(e){
+
+creatingAccount=false;
+
+console.error(e);
+
+authMsg(readableError(e));
+
+alertMsg(readableError(e));
+
+}finally{
+
+btn.disabled=false;
+
+}
+
 };
+
+
+/* SIGN IN */
+
 $("signin").onclick=async()=>{
- const btn=$("signin");btn.disabled=true;authMsg("Signing in...");
- try{
-  const email=$("email").value.trim(),password=$("password").value;
-  if(!email||!password)throw Error("Enter your email and password.");
-  const cr=await signInWithEmailAndPassword(auth,email,password);
-  await loadSignedInUser(cr.user);
- }catch(e){console.error("Sign-in error:",e);authMsg(readableError(e));alertMsg(readableError(e));}
- finally{btn.disabled=false;}
+
+const btn=$("signin");
+
+btn.disabled=true;
+
+authMsg("Signing in...");
+
+try{
+
+const email=$("email").value.trim();
+
+const password=$("password").value;
+
+if(!email||!password){
+
+throw Error("Enter email and password.");
+
+}
+
+const cr=await signInWithEmailAndPassword(
+auth,email,password
+);
+
+await loadSignedInUser(cr.user);
+
+}catch(e){
+
+console.error(e);
+
+authMsg(readableError(e));
+
+alertMsg(readableError(e));
+
+}finally{
+
+btn.disabled=false;
+
+}
+
 };
-$("logout").onclick=async()=>{try{await signOut(auth)}catch(e){alertMsg(readableError(e))}};
+
+
+/* LOGOUT */
+
+$("logout").onclick=async()=>{
+
+try{
+
+await signOut(auth);
+
+}catch(e){
+
+alertMsg(readableError(e));
+
+}
+
+};
+
+
+/* PRODUCTS */
+
 async function refreshCatalog(){
- const p=await getDocs(collection(db,"products"));items=p.docs.map(d=>({id:d.id,...d.data()}));
- // Pending wholesale users receive no retail or wholesale price list.
- let priceCol=me.role==="admin"?"retailPrices":me.accountType==="wholesale"?(me.wholesaleStatus==="approved"?"wholesalePrices":null):"retailPrices";
- let map={};
- if(priceCol){let prices=await getDocs(collection(db,priceCol));prices.docs.forEach(d=>map[d.id]=d.data().price)}
- $("catalogue").innerHTML=items.filter(x=>x.active!==false).map(x=>`<div class="product"><img src="${esc(x.imageUrl||"")}" alt=""><div><b>${esc(x.name)}</b><p>${esc(x.description||"")}</p><small>${esc(x.unit||"")}</small><p>${priceCol&&map[x.id]!==undefined?money(map[x.id]):"Price available after approval / confirmation"}</p><label>Quantity</label><input id="q${x.id}" type="number" min="1" value="1"><button onclick="window.add('${x.id}')">Add</button></div></div>`).join("")||"Products will appear here.";
+
+const p=await getDocs(
+collection(db,"products")
+);
+
+items=p.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
+
+let priceCol=
+
+me.role==="admin"
+
+?"retailPrices"
+
+:me.accountType==="wholesale"
+
+?(me.wholesaleStatus==="approved"
+?"wholesalePrices":null)
+
+:"retailPrices";
+
+let map={};
+
+if(priceCol){
+
+let prices=await getDocs(
+collection(db,priceCol)
+);
+
+prices.docs.forEach(d=>{
+map[d.id]=d.data().price;
+});
+
 }
-window.add=id=>{let p=items.find(x=>x.id===id),q=Math.floor(+$("q"+id).value);if(!p||q<1)return;let old=basket.find(x=>x.productId===id);if(old)old.quantity+=q;else basket.push({productId:id,name:p.name,unit:p.unit||"",quantity:q});$("basket").innerHTML=basket.map(x=>`${esc(x.name)} — ${x.quantity} ${esc(x.unit)}`).join("<br>")};
-$("sendOrder").onclick=async()=>{try{if(!basket.length)throw Error("Add products first.");await addDoc(collection(db,"orderRequests"),{customerUid:user.uid,customerName:me.name,customerPhone:me.phone,accountType:me.accountType,items:basket,notes:$("notes").value.trim(),status:"awaiting_admin_review",createdAt:serverTimestamp()});basket=[];$("basket").textContent="No items selected.";$("notes").value="";alertMsg("Order request sent. The business will confirm prices, availability and payment terms.");await refreshMine()}catch(e){alertMsg(readableError(e))}};
-async function refreshMine(){let s=await getDocs(query(collection(db,"orderRequests"),where("customerUid","==",user.uid)));$("myOrders").innerHTML=s.docs.map(d=>{let x=d.data();return `<p><b>${d.id}</b> — ${esc(x.status)}<br>${(x.items||[]).map(i=>esc(i.name)+" × "+i.quantity).join(", ")}</p>`}).join("")||"No order requests yet."}
+
+$("catalogue").innerHTML=
+
+items.filter(x=>x.active!==false).map(x=>`
+
+<div class="product">
+
+<img src="${esc(x.imageUrl||"")}" alt="">
+
+<div>
+
+<b>${esc(x.name)}</b>
+
+<p>${esc(x.description||"")}</p>
+
+<small>${esc(x.unit||"")}</small>
+
+<p>
+${
+priceCol&&map[x.id]!==undefined
+?money(map[x.id])
+:"Price available after approval / confirmation"
+}
+</p>
+
+<label>Quantity</label>
+
+<input id="q${x.id}" type="number" min="1" value="1">
+
+<button onclick="window.add('${x.id}')">
+Add
+</button>
+
+</div>
+
+</div>
+
+`).join("")||"Products will appear here.";
+
+}
+
+
+/* ADD TO BASKET */
+
+window.add=id=>{
+
+let p=items.find(x=>x.id===id);
+
+let q=Math.floor(+$("q"+id).value);
+
+if(!p||q<1)return;
+
+let old=basket.find(x=>x.productId===id);
+
+if(old)old.quantity+=q;
+
+else basket.push({
+
+productId:id,
+name:p.name,
+unit:p.unit||"",
+quantity:q
+
+});
+
+$("basket").innerHTML=basket.map(x=>
+`${esc(x.name)} — ${x.quantity} ${esc(x.unit)}`
+).join("<br>");
+
+};
+
+
+/* SUBMIT ORDER */
+
+$("sendOrder").onclick=async()=>{
+
+try{
+
+if(me.role!=="customer" && user.uid!==ADMIN_UID){
+
+throw Error("Account not authorized.");
+
+}
+
+if(!basket.length){
+
+throw Error("Add products first.");
+
+}
+
+await addDoc(
+collection(db,"orderRequests"),
+{
+
+customerUid:user.uid,
+
+customerName:me.name,
+
+customerPhone:me.phone,
+
+accountType:me.accountType,
+
+items:basket,
+
+notes:$("notes").value.trim(),
+
+status:"awaiting_admin_review",
+
+createdAt:serverTimestamp()
+
+}
+);
+
+basket=[];
+
+$("basket").textContent="No items selected.";
+
+$("notes").value="";
+
+alertMsg("Order request submitted successfully.");
+
+await refreshMine();
+
+}catch(e){
+
+alertMsg(readableError(e));
+
+}
+
+};
+
+
+/* CUSTOMER ORDERS */
+
+async function refreshMine(){
+
+let s=await getDocs(
+
+query(
+collection(db,"orderRequests"),
+where("customerUid","==",user.uid)
+)
+
+);
+
+$("myOrders").innerHTML=
+
+s.docs.map(d=>{
+
+let x=d.data();
+
+return `
+
+<div class="card">
+
+<b>Order ID:</b> ${esc(d.id)}
+
+<p>Status: ${esc(x.status)}</p>
+
+<p>
+${(x.items||[]).map(i=>
+esc(i.name)+" × "+i.quantity
+).join(", ")}
+</p>
+
+</div>
+
+`;
+
+}).join("")||"No order requests yet.";
+
+}
+
+
+/* ADMIN DASHBOARD */
+
 async function refreshAdmin(){
- let [rs,us,ps,os]=await Promise.all([getDocs(collection(db,"orderRequests")),getDocs(collection(db,"users")),getDocs(collection(db,"products")),getDocs(collection(db,"confirmedOrders"))]);
- let req=rs.docs.map(d=>({id:d.id,...d.data()})),buyers=us.docs.map(d=>({id:d.id,...d.data()})),orders=os.docs.map(d=>({id:d.id,...d.data()}));
- $("summary").textContent=`Requests: ${req.length} | Confirmed orders: ${orders.length} | Outstanding balances: ${money(orders.reduce((a,o)=>a+Number(o.balance||0),0))}`;
- $("requestsList").innerHTML=req.map(r=>`<div class="card"><b>${esc(r.customerName)}</b> (${esc(r.accountType)})<p>${(r.items||[]).map(i=>esc(i.name)+" × "+i.quantity).join("<br>")}</p><small>Request ID: ${r.id}</small><button onclick="window.chooseReq('${r.id}')">Use this request</button>${r.accountType==="wholesale"&&buyers.find(b=>b.id===r.customerUid)?.wholesaleStatus!=="approved"?`<button class="secondary" onclick="window.approveBuyer('${r.customerUid}')">Approve wholesale buyer</button>`:""}</div>`).join("")||"No requests.";
- $("buyersList").innerHTML=buyers.map(b=>`<p>${esc(b.name)} — ${esc(b.phone)} — ${esc(b.accountType)} / ${esc(b.wholesaleStatus||"")} ${b.accountType==="wholesale"&&b.wholesaleStatus!=="approved"?`<button onclick="window.approveBuyer('${b.id}')">Approve</button>`:""}</p>`).join("");
- $("adminProducts").innerHTML=ps.docs.map(d=>`<p>${esc(d.data().name)} — ${d.id}</p>`).join("");
- $("balances").innerHTML="<h3>Confirmed orders and balances</h3>"+orders.map(o=>`<p>${esc(o.customerName)} — ${money(o.total)} total; paid ${money(o.paid)}; due ${money(o.balance)} — ID ${o.id}</p>`).join("");
+
+if(user.uid!==ADMIN_UID||me.role!=="admin"){
+
+throw Error("Administrator access denied.");
+
 }
-window.chooseReq=id=>$("orderId").value=id;
-window.approveBuyer=async uid=>{try{if(me.role!=="admin")throw Error("Admin only.");await updateDoc(doc(db,"users",uid),{wholesaleStatus:"approved"});alertMsg("Wholesale buyer approved.");await refreshAdmin()}catch(e){alertMsg(readableError(e))}};
+
+let [rs,us,ps,os]=await Promise.all([
+
+getDocs(collection(db,"orderRequests")),
+
+getDocs(collection(db,"users")),
+
+getDocs(collection(db,"products")),
+
+getDocs(collection(db,"confirmedOrders"))
+
+]);
+
+let req=rs.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
+
+let buyers=us.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
+
+let orders=os.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
+
+$("summary").textContent=
+
+`Requests: ${req.length} | Confirmed orders: ${orders.length} | Outstanding balances: ${money(orders.reduce((a,o)=>a+Number(o.balance||0),0))}`;
+
+
+/* REQUESTS */
+
+$("requestsList").innerHTML=
+
+req.map(r=>`
+
+<div class="card">
+
+<b>${esc(r.customerName)}</b>
+
+<p>${esc(r.accountType)}</p>
+
+<p>
+${(r.items||[]).map(i=>
+esc(i.name)+" × "+i.quantity
+).join("<br>")}
+</p>
+
+<small>Request ID: ${esc(r.id)}</small>
+
+<button onclick="window.chooseReq('${r.id}')">
+Use this request
+</button>
+
+${
+r.accountType==="wholesale" &&
+buyers.find(b=>b.id===r.customerUid)?.wholesaleStatus!=="approved"
+
+?`<button onclick="window.approveBuyer('${r.customerUid}')">
+Approve wholesale buyer
+</button>`
+
+:""
+
+}
+
+</div>
+
+`).join("")||"No requests.";
+
+
+/* CUSTOMERS */
+
+$("buyersList").innerHTML=
+
+buyers.map(b=>`
+
+<div class="card">
+
+<b>${esc(b.name)}</b>
+
+<p>${esc(b.phone)}</p>
+
+<p>${esc(b.email)}</p>
+
+<p>
+${esc(b.accountType)} /
+${esc(b.wholesaleStatus||"")}
+</p>
+
+${
+b.accountType==="wholesale" &&
+b.wholesaleStatus!=="approved"
+
+?`<button onclick="window.approveBuyer('${b.id}')">
+Approve
+</button>`
+
+:""
+
+}
+
+</div>
+
+`).join("");
+
+
+/* PRODUCTS */
+
+$("adminProducts").innerHTML=
+
+ps.docs.map(d=>`
+
+<p>
+${esc(d.data().name)} — ${esc(d.id)}
+</p>
+
+`).join("");
+
+
+/* BALANCES */
+
+$("balances").innerHTML=
+
+"<h3>Confirmed orders and balances</h3>"+
+
+orders.map(o=>`
+
+<div class="card">
+
+<b>${esc(o.customerName)}</b>
+
+<p>Total: ${money(o.total)}</p>
+
+<p>Paid: ${money(o.paid)}</p>
+
+<p>Due: ${money(o.balance)}</p>
+
+<p>Order ID: ${esc(o.id)}</p>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* CHOOSE ORDER */
+
+window.chooseReq=id=>{
+
+$("orderId").value=id;
+
+};
+
+
+/* APPROVE WHOLESALE */
+
+window.approveBuyer=async uid=>{
+
+try{
+
+if(user.uid!==ADMIN_UID||me.role!=="admin"){
+
+throw Error("Admin only.");
+
+}
+
+await updateDoc(
+doc(db,"users",uid),
+{
+wholesaleStatus:"approved"
+}
+);
+
+alertMsg("Wholesale buyer approved.");
+
+await refreshAdmin();
+
+}catch(e){
+
+alertMsg(readableError(e));
+
+}
+
+};
+
+
+/* ADD PRODUCT */
+
 $("addProduct").onclick=async()=>{
- try{
-  if(me.role!=="admin")throw Error("Admin only.");
-  let name=$("prodName").value.trim();if(!name)throw Error("Enter a product name.");
-  let retail=Number($("retail").value),wholesale=Number($("wholesale").value);
-  if($("retail").value===""||$("wholesale").value===""||retail<0||wholesale<0)throw Error("Enter valid retail and wholesale prices.");
-  let imageUrl="",f=$("photo").files[0];
-  if(f){
-   if(f.size>5*1024*1024||!["image/jpeg","image/png","image/webp"].includes(f.type))throw Error("Choose JPG, PNG or WEBP up to 5MB.");
-   let fd=new FormData();fd.append("file",f);fd.append("upload_preset",settings.preset);
-   let res=await fetch(`https://api.cloudinary.com/v1_1/${encodeURIComponent(settings.cloudName)}/image/upload`,{method:"POST",body:fd}),j=await res.json();
-   if(!res.ok)throw Error(j.error?.message||"Image upload failed.");imageUrl=j.secure_url;
-  }
-  let ref=await addDoc(collection(db,"products"),{name,description:$("prodDesc").value,unit:$("prodUnit").value,stock:Number($("stock").value||0),imageUrl,active:true,createdAt:serverTimestamp()});
-  await setDoc(doc(db,"retailPrices",ref.id),{price:retail});await setDoc(doc(db,"wholesalePrices",ref.id),{price:wholesale});
-  alertMsg("Product and private price lists saved.");$("prodName").value="";$("prodDesc").value="";$("prodUnit").value="";$("retail").value="";$("wholesale").value="";$("stock").value="";$("photo").value="";
-  await refreshCatalog();await refreshAdmin();
- }catch(e){alertMsg(readableError(e))}
+
+try{
+
+if(user.uid!==ADMIN_UID||me.role!=="admin"){
+
+throw Error("Admin only.");
+
+}
+
+let name=$("prodName").value.trim();
+
+if(!name){
+
+throw Error("Enter a product name.");
+
+}
+
+let retail=Number($("retail").value);
+
+let wholesale=Number($("wholesale").value);
+
+if(
+$("retail").value===""||
+$("wholesale").value===""||
+retail<0||
+wholesale<0
+){
+
+throw Error("Enter valid prices.");
+
+}
+
+let imageUrl="";
+
+let f=$("photo").files[0];
+
+if(f){
+
+if(
+f.size>5*1024*1024||
+!["image/jpeg","image/png","image/webp"].includes(f.type)
+){
+
+throw Error("Choose JPG, PNG or WEBP up to 5MB.");
+
+}
+
+let fd=new FormData();
+
+fd.append("file",f);
+
+fd.append("upload_preset",settings.preset);
+
+let res=await fetch(
+`https://api.cloudinary.com/v1_1/${encodeURIComponent(settings.cloudName)}/image/upload`,
+{
+method:"POST",
+body:fd
+}
+);
+
+let j=await res.json();
+
+if(!res.ok){
+
+throw Error(j.error?.message||"Image upload failed.");
+
+}
+
+imageUrl=j.secure_url;
+
+}
+
+let ref=await addDoc(
+collection(db,"products"),
+{
+
+name,
+
+description:$("prodDesc").value,
+
+unit:$("prodUnit").value,
+
+stock:Number($("stock").value||0),
+
+imageUrl,
+
+active:true,
+
+createdAt:serverTimestamp()
+
+}
+);
+
+await setDoc(
+doc(db,"retailPrices",ref.id),
+{
+price:retail
+}
+);
+
+await setDoc(
+doc(db,"wholesalePrices",ref.id),
+{
+price:wholesale
+}
+);
+
+alertMsg("Product and price lists saved.");
+
+await refreshCatalog();
+
+await refreshAdmin();
+
+}catch(e){
+
+alertMsg(readableError(e));
+
+}
+
 };
+
+
+/* CONFIRM ORDER */
+
 $("confirmOrder").onclick=async()=>{
- try{
-  if(me.role!=="admin")throw Error("Admin only.");
-  let id=$("orderId").value.trim(),total=Number($("confirmedTotal").value);
-  if(!id||$("confirmedTotal").value===""||!Number.isFinite(total)||total<0)throw Error("Enter request ID and a valid confirmed total.");
-  const reqRef=doc(db,"orderRequests",id),orderRef=doc(db,"confirmedOrders",id);
-  await runTransaction(db,async tx=>{
-   const [requestSnap,existingSnap]=await Promise.all([tx.get(reqRef),tx.get(orderRef)]);
-   if(!requestSnap.exists())throw Error("Request not found.");
-   if(existingSnap.exists())throw Error("This request has already been confirmed. No duplicate order was created.");
-   const r=requestSnap.data();
-   tx.set(orderRef,{requestId:id,customerUid:r.customerUid,customerName:r.customerName,customerPhone:r.customerPhone,items:r.items,total,paid:0,balance:total,creditApproved:$("creditApproval").value==="yes",status:"confirmed",createdAt:serverTimestamp()});
-   tx.update(reqRef,{status:"confirmed"});
-  });
-  alertMsg("Order confirmed. A balance record has been created.");await refreshAdmin();
- }catch(e){alertMsg(readableError(e))}
+
+try{
+
+if(user.uid!==ADMIN_UID||me.role!=="admin"){
+
+throw Error("Admin only.");
+
+}
+
+let id=$("orderId").value.trim();
+
+let total=Number($("confirmedTotal").value);
+
+if(!id||$("confirmedTotal").value===""||total<0){
+
+throw Error("Enter request ID and confirmed total.");
+
+}
+
+const reqRef=doc(db,"orderRequests",id);
+
+const orderRef=doc(db,"confirmedOrders",id);
+
+await runTransaction(db,async tx=>{
+
+const [requestSnap,existingSnap]=await Promise.all([
+
+tx.get(reqRef),
+
+tx.get(orderRef)
+
+]);
+
+if(!requestSnap.exists()){
+
+throw Error("Request not found.");
+
+}
+
+if(existingSnap.exists()){
+
+throw Error("This order has already been confirmed.");
+
+}
+
+const r=requestSnap.data();
+
+tx.set(orderRef,{
+
+requestId:id,
+
+customerUid:r.customerUid,
+
+customerName:r.customerName,
+
+customerPhone:r.customerPhone,
+
+items:r.items,
+
+total,
+
+paid:0,
+
+balance:total,
+
+creditApproved:$("creditApproval").value==="yes",
+
+status:"confirmed",
+
+createdAt:serverTimestamp()
+
+});
+
+tx.update(reqRef,{
+status:"confirmed"
+});
+
+});
+
+alertMsg("Order confirmed.");
+
+await refreshAdmin();
+
+}catch(e){
+
+alertMsg(readableError(e));
+
+}
+
 };
+
+
+/* RECORD PAYMENT */
+
 $("addPayment").onclick=async()=>{
- try{
-  if(me.role!=="admin")throw Error("Admin only.");
-  let id=$("paymentOrder").value.trim(),amt=Number($("amount").value);
-  if(!id||!Number.isFinite(amt)||amt<=0)throw Error("Enter order ID and a valid payment amount.");
-  await runTransaction(db,async tx=>{
-   let ref=doc(db,"confirmedOrders",id),s=await tx.get(ref);
-   if(!s.exists())throw Error("Confirmed order not found.");
-   let o=s.data(),bal=Number(o.balance||0);
-   if(amt>bal)throw Error("Payment exceeds balance.");
-   tx.update(ref,{paid:Number(o.paid||0)+amt,balance:bal-amt,status:bal-amt===0?"paid":"part_paid"});
-   let p=doc(collection(db,"payments"));
-   tx.set(p,{orderId:id,customerUid:o.customerUid,customerName:o.customerName,amount:amt,method:$("method").value,reference:$("reference").value,createdAt:serverTimestamp(),recordedBy:user.uid});
-  });
-  $("amount").value="";$("reference").value="";alertMsg("Payment recorded.");await refreshAdmin();
- }catch(e){alertMsg(readableError(e))}
+
+try{
+
+if(user.uid!==ADMIN_UID||me.role!=="admin"){
+
+throw Error("Admin only.");
+
+}
+
+let id=$("paymentOrder").value.trim();
+
+let amt=Number($("amount").value);
+
+if(!id||!Number.isFinite(amt)||amt<=0){
+
+throw Error("Enter order ID and valid payment.");
+
+}
+
+await runTransaction(db,async tx=>{
+
+let ref=doc(db,"confirmedOrders",id);
+
+let s=await tx.get(ref);
+
+if(!s.exists()){
+
+throw Error("Confirmed order not found.");
+
+}
+
+let o=s.data();
+
+let bal=Number(o.balance||0);
+
+if(amt>bal){
+
+throw Error("Payment exceeds balance.");
+
+}
+
+tx.update(ref,{
+
+paid:Number(o.paid||0)+amt,
+
+balance:bal-amt,
+
+status:bal-amt===0?"paid":"part_paid"
+
+});
+
+let p=doc(collection(db,"payments"));
+
+tx.set(p,{
+
+orderId:id,
+
+customerUid:o.customerUid,
+
+customerName:o.customerName,
+
+amount:amt,
+
+method:$("method").value,
+
+reference:$("reference").value,
+
+createdAt:serverTimestamp(),
+
+recordedBy:user.uid
+
+});
+
+});
+
+$("amount").value="";
+
+$("reference").value="";
+
+alertMsg("Payment recorded.");
+
+await refreshAdmin();
+
+}catch(e){
+
+alertMsg(readableError(e));
+
+}
+
 };
-document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));["catalog","mine","admin"].forEach(k=>show(k,k===b.dataset.tab))});
-document.querySelectorAll("[data-panel]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-panel]").forEach(x=>x.classList.toggle("active",x===b));["requests","products","buyers","accounts"].forEach(k=>show(k,k===b.dataset.panel))});
-</script></body></html>
+
+
+/* MAIN NAVIGATION */
+
+document.querySelectorAll("[data-tab]").forEach(b=>{
+
+b.onclick=()=>{
+
+if(b.dataset.tab==="admin"){
+
+if(user?.uid!==ADMIN_UID||me?.role!=="admin"){
+
+show("admin",false);
+
+show("adminButton",false);
+
+return;
+
+}
+
+}
+
+document.querySelectorAll("[data-tab]").forEach(x=>{
+
+x.classList.toggle("active",x===b);
+
+});
+
+["catalog","mine","admin"].forEach(k=>{
+
+show(k,k===b.dataset.tab);
+
+});
+
+};
+
+});
+
+
+/* ADMIN SUB-NAVIGATION */
+
+document.querySelectorAll("[data-panel]").forEach(b=>{
+
+b.onclick=()=>{
+
+if(user?.uid!==ADMIN_UID||me?.role!=="admin"){
+
+return;
+
+}
+
+document.querySelectorAll("[data-panel]").forEach(x=>{
+
+x.classList.toggle("active",x===b);
+
+});
+
+["requests","products","buyers","accounts"].forEach(k=>{
+
+show(k,k===b.dataset.panel);
+
+});
+
+};
+
+});
+
+</script>
+
+</body>
+</html>
