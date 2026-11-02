@@ -37,21 +37,7 @@ if ("serviceWorker" in navigator) {
 <body>
 <header><h1>MARY CEREAL MIX</h1><p>Customer Ordering &amp; Sales Management System</p></header>
 <main>
-<section id="configSection" class="card">
-<h2>System Configuration</h2>
-<p>Enter your Firebase Web App configuration details.</p>
-<div class="grid">
-<div><label>API Key</label><input id="apiKey" autocomplete="off" placeholder="Firebase API Key"></div>
-<div><label>Auth Domain</label><input id="authDomain" placeholder="your-project.firebaseapp.com"></div>
-<div><label>Project ID</label><input id="projectId" placeholder="Firebase Project ID"></div>
-<div><label>Storage Bucket</label><input id="storageBucket" placeholder="Storage Bucket"></div>
-<div><label>Messaging Sender ID</label><input id="messagingSenderId" placeholder="Sender ID"></div>
-<div><label>App ID</label><input id="appId" placeholder="Firebase App ID"></div>
-</div>
-<button id="saveConfig" type="button">Save Configuration &amp; Connect</button>
-<button id="clearConfig" type="button" class="secondary">Clear Saved Configuration</button>
-<p id="configMessage" class="status"></p>
-</section>
+<section id="connectionStatus" class="card" aria-live="polite">Connecting securely to Mary Cereal...</section>
 
 <section id="loginSection" class="card hidden">
 <h2>Customer / Admin Login</h2>
@@ -127,6 +113,14 @@ const ADMIN_UID="BzTy6OPheYNFPfhEBgRZavmm0cu2";
 const CLOUDINARY_NAME="d5jjbbjp";
 const CLOUDINARY_PRESET="mary_cereal_upload";
 const ORDER_EMAIL_WEB_APP_URL="https://script.google.com/macros/s/AKfycbybsrZ55ZeUZshy0sVUYVveK3TbNCjhjCz5utJ8umaY3WxSKgodph6w25CNOifHGRYd_A/exec";
+const FIREBASE_CONFIG={
+ apiKey:"AIzaSyAHW5gA9zPVtOm1S8xYp0JhRXXprtyOxNA",
+ authDomain:"mary-cereal-mix.firebaseapp.com",
+ projectId:"mary-cereal-mix",
+ storageBucket:"mary-cereal-mix.firebasestorage.app",
+ messagingSenderId:"108550919620",
+ appId:"1:108550919620:web:23ccc6c818165870870091"
+};
 let app=null,auth=null,db=null,currentUser=null,me=null,isAdmin=false,products=[],customers=[],confirmedOrders=[];
 let authListenerStarted=false;
 
@@ -137,45 +131,29 @@ function err(e){
  const m={"auth/invalid-credential":"Incorrect email or password.","auth/email-already-in-use":"This email already has an account.","auth/weak-password":"Password must contain at least 6 characters.","auth/invalid-email":"Enter a valid email address.","auth/too-many-requests":"Too many attempts. Try again later.","auth/network-request-failed":"Network problem. Check your internet connection.","permission-denied":"Permission denied. Check your Firestore security rules."};
  return m[e.code]||e.message||"Something went wrong.";
 }
-function setConfigMessage(message,isError=false){$("configMessage").textContent=message;$("configMessage").className="status "+(isError?"err":"ok")}
-function readConfig(){return {apiKey:$("apiKey").value.trim(),authDomain:$("authDomain").value.trim(),projectId:$("projectId").value.trim(),storageBucket:$("storageBucket").value.trim(),messagingSenderId:$("messagingSenderId").value.trim(),appId:$("appId").value.trim()}}
-function validConfig(c){return Object.values(c).every(Boolean)}
-function fillConfig(c){for(const k of ["apiKey","authDomain","projectId","storageBucket","messagingSenderId","appId"])$(k).value=c[k]||""}
-
 async function connectFirebase(){
- const c=readConfig();
- if(!validConfig(c)){setConfigMessage("Please complete all six Firebase fields.",true);return}
- const btn=$("saveConfig");btn.disabled=true;btn.textContent="Connecting...";
+ const status=$("connectionStatus");
  try{
-  localStorage.setItem("marySecureConfig",JSON.stringify(c));
-  if(!app){app=initializeApp(c);auth=getAuth(app);db=getFirestore(app)}
-  setConfigMessage("Firebase initialized. Checking sign-in...");
-  show("configSection",false);
+  if(!app){app=initializeApp(FIREBASE_CONFIG);auth=getAuth(app);db=getFirestore(app)}
+  status.textContent="Connected. Checking your account...";
   if(!authListenerStarted){
    authListenerStarted=true;
    onAuthStateChanged(auth,async user=>{
     currentUser=user;
-    if(!user){me=null;isAdmin=false;show("appSection",false);show("registerSection",false);show("loginSection",true);return}
+    if(!user){
+     me=null;isAdmin=false;show("appSection",false);show("registerSection",false);show("loginSection",true);
+     status.classList.add("hidden");return;
+    }
+    status.classList.add("hidden");
     await loadUserProfile(user);
    });
   }
-  show("loginSection",true);
-  setConfigMessage("Connected successfully.");
  }catch(e){
-  show("configSection",true);
-  setConfigMessage("Connection failed: "+err(e),true);
- }finally{btn.disabled=false;btn.textContent="Save Configuration & Connect"}
+  status.textContent="Unable to connect to Mary Cereal. Please check your internet connection or contact the administrator.";
+  console.error("Firebase connection failed:",e);
+ }
 }
-$("saveConfig").addEventListener("click",connectFirebase);
-$("clearConfig").addEventListener("click",()=>{
- localStorage.removeItem("marySecureConfig");
- fillConfig({});
- setConfigMessage("Saved configuration cleared.");
-});
-try{
- const saved=localStorage.getItem("marySecureConfig");
- if(saved){const c=JSON.parse(saved);fillConfig(c);connectFirebase()}
-}catch(e){setConfigMessage("Saved configuration could not be read. Enter it again.",true)}
+connectFirebase();
 
 function openPage(id){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));show(id)}
 document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
@@ -211,7 +189,7 @@ async function loadUserProfile(user){
   const snap=await getDoc(doc(db,"users",user.uid));
   if(!snap.exists()){alert("Your login exists, but your customer profile is missing. Contact the administrator.");await signOut(auth);return}
   me=snap.data();isAdmin=user.uid===ADMIN_UID&&me.role==="admin";
-  show("configSection",false);show("loginSection",false);show("registerSection",false);show("appSection",true);
+  show("loginSection",false);show("registerSection",false);show("appSection",true);
   $("welcome").textContent="Welcome, "+(me.name||user.email);
   $("accountInfo").textContent=isAdmin?"Administrator":(me.accountType||"Customer")+(me.accountType==="wholesale"?" | Wholesale status: "+(me.wholesaleStatus||"pending"):"");
   show("adminNav",isAdmin);show("customerNav",!isAdmin);
