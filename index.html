@@ -5,117 +5,318 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#174b3a">
 <title>Mary Cereal Mix</title>
+
 <style>
 :root{--g:#174b3a;--g2:#246b50;--bg:#f2f7f3;--line:#dce5de;--red:#b83232;--gold:#d5a52e}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#25352b}
-header{background:var(--g);color:#fff;text-align:center;padding:20px}header h1{margin:0;font-size:25px}header p{margin:7px 0 0}
-main{max-width:1150px;margin:20px auto;padding:12px}.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px #0000000c}
-h2,h3{color:var(--g)}input,select,textarea,button{width:100%;padding:12px;margin:6px 0;border:1px solid var(--line);border-radius:7px;font-size:15px}
-textarea{min-height:75px}button{background:var(--g);color:white;border:0;font-weight:bold;cursor:pointer}button:disabled{opacity:.6;cursor:wait}
-button.secondary{background:#64746a}button.danger{background:var(--red)}button.gold{background:var(--gold);color:#222}
-button.small{width:auto;padding:8px 12px;font-size:13px;margin:3px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.hidden{display:none!important}.nav{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}.nav button{width:auto;flex:1;min-width:105px}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{background:#edf4ef}
-.tablewrap{overflow-x:auto}.stat{background:#edf5ef;border-left:4px solid var(--g);padding:15px;border-radius:7px}.stat strong{font-size:22px;display:block;margin-top:6px}
-.badge{display:inline-block;background:#e8f1e9;padding:5px 8px;border-radius:20px;font-size:12px}.notice{padding:12px;background:#fff8df;border-radius:7px;font-size:13px}
-.productImage{width:90px;height:90px;object-fit:cover;border-radius:8px}label{font-weight:bold;font-size:13px}footer{text-align:center;padding:20px;color:#68766c;font-size:12px}
-.status{font-size:13px;margin-top:10px;white-space:pre-wrap}.ok{color:#176b3c}.err{color:#b83232}
-@media(max-width:600px){main{padding:8px}.card{padding:13px}th,td{padding:7px;font-size:12px}}
-@media print{header,#adminNav,#customerNav,button{display:none!important}body{background:white}.card{box-shadow:none}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#25352b}
+header{background:var(--g);color:#fff;text-align:center;padding:20px}
+header h1{margin:0;font-size:25px}
+header p{margin:7px 0 0}
+main{max-width:1150px;margin:20px auto;padding:12px}
+.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px #0000000c}
+h2,h3{color:var(--g)}
+input,select,textarea,button{width:100%;padding:12px;margin:6px 0;border:1px solid var(--line);border-radius:7px;font-size:15px}
+textarea{min-height:75px}
+button{background:var(--g);color:white;border:0;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+button.secondary{background:#64746a}
+button.danger{background:var(--red)}
+button.gold{background:var(--gold);color:#222}
+button.small{width:auto;padding:8px 12px;font-size:13px;margin:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.hidden{display:none!important}
+.nav{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}
+.nav button{width:auto;flex:1;min-width:105px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+th{background:#edf4ef}
+.tablewrap{overflow-x:auto}
+.stat{background:#edf5ef;border-left:4px solid var(--g);padding:15px;border-radius:7px}
+.stat strong{font-size:22px;display:block;margin-top:6px}
+.badge{display:inline-block;background:#e8f1e9;padding:5px 8px;border-radius:20px;font-size:12px}
+.notice{padding:12px;background:#fff8df;border-radius:7px;font-size:13px}
+.productImage{width:90px;height:90px;object-fit:cover;border-radius:8px}
+label{font-weight:bold;font-size:13px}
+footer{text-align:center;padding:20px;color:#68766c;font-size:12px}
+.status{font-size:13px;margin-top:10px;white-space:pre-wrap}
+.ok{color:#176b3c}
+.err{color:#b83232}
+@media(max-width:600px){
+main{padding:8px}
+.card{padding:13px}
+th,td{padding:7px;font-size:12px}
+}
+@media print{
+header,#adminNav,#customerNav,button{display:none!important}
+body{background:white}
+.card{box-shadow:none}
+}
 </style>
+
 <link rel="manifest" href="./manifest.webmanifest">
+
 <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./sw.js").catch(function (error) {
-      console.error("Service worker registration failed:", error);
-    });
+ window.addEventListener("load", function () {
+  navigator.serviceWorker.register("./sw.js").catch(function(error) {
+   console.error("Service worker registration failed:",error);
   });
+ });
 }
 </script>
 </head>
+
 <body>
-<header><h1>MARY CEREAL MIX</h1><p>Customer Ordering &amp; Sales Management System</p></header>
+
+<header>
+<h1>MARY CEREAL MIX</h1>
+<p>Customer Ordering &amp; Sales Management System</p>
+</header>
+
 <main>
-<section id="connectionStatus" class="card" aria-live="polite">Connecting securely to Mary Cereal...</section>
+
+<section id="connectionStatus" class="card" aria-live="polite">
+Connecting securely to Mary Cereal...
+</section>
 
 <section id="loginSection" class="card hidden">
 <h2>Customer / Admin Login</h2>
-<label>Email Address</label><input id="email" type="email" placeholder="Enter email">
-<label>Password</label><input id="password" type="password" placeholder="Enter password">
-<button id="loginBtn">Login</button><button id="resetPassword" class="secondary">Forgot Password?</button>
-<hr><h3>New Customer?</h3><button id="showRegister" class="gold">Create Customer Account</button>
+
+<label>Email Address</label>
+<input id="email" type="email" placeholder="Enter email">
+
+<label>Password</label>
+<input id="password" type="password" placeholder="Enter password">
+
+<button id="loginBtn">Login</button>
+<button id="resetPassword" class="secondary">Forgot Password?</button>
+
+<hr>
+<h3>New Customer?</h3>
+<button id="showRegister" class="gold">Create Customer Account</button>
 </section>
 
 <section id="registerSection" class="card hidden">
 <h2>Customer Registration</h2>
-<label>Full Name</label><input id="regName" placeholder="Full name">
-<label>Phone Number</label><input id="regPhone" placeholder="Phone number">
-<label>Email Address</label><input id="regEmail" type="email" placeholder="Email address">
-<label>Password</label><input id="regPassword" type="password" placeholder="Minimum 6 characters">
-<label>Customer Type</label><select id="regAccountType"><option value="retail">Retail Customer</option><option value="wholesale">Wholesale Customer</option></select>
-<button id="registerBtn">Register Account</button><button id="backToLogin" class="secondary">Back to Login</button>
-<p class="notice">Wholesale accounts require administrator approval before wholesale prices are available.</p>
+
+<label>Full Name</label>
+<input id="regName" placeholder="Full name">
+
+<label>Phone Number</label>
+<input id="regPhone" placeholder="Phone number">
+
+<label>Email Address</label>
+<input id="regEmail" type="email" placeholder="Email address">
+
+<label>Password</label>
+<input id="regPassword" type="password" placeholder="Minimum 6 characters">
+
+<label>Customer Type</label>
+<select id="regAccountType">
+<option value="retail">Retail Customer</option>
+<option value="wholesale">Wholesale Customer</option>
+</select>
+
+<button id="registerBtn">Register Account</button>
+<button id="backToLogin" class="secondary">Back to Login</button>
+
+<p class="notice">
+Wholesale accounts require administrator approval before wholesale prices are available.
+</p>
 </section>
 
 <section id="appSection" class="hidden">
-<div class="card"><h3 id="welcome"></h3><p id="accountInfo"></p><button id="logoutBtn" class="danger">Logout</button></div>
-<div id="customerNav" class="nav"><button data-page="catalogPage">Products &amp; Order</button><button data-page="ordersPage">My Orders</button></div>
-<div id="adminNav" class="nav hidden">
-<button data-page="adminDashboard">Dashboard</button><button data-page="adminOrders">Order Requests</button><button data-page="adminProducts">Products &amp; Prices</button><button data-page="adminCustomers">Customers</button><button data-page="adminPayments">Payments &amp; Debts</button><button data-page="adminReports">Sales Reports</button>
+
+<div class="card">
+<h3 id="welcome"></h3>
+<p id="accountInfo"></p>
+<button id="logoutBtn" class="danger">Logout</button>
 </div>
 
-<section id="catalogPage" class="page card"><h2>Available Products</h2><p id="priceMessage"></p><div id="catalogList" class="grid"></div>
-<label>Order Notes</label><textarea id="orderNotes" placeholder="Additional instructions"></textarea><button id="submitOrder">Submit Order Request</button></section>
-<section id="ordersPage" class="page card hidden"><h2>My Order History</h2><button id="refreshMyOrders" class="secondary">Refresh Orders</button><div id="myOrders"></div></section>
+<div id="customerNav" class="nav">
+<button data-page="catalogPage">Products &amp; Order</button>
+<button data-page="ordersPage">My Orders</button>
+</div>
 
-<section id="adminDashboard" class="page card hidden"><h2>Administrator Dashboard</h2><div class="grid">
-<div class="stat">Total Customers<strong id="totalCustomers">0</strong></div><div class="stat">Order Requests<strong id="totalRequests">0</strong></div>
-<div class="stat">Confirmed Orders<strong id="totalConfirmed">0</strong></div><div class="stat">Outstanding Debt<strong id="totalDebt">GH₵0.00</strong></div>
-<div class="stat">Total Sales<strong id="totalSales">GH₵0.00</strong></div><div class="stat">Total Payments<strong id="totalPayments">GH₵0.00</strong></div></div>
-<button id="refreshDashboard" class="secondary">Refresh Dashboard</button></section>
+<div id="adminNav" class="nav hidden">
+<button data-page="adminDashboard">Dashboard</button>
+<button data-page="adminOrders">Order Requests</button>
+<button data-page="adminProducts">Products &amp; Prices</button>
+<button data-page="adminCustomers">Customers</button>
+<button data-page="adminPayments">Payments &amp; Debts</button>
+<button data-page="adminReports">Sales Reports</button>
+</div>
 
-<section id="adminOrders" class="page card hidden"><h2>Customer Order Requests</h2><button id="refreshRequests" class="secondary">Refresh Requests</button><div id="requestsList"></div></section>
+<section id="catalogPage" class="page card">
+<h2>Available Products</h2>
+<p id="priceMessage"></p>
+<div id="catalogList" class="grid"></div>
 
-<section id="adminProducts" class="page card hidden"><h2>Product Management</h2>
-<label>Product Name</label><input id="productName" placeholder="Product name">
-<label>Unit / Package</label><input id="productUnit" placeholder="e.g. 1kg, 500g, bag">
-<label>Description</label><textarea id="productDescription"></textarea>
-<label>Product Picture</label><input id="productImage" type="file" accept="image/*">
-<label>Retail Price (GH₵)</label><input id="retailPrice" type="number" min="0" step="0.01">
-<label>Wholesale Price (GH₵)</label><input id="wholesalePrice" type="number" min="0" step="0.01">
-<button id="addProduct">Add Product</button><hr><h3>Existing Products</h3><div id="productsList"></div></section>
+<label>Order Notes</label>
+<textarea id="orderNotes" placeholder="Additional instructions"></textarea>
 
-<section id="adminCustomers" class="page card hidden"><h2>Customer Management</h2><button id="refreshCustomers" class="secondary">Refresh Customers</button><div id="customersList"></div></section>
+<button id="submitOrder">Submit Order Request</button>
+</section>
 
-<section id="adminPayments" class="page card hidden"><h2>Record Customer Payment</h2>
-<label>Select Customer</label><select id="paymentCustomer"></select><label>Confirmed Order</label><select id="paymentOrder"></select>
-<label>Amount Paid (GH₵)</label><input id="paymentAmount" type="number" min="0" step="0.01">
-<label>Payment Method</label><select id="paymentMethod"><option>Cash</option><option>Mobile Money</option><option>Bank Transfer</option><option>Other</option></select>
-<label>Payment Reference / Notes</label><input id="paymentReference" placeholder="Optional reference"><button id="recordPayment">Record Payment</button>
-<hr><h3>Confirmed Orders &amp; Balances</h3><div id="debtsList"></div></section>
+<section id="ordersPage" class="page card hidden">
+<h2>My Order History</h2>
+<button id="refreshMyOrders" class="secondary">Refresh Orders</button>
+<div id="myOrders"></div>
+</section>
 
-<section id="adminReports" class="page card hidden"><h2>Sales &amp; Payment Reports</h2><div class="grid">
-<div class="stat">Confirmed Sales<strong id="reportSales">GH₵0.00</strong></div><div class="stat">Money Received<strong id="reportReceived">GH₵0.00</strong></div><div class="stat">Outstanding Debt<strong id="reportDebt">GH₵0.00</strong></div></div>
-<h3>Sales by Customer</h3><div id="customerSalesReport"></div><h3>Payment Records</h3><div id="paymentReport"></div>
-<button id="printReport">Print Report</button><button id="refreshReports" class="secondary">Refresh Reports</button></section>
+<section id="adminDashboard" class="page card hidden">
+<h2>Administrator Dashboard</h2>
+
+<div class="grid">
+<div class="stat">Total Customers<strong id="totalCustomers">0</strong></div>
+<div class="stat">Order Requests<strong id="totalRequests">0</strong></div>
+<div class="stat">Confirmed Orders<strong id="totalConfirmed">0</strong></div>
+<div class="stat">Outstanding Debt<strong id="totalDebt">GH₵0.00</strong></div>
+<div class="stat">Total Sales<strong id="totalSales">GH₵0.00</strong></div>
+<div class="stat">Total Payments<strong id="totalPayments">GH₵0.00</strong></div>
+</div>
+
+<button id="refreshDashboard" class="secondary">Refresh Dashboard</button>
+</section>
+
+<section id="adminOrders" class="page card hidden">
+<h2>Customer Order Requests</h2>
+<button id="refreshRequests" class="secondary">Refresh Requests</button>
+<div id="requestsList"></div>
+</section>
+
+<section id="adminProducts" class="page card hidden">
+<h2>Product Management</h2>
+
+<label>Product Name</label>
+<input id="productName" placeholder="Product name">
+
+<label>Unit / Package</label>
+<input id="productUnit" placeholder="e.g. 1kg, 500g, bag">
+
+<label>Description</label>
+<textarea id="productDescription"></textarea>
+
+<label>Product Picture</label>
+<input id="productImage" type="file" accept="image/*">
+
+<label>Retail Price (GH₵)</label>
+<input id="retailPrice" type="number" min="0" step="0.01">
+
+<label>Wholesale Price (GH₵)</label>
+<input id="wholesalePrice" type="number" min="0" step="0.01">
+
+<button id="addProduct">Add Product</button>
+
+<hr>
+<h3>Existing Products</h3>
+<div id="productsList"></div>
+</section>
+
+<section id="adminCustomers" class="page card hidden">
+<h2>Customer Management</h2>
+<button id="refreshCustomers" class="secondary">Refresh Customers</button>
+<div id="customersList"></div>
+</section>
+
+<section id="adminPayments" class="page card hidden">
+<h2>Record Customer Payment</h2>
+
+<label>Select Customer</label>
+<select id="paymentCustomer"></select>
+
+<label>Confirmed Order</label>
+<select id="paymentOrder"></select>
+
+<label>Amount Paid (GH₵)</label>
+<input id="paymentAmount" type="number" min="0" step="0.01">
+
+<label>Payment Method</label>
+<select id="paymentMethod">
+<option>Cash</option>
+<option>Mobile Money</option>
+<option>Bank Transfer</option>
+<option>Other</option>
+</select>
+
+<label>Payment Reference / Notes</label>
+<input id="paymentReference" placeholder="Optional reference">
+
+<button id="recordPayment">Record Payment</button>
+
+<hr>
+<h3>Confirmed Orders &amp; Balances</h3>
+<div id="debtsList"></div>
+</section>
+
+<section id="adminReports" class="page card hidden">
+<h2>Sales &amp; Payment Reports</h2>
+
+<div class="grid">
+<div class="stat">Confirmed Sales<strong id="reportSales">GH₵0.00</strong></div>
+<div class="stat">Money Received<strong id="reportReceived">GH₵0.00</strong></div>
+<div class="stat">Outstanding Debt<strong id="reportDebt">GH₵0.00</strong></div>
+</div>
+
+<h3>Sales by Customer</h3>
+<div id="customerSalesReport"></div>
+
+<h3>Payment Records</h3>
+<div id="paymentReport"></div>
+
+<button id="printReport">Print Report</button>
+<button id="refreshReports" class="secondary">Refresh Reports</button>
+</section>
+
 </section>
 </main>
-<footer>Mary Cereal Mix | Customer Ordering &amp; Sales Management</footer>
+
+<footer>
+Mary Cereal Mix | Customer Ordering &amp; Sales Management
+</footer>
 
 <script type="module">
+
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,doc,getDoc,getDocs,setDoc,addDoc,updateDoc,deleteDoc,query,where,serverTimestamp,runTransaction} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const $=id=>document.getElementById(id);
-const ADMIN_UID="BzTy6OPheYNFPfhEBgRZavmm0cu2";
-const CLOUDINARY_NAME="d5jjbbjp";
-const CLOUDINARY_PRESET="mary_cereal_upload";
-const ORDER_EMAIL_WEB_APP_URL="https://script.google.com/macros/s/AKfycbybsrZ55ZeUZshy0sVUYVveK3TbNCjhjCz5utJ8umaY3WxSKgodph6w25CNOifHGRYd_A/exec";
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-/* Corrected Firebase configuration */
-const FIREBASE_CONFIG={
+import {
+getFirestore,
+collection,
+doc,
+getDoc,
+getDocs,
+setDoc,
+addDoc,
+updateDoc,
+deleteDoc,
+query,
+where,
+serverTimestamp,
+runTransaction
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const $ = id => document.getElementById(id);
+
+const ADMIN_UID = "BzTy6OPheYNFPfhEBgRZavmm0cu2";
+
+const CLOUDINARY_NAME = "d5jjbbjp";
+const CLOUDINARY_PRESET = "mary_cereal_upload";
+
+const ORDER_EMAIL_WEB_APP_URL =
+"https://script.google.com/macros/s/AKfycbybsrZ55ZeUZshy0sVUYVveK3TbNCjhjCz5utJ8umaY3WxSKgodph6w25CNOifHGRYd_A/exec";
+
+const FIREBASE_CONFIG = {
  apiKey:"AIzaSyAH5WgA9zPVtOm1S8xYp0JhRXXprtyOxNA",
  authDomain:"mary-cereal-mix.firebaseapp.com",
  projectId:"mary-cereal-mix",
@@ -124,120 +325,233 @@ const FIREBASE_CONFIG={
  appId:"1:108550919620:web:23ccc6c818165870870091"
 };
 
-let app=null,auth=null,db=null,currentUser=null,me=null,isAdmin=false,products=[],customers=[],confirmedOrders=[];
-let authListenerStarted=false;
+let app = null;
+let auth = null;
+let db = null;
+let currentUser = null;
+let me = null;
+let isAdmin = false;
+let products = [];
+let customers = [];
+let confirmedOrders = [];
+let authListenerStarted = false;
 
-function show(id,on=true){$(id)?.classList.toggle("hidden",!on)}
-function money(v){return "GH₵"+Number(v||0).toFixed(2)}
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function err(e){
- const m={
- "auth/invalid-credential":"Incorrect email or password.",
- "auth/email-already-in-use":"This email already has an account.",
- "auth/weak-password":"Password must contain at least 6 characters.",
- "auth/invalid-email":"Enter a valid email address.",
- "auth/too-many-requests":"Too many attempts. Try again later.",
- "auth/network-request-failed":"Network problem. Check your internet connection.",
- "permission-denied":"Permission denied. Check your Firestore security rules."
- };
- return m[e.code]||e.message||"Something went wrong.";
+function show(id,on=true) {
+ $(id)?.classList.toggle("hidden",!on);
 }
 
-async function connectFirebase(){
+function money(v) {
+ return "GH₵"+Number(v||0).toFixed(2);
+}
+
+function esc(v) {
+ return String(v??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#039;"
+ }[c]));
+}
+
+function err(e) {
+ const messages = {
+  "auth/invalid-credential":"Incorrect email or password.",
+  "auth/user-not-found":"No account found with this email.",
+  "auth/wrong-password":"Incorrect password.",
+  "auth/email-already-in-use":"This email already has an account.",
+  "auth/weak-password":"Password must contain at least 6 characters.",
+  "auth/invalid-email":"Enter a valid email address.",
+  "auth/too-many-requests":"Too many attempts. Try again later.",
+  "auth/network-request-failed":"Network problem. Check your internet connection.",
+  "auth/api-key-not-valid":"Firebase API key is invalid. Check the Firebase configuration.",
+  "permission-denied":"Permission denied. Check your Firestore security rules."
+ };
+
+ return messages[e.code] || e.message || "Something went wrong.";
+}
+
+function connectionError(e) {
+ console.error("Firebase error:",e);
+
  const status=$("connectionStatus");
- try{
-  if(!app){
-   app=initializeApp(FIREBASE_CONFIG);
-   auth=getAuth(app);
-   db=getFirestore(app);
-  }
+ status.classList.remove("hidden");
+ status.classList.add("err");
+
+ status.textContent =
+ "Firebase connection failed.\n" +
+ "Error: " + (e.code || "Unknown") +
+ "\nDetails: " + (e.message || String(e));
+}
+
+
+/* FIREBASE CONNECTION */
+
+async function connectFirebase() {
+ const status=$("connectionStatus");
+
+ try {
+  app=initializeApp(FIREBASE_CONFIG);
+  auth=getAuth(app);
+  db=getFirestore(app);
+
   status.textContent="Connected. Checking your account...";
-  if(!authListenerStarted){
-   authListenerStarted=true;
-   onAuthStateChanged(auth,async user=>{
+
+  if(authListenerStarted) return;
+
+  authListenerStarted=true;
+
+  onAuthStateChanged(
+   auth,
+   async user => {
     currentUser=user;
-    if(!user){
-     me=null;
-     isAdmin=false;
-     show("appSection",false);
-     show("registerSection",false);
-     show("loginSection",true);
-     status.classList.add("hidden");
-     return;
+
+    try {
+     if(!user) {
+      me=null;
+      isAdmin=false;
+
+      show("appSection",false);
+      show("registerSection",false);
+      show("loginSection",true);
+
+      status.classList.add("hidden");
+      return;
+     }
+
+     status.classList.remove("hidden");
+     status.classList.remove("err");
+     status.textContent="Loading your account...";
+
+     await loadUserProfile(user);
+
+     if(currentUser && currentUser.uid===user.uid) {
+      status.classList.add("hidden");
+     }
+
+    } catch(e) {
+     connectionError(e);
     }
-    status.classList.add("hidden");
-    await loadUserProfile(user);
-   });
-  }
- }catch(e){
-  status.textContent="Unable to connect to Mary Cereal. Please check your internet connection or contact the administrator.";
-  console.error("Firebase connection failed:",e);
+   },
+   error => connectionError(error)
+  );
+
+ } catch(e) {
+  connectionError(e);
  }
 }
+
 connectFirebase();
 
-function openPage(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+
+/* NAVIGATION */
+
+function openPage(id) {
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.add("hidden");
+ });
  show(id);
 }
-document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
+
+document.querySelectorAll("[data-page]").forEach(b=>{
+ b.addEventListener("click",()=>openPage(b.dataset.page));
+});
+
+
+/* REGISTRATION AND LOGIN */
 
 $("showRegister").onclick=()=>{
  show("loginSection",false);
  show("registerSection",true);
 };
+
 $("backToLogin").onclick=()=>{
  show("registerSection",false);
  show("loginSection",true);
 };
 
 $("loginBtn").onclick=async()=>{
- if(!auth){alert("Firebase is not connected. Please try again.");return}
+ if(!auth) {
+  alert("Firebase is not connected. Please wait and try again.");
+  return;
+ }
+
  const email=$("email").value.trim();
  const password=$("password").value;
- if(!email||!password){alert("Enter your email and password.");return}
- try{
+
+ if(!email||!password) {
+  alert("Enter your email and password.");
+  return;
+ }
+
+ $("loginBtn").disabled=true;
+
+ try {
   await signInWithEmailAndPassword(auth,email,password);
- }catch(e){
+ } catch(e) {
   alert(err(e));
+ } finally {
+  $("loginBtn").disabled=false;
  }
 };
 
 $("resetPassword").onclick=async()=>{
- if(!auth){alert("Firebase is not connected. Please try again.");return}
+ if(!auth) {
+  alert("Firebase is not connected.");
+  return;
+ }
+
  const email=$("email").value.trim();
- if(!email){alert("Enter your registered email first.");return}
- try{
+
+ if(!email) {
+  alert("Enter your registered email first.");
+  return;
+ }
+
+ try {
   await sendPasswordResetEmail(auth,email);
   alert("Password reset email sent. Check inbox and spam folder.");
- }catch(e){
+ } catch(e) {
   alert(err(e));
  }
 };
 
 $("registerBtn").onclick=async()=>{
- if(!auth||!db){alert("Firebase is not connected. Please try again.");return}
+ if(!auth||!db) {
+  alert("Firebase is not connected.");
+  return;
+ }
+
  const name=$("regName").value.trim();
  const phone=$("regPhone").value.trim();
  const email=$("regEmail").value.trim();
  const password=$("regPassword").value;
  const accountType=$("regAccountType").value;
 
- if(!name||!phone||!email||!password){
+ if(!name||!phone||!email||!password) {
   alert("Complete all registration fields.");
   return;
  }
- if(password.length<6){
+
+ if(password.length<6) {
   alert("Password must contain at least 6 characters.");
   return;
  }
 
- const btn=$("registerBtn");
- btn.disabled=true;
- btn.textContent="Creating Account...";
+ $("registerBtn").disabled=true;
 
- try{
+ let createdUser=null;
+
+ try {
   const cred=await createUserWithEmailAndPassword(auth,email,password);
+  createdUser=cred.user;
+
+  /*
+   * Save the Firestore profile immediately.
+   * The profile loader below retries briefly if the authentication
+   * listener runs before this document has been created.
+   */
+
   await setDoc(doc(db,"users",cred.user.uid),{
    name,
    phone,
@@ -247,83 +561,215 @@ $("registerBtn").onclick=async()=>{
    role:"customer",
    createdAt:serverTimestamp()
   });
-  alert(accountType==="wholesale"?"Account created. Await administrator approval.":"Customer account created.");
- }catch(e){
-  alert(err(e));
- }finally{
-  btn.disabled=false;
-  btn.textContent="Register Account";
+
+  alert(
+   accountType==="wholesale"
+    ? "Account created. Await administrator approval."
+    : "Customer account created successfully."
+  );
+
+ } catch(e) {
+  console.error("Registration error:",e);
+
+  if(createdUser) {
+   alert(
+    "Your login account was created, but your customer profile could not be saved.\n\n"+
+    err(e)+
+    "\n\nPlease contact the administrator before registering again."
+   );
+  } else {
+   alert(err(e));
+  }
+
+ } finally {
+  $("registerBtn").disabled=false;
  }
 };
 
 $("logoutBtn").onclick=()=>signOut(auth);
 
-async function loadUserProfile(user){
- try{
-  const snap=await getDoc(doc(db,"users",user.uid));
-  if(!snap.exists()){
-   alert("Your login exists, but your customer profile is missing. Contact the administrator.");
+
+/* LOAD USER PROFILE */
+
+async function loadUserProfile(user) {
+ try {
+  let snap=null;
+
+  /*
+   * Retry briefly to handle the small timing gap between
+   * Firebase Authentication account creation and Firestore profile creation.
+   */
+
+  for(let attempt=0;attempt<6;attempt++) {
+   snap=await getDoc(doc(db,"users",user.uid));
+
+   if(snap.exists()) break;
+
+   await new Promise(resolve=>setTimeout(resolve,500));
+  }
+
+  if(!snap || !snap.exists()) {
+   if(user.uid===ADMIN_UID) {
+    alert("Administrator profile is missing in Firestore. Please check the users collection.");
+   } else {
+    alert("Your login exists, but your customer profile is missing. Contact the administrator.");
+   }
+
    await signOut(auth);
    return;
   }
+
   me=snap.data();
-  isAdmin=user.uid===ADMIN_UID&&me.role==="admin";
+
+  /*
+   * The configured administrator UID is authoritative.
+   * This avoids locking the administrator out because of
+   * a missing or incorrectly written role field.
+   */
+
+  isAdmin=user.uid===ADMIN_UID;
+
   show("loginSection",false);
   show("registerSection",false);
   show("appSection",true);
+
   $("welcome").textContent="Welcome, "+(me.name||user.email);
-  $("accountInfo").textContent=isAdmin?"Administrator":(me.accountType||"Customer")+(me.accountType==="wholesale"?" | Wholesale status: "+(me.wholesaleStatus||"pending"):"");
+
+  $("accountInfo").textContent=
+   isAdmin
+    ? "Administrator"
+    : (me.accountType||"Customer")+
+      (me.accountType==="wholesale"
+       ? " | Wholesale status: "+(me.wholesaleStatus||"pending")
+       : "");
+
   show("adminNav",isAdmin);
   show("customerNav",!isAdmin);
-  if(isAdmin){
+
+  if(isAdmin) {
    openPage("adminDashboard");
    await refreshAdmin();
-  }else{
+  } else {
    openPage("catalogPage");
    await loadCatalog();
    await loadMyOrders();
   }
- }catch(e){
-  alert(err(e));
+
+ } catch(e) {
+  console.error("Profile loading error:",e);
+  throw e;
  }
 }
 
-async function loadCatalog(){
- try{
+
+/* CUSTOMER CATALOG */
+
+async function loadCatalog() {
+ try {
   const s=await getDocs(collection(db,"products"));
-  products=s.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.active!==false);
+
+  products=s.docs
+   .map(d=>({id:d.id,...d.data()}))
+   .filter(p=>p.active!==false);
+
   const retail=me.accountType==="retail";
-  const wholesale=me.accountType==="wholesale"&&me.wholesaleStatus==="approved";
-  $("priceMessage").textContent=me.accountType==="wholesale"&&!wholesale?"Wholesale approval is pending. Prices will appear after approval.":"Choose products and quantities.";
+
+  const wholesale=
+   me.accountType==="wholesale" &&
+   me.wholesaleStatus==="approved";
+
+  $("priceMessage").textContent=
+   me.accountType==="wholesale"&&!wholesale
+    ? "Wholesale approval is pending. Prices will appear after approval."
+    : "Choose products and quantities.";
+
   const priceMap={};
-  if(retail||wholesale){
-   const ps=await getDocs(collection(db,retail?"retailPrices":"wholesalePrices"));
-   ps.forEach(d=>priceMap[d.id]=d.data());
+
+  if(retail||wholesale) {
+   const ps=await getDocs(
+    collection(db,retail?"retailPrices":"wholesalePrices")
+   );
+
+   ps.forEach(d=>{
+    priceMap[d.id]=d.data();
+   });
   }
+
   $("catalogList").innerHTML=products.map(p=>{
-   const price=(retail||wholesale)?priceMap[p.id]?.price:null;
-   return `<div class="card">${p.imageUrl?`<img class="productImage" src="${esc(p.imageUrl)}" alt="">`:""}<h3>${esc(p.name)}</h3><p>${esc(p.description||"")}</p><p>Unit: ${esc(p.unit||"")}</p><p><b>${price===null||price===undefined?"Price pending approval":money(price)}</b></p><label>Quantity</label><input type="number" min="0" step="1" class="quantityInput" data-id="${esc(p.id)}" data-name="${esc(p.name)}" data-unit="${esc(p.unit||"")}" data-price="${price??""}" value="0"></div>`;
+   const price=(retail||wholesale)
+    ? priceMap[p.id]?.price
+    : null;
+
+   return `
+    <div class="card">
+     ${p.imageUrl
+      ? `<img class="productImage" src="${esc(p.imageUrl)}" alt="">`
+      : ""
+     }
+
+     <h3>${esc(p.name)}</h3>
+     <p>${esc(p.description||"")}</p>
+     <p>Unit: ${esc(p.unit||"")}</p>
+
+     <p><b>
+      ${
+       price===null||price===undefined
+        ? "Price pending approval"
+        : money(price)
+      }
+     </b></p>
+
+     <label>Quantity</label>
+
+     <input
+      type="number"
+      min="0"
+      step="1"
+      class="quantityInput"
+      data-id="${esc(p.id)}"
+      data-name="${esc(p.name)}"
+      data-unit="${esc(p.unit||"")}"
+      data-price="${price??""}"
+      value="0"
+     >
+    </div>
+   `;
   }).join("")||"<p>No products available.</p>";
- }catch(e){
+
+ } catch(e) {
+  console.error(e);
   alert("Could not load products: "+err(e));
  }
 }
 
+
+/* CUSTOMER ORDER SUBMISSION */
+
 $("submitOrder").onclick=async()=>{
- if(!currentUser||!me)return;
+ if(!currentUser||!me) return;
+
  const items=[];
+
  document.querySelectorAll(".quantityInput").forEach(i=>{
   const q=Number(i.value);
-  if(q>0)items.push({
-   productId:i.dataset.id,
-   productName:i.dataset.name,
-   unit:i.dataset.unit,
-   quantity:q,
-   unitPrice:i.dataset.price===""?null:Number(i.dataset.price)
-  });
+
+  if(q>0) {
+   items.push({
+    productId:i.dataset.id,
+    productName:i.dataset.name,
+    unit:i.dataset.unit,
+    quantity:q,
+    unitPrice:i.dataset.price===""?null:Number(i.dataset.price)
+   });
+  }
  });
- if(!items.length){alert("Select at least one product.");return}
- try{
+
+ if(!items.length) {
+  alert("Select at least one product.");
+  return;
+ }
+
+ try {
   const orderData={
    customerUid:currentUser.uid,
    customerName:me.name||"",
@@ -334,15 +780,29 @@ $("submitOrder").onclick=async()=>{
    status:"awaiting_admin_review",
    createdAt:serverTimestamp()
   };
-  const orderRef=await addDoc(collection(db,"orderRequests"),orderData);
+
+  const orderRef=await addDoc(
+   collection(db,"orderRequests"),
+   orderData
+  );
+
   let emailAttempted=false;
-  try{
-   const itemLines=items.map(i=>`${i.productName} x ${i.quantity} ${i.unit||""}`).join("\n");
-   const total=items.reduce((sum,i)=>sum+(Number(i.unitPrice||0)*Number(i.quantity||0)),0);
+
+  try {
+   const itemLines=items.map(i=>
+    `${i.productName} x ${i.quantity} ${i.unit||""}`
+   ).join("\n");
+
+   const total=items.reduce((sum,i)=>
+    sum+(Number(i.unitPrice||0)*Number(i.quantity||0)),0
+   );
+
    await fetch(ORDER_EMAIL_WEB_APP_URL,{
     method:"POST",
     mode:"no-cors",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    headers:{
+     "Content-Type":"text/plain;charset=utf-8"
+    },
     body:JSON.stringify({
      orderId:orderRef.id,
      customerName:orderData.customerName,
@@ -351,53 +811,748 @@ $("submitOrder").onclick=async()=>{
      total:total.toFixed(2)
     })
    });
+
    emailAttempted=true;
-  }catch(emailError){
-   console.error("Order saved, but email notification request failed:",emailError);
+
+  } catch(emailError) {
+   console.error("Email notification failed:",emailError);
   }
-  alert(emailAttempted?"Order request submitted. An email notification request has been sent to the administrator.":"Order request saved, but the email notification could not be requested. Please contact the administrator.");
+
+  alert(
+   emailAttempted
+    ? "Order request submitted. An email notification request has been sent to the administrator."
+    : "Order request saved, but the email notification could not be requested. Please contact the administrator."
+  );
+
   $("orderNotes").value="";
-  document.querySelectorAll(".quantityInput").forEach(i=>i.value=0);
+
+  document.querySelectorAll(".quantityInput").forEach(i=>{
+   i.value=0;
+  });
+
   await loadMyOrders();
- }catch(e){
+
+ } catch(e) {
   alert("Order failed: "+err(e));
  }
 };
 
-async function loadMyOrders(){
- if(!currentUser)return;
- try{
-  const rq=await getDocs(query(collection(db,"orderRequests"),where("customerUid","==",currentUser.uid)));
-  const cq=await getDocs(query(collection(db,"confirmedOrders"),where("customerUid","==",currentUser.uid)));
-  $("myOrders").innerHTML=`<h3>Order Requests</h3>${rq.docs.map(d=>{
-   const o=d.data();
-   return `<div class="card"><b>Request:</b> ${esc(d.id)}<p>Status: <span class="badge">${esc(o.status)}</span></p>${(o.items||[]).map(i=>`<p>${esc(i.productName)} × ${Number(i.quantity)}</p>`).join("")}</div>`;
-  }).join("")||"<p>No requests yet.</p>"}<h3>Confirmed Orders</h3>${cq.docs.map(d=>{
-   const o=d.data();
-   return `<div class="card"><b>Order:</b> ${esc(d.id)}<p>Total: ${money(o.total)}</p><p>Paid: ${money(o.paid)}</p><p>Balance: ${money(o.balance)}</p></div>`;
-  }).join("")||"<p>No confirmed orders.</p>"}`;
- }catch(e){
+
+/* CUSTOMER ORDER HISTORY */
+
+async function loadMyOrders() {
+ if(!currentUser) return;
+
+ try {
+  const rq=await getDocs(
+   query(
+    collection(db,"orderRequests"),
+    where("customerUid","==",currentUser.uid)
+   )
+  );
+
+  const cq=await getDocs(
+   query(
+    collection(db,"confirmedOrders"),
+    where("customerUid","==",currentUser.uid)
+   )
+  );
+
+  $("myOrders").innerHTML=`
+   <h3>Order Requests</h3>
+
+   ${
+    rq.docs.map(d=>{
+     const o=d.data();
+
+     return `
+      <div class="card">
+       <b>Request:</b> ${esc(d.id)}
+       <p>Status: <span class="badge">${esc(o.status)}</span></p>
+
+       ${
+        (o.items||[]).map(i=>
+         `<p>${esc(i.productName)} × ${Number(i.quantity)}</p>`
+        ).join("")
+       }
+      </div>
+     `;
+    }).join("")||"<p>No requests yet.</p>"
+   }
+
+   <h3>Confirmed Orders</h3>
+
+   ${
+    cq.docs.map(d=>{
+     const o=d.data();
+
+     return `
+      <div class="card">
+       <b>Order:</b> ${esc(d.id)}
+       <p>Total: ${money(o.total)}</p>
+       <p>Paid: ${money(o.paid)}</p>
+       <p>Balance: ${money(o.balance)}</p>
+      </div>
+     `;
+    }).join("")||"<p>No confirmed orders.</p>"
+   }
+  `;
+
+ } catch(e) {
   $("myOrders").textContent=err(e);
  }
 }
+
 $("refreshMyOrders").onclick=loadMyOrders;
 
-async function refreshAdmin(){
- if(!isAdmin)return;
- await Promise.all([loadAdminRequests(),loadAdminProducts(),loadAdminCustomers(),loadDebts()]);
+
+/* ADMIN DASHBOARD */
+
+async function refreshAdmin() {
+ if(!isAdmin) return;
+
+ await Promise.all([
+  loadAdminRequests(),
+  loadAdminProducts(),
+  loadAdminCustomers(),
+  loadDebts()
+ ]);
+
  const [rq,co,pa]=await Promise.all([
   getDocs(collection(db,"orderRequests")),
   getDocs(collection(db,"confirmedOrders")),
   getDocs(collection(db,"payments"))
  ]);
- let sales=0,debt=0,received=0;
+
+ let sales=0;
+ let debt=0;
+ let received=0;
+
  co.forEach(d=>{
   sales+=Number(d.data().total||0);
   debt+=Number(d.data().balance||0);
  });
- pa.forEach(d=>received+=Number(d.data().amount||0));
+
+ pa.forEach(d=>{
+  received+=Number(d.data().amount||0);
+ });
+
  $("totalCustomers").textContent=customers.length;
  $("totalRequests").textContent=rq.size;
  $("totalConfirmed").textContent=co.size;
  $("totalDebt").textContent=money(debt);
- $("totalSales").
+ $("totalSales").textContent=money(sales);
+ $("totalPayments").textContent=money(received);
+
+ await loadReports();
+}
+
+$("refreshDashboard").onclick=refreshAdmin;
+
+
+/* ADMIN ORDER REQUESTS */
+
+async function loadAdminRequests() {
+ if(!isAdmin) return;
+
+ const s=await getDocs(collection(db,"orderRequests"));
+
+ const arr=s.docs
+  .map(d=>({id:d.id,...d.data()}))
+  .filter(o=>o.status==="awaiting_admin_review");
+
+ $("requestsList").innerHTML=arr.map(o=>`
+  <div class="card">
+   <h3>${esc(o.customerName||"Customer")}</h3>
+
+   <p>Phone: ${esc(o.customerPhone||"")}</p>
+   <p>Type: ${esc(o.accountType||"")}</p>
+   <p>Request: ${esc(o.id)}</p>
+
+   ${
+    (o.items||[]).map(i=>`
+     <p>
+      ${esc(i.productName)} —
+      ${Number(i.quantity)} ${esc(i.unit||"")}
+     </p>
+    `).join("")
+   }
+
+   <p>Notes: ${esc(o.notes||"")}</p>
+
+   <button class="small"
+    onclick="window.confirmOrder('${o.id}')">
+    Confirm Order
+   </button>
+
+   <button class="small danger"
+    onclick="window.rejectOrder('${o.id}')">
+    Reject Request
+   </button>
+  </div>
+ `).join("")||"<p>No pending requests.</p>";
+}
+
+$("refreshRequests").onclick=loadAdminRequests;
+
+window.rejectOrder=async id=>{
+ if(!isAdmin||!confirm("Reject this request?")) return;
+
+ try {
+  await updateDoc(doc(db,"orderRequests",id),{
+   status:"rejected"
+  });
+
+  await refreshAdmin();
+
+ } catch(e) {
+  alert(err(e));
+ }
+};
+
+
+/* CONFIRM ORDER */
+
+window.confirmOrder=async id=>{
+ if(!isAdmin) return;
+
+ try {
+  const ref=doc(db,"orderRequests",id);
+  const s=await getDoc(ref);
+
+  if(!s.exists()) {
+   throw Error("Request not found.");
+  }
+
+  const r=s.data();
+
+  if(r.status!=="awaiting_admin_review") {
+   throw Error("Request already processed.");
+  }
+
+  let total=0;
+
+  for(const i of r.items||[]) {
+   if(i.unitPrice===null||i.unitPrice===undefined) {
+    throw Error("Order has missing prices. Check the product price list.");
+   }
+
+   total+=Number(i.quantity)*Number(i.unitPrice);
+  }
+
+  if(!confirm("Confirm order for "+money(total)+"?")) return;
+
+  await runTransaction(db,async tx=>{
+   const fresh=await tx.get(ref);
+
+   if(
+    !fresh.exists()||
+    fresh.data().status!=="awaiting_admin_review"
+   ) {
+    throw Error("Request already processed.");
+   }
+
+   tx.set(doc(db,"confirmedOrders",id),{
+    requestId:id,
+    customerUid:r.customerUid,
+    customerName:r.customerName||"",
+    customerPhone:r.customerPhone||"",
+    accountType:r.accountType||"retail",
+    items:r.items||[],
+    total,
+    paid:0,
+    balance:total,
+    paymentStatus:"unpaid",
+    createdAt:serverTimestamp()
+   });
+
+   tx.update(ref,{
+    status:"confirmed"
+   });
+  });
+
+  alert("Order confirmed.");
+
+  await refreshAdmin();
+
+ } catch(e) {
+  alert(err(e));
+ }
+};
+
+
+/* PRODUCT IMAGE UPLOAD */
+
+async function uploadProductImage(file) {
+ if(!file) return "";
+
+ const fd=new FormData();
+
+ fd.append("file",file);
+ fd.append("upload_preset",CLOUDINARY_PRESET);
+
+ const res=await fetch(
+  `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`,
+  {
+   method:"POST",
+   body:fd
+  }
+ );
+
+ const data=await res.json();
+
+ if(!res.ok) {
+  throw Error(data.error?.message||"Image upload failed.");
+ }
+
+ return data.secure_url;
+}
+
+
+/* ADD PRODUCT */
+
+$("addProduct").onclick=async()=>{
+ if(!isAdmin) return;
+
+ const name=$("productName").value.trim();
+ const unit=$("productUnit").value.trim();
+ const description=$("productDescription").value.trim();
+ const retail=Number($("retailPrice").value);
+ const wholesale=Number($("wholesalePrice").value);
+ const file=$("productImage").files[0];
+
+ if(
+  !name||
+  !unit||
+  $("retailPrice").value===""||
+  $("wholesalePrice").value===""||
+  retail<0||
+  wholesale<0
+ ) {
+  alert("Enter product name, unit and both prices.");
+  return;
+ }
+
+ $("addProduct").disabled=true;
+
+ try {
+  const imageUrl=await uploadProductImage(file);
+
+  const p=await addDoc(collection(db,"products"),{
+   name,
+   unit,
+   description,
+   imageUrl,
+   active:true,
+   createdAt:serverTimestamp()
+  });
+
+  await setDoc(doc(db,"retailPrices",p.id),{
+   productId:p.id,
+   price:retail
+  });
+
+  await setDoc(doc(db,"wholesalePrices",p.id),{
+   productId:p.id,
+   price:wholesale
+  });
+
+  alert("Product saved.");
+
+  [
+   "productName",
+   "productUnit",
+   "productDescription",
+   "retailPrice",
+   "wholesalePrice",
+   "productImage"
+  ].forEach(id=>{
+   $(id).value="";
+  });
+
+  await loadAdminProducts();
+
+ } catch(e) {
+  alert("Could not save product: "+err(e));
+ } finally {
+  $("addProduct").disabled=false;
+ }
+};
+
+
+/* ADMIN PRODUCT LIST */
+
+async function loadAdminProducts() {
+ if(!isAdmin) return;
+
+ const s=await getDocs(collection(db,"products"));
+
+ products=s.docs.map(d=>({
+  id:d.id,
+  ...d.data()
+ }));
+
+ let html="";
+
+ for(const p of products) {
+  const [r,w]=await Promise.all([
+   getDoc(doc(db,"retailPrices",p.id)),
+   getDoc(doc(db,"wholesalePrices",p.id))
+  ]);
+
+  const rp=r.exists()?r.data().price:0;
+  const wp=w.exists()?w.data().price:0;
+
+  html+=`
+   <div class="card">
+
+    ${
+     p.imageUrl
+      ? `<img class="productImage" src="${esc(p.imageUrl)}" alt="">`
+      : ""
+    }
+
+    <h3>${esc(p.name)}</h3>
+    <p>${esc(p.unit||"")}</p>
+    <p>Retail: ${money(rp)}</p>
+    <p>Wholesale: ${money(wp)}</p>
+
+    <button class="small"
+     onclick="window.editPrices('${p.id}',${rp},${wp})">
+     Edit Prices
+    </button>
+
+    <button class="small danger"
+     onclick="window.deleteProduct('${p.id}')">
+     Delete Product
+    </button>
+
+   </div>
+  `;
+ }
+
+ $("productsList").innerHTML=
+  html||"<p>No products added.</p>";
+}
+
+
+/* EDIT PRODUCT PRICES */
+
+window.editPrices=async(id,r,w)=>{
+ if(!isAdmin) return;
+
+ const nr=prompt("New retail price:",r);
+
+ if(nr===null) return;
+
+ const nw=prompt("New wholesale price:",w);
+
+ if(nw===null) return;
+
+ if(
+  nr.trim()===""||
+  nw.trim()===""||
+  !Number.isFinite(Number(nr))||
+  !Number.isFinite(Number(nw))||
+  Number(nr)<0||
+  Number(nw)<0
+ ) {
+  alert("Enter valid prices.");
+  return;
+ }
+
+ try {
+  await setDoc(doc(db,"retailPrices",id),{
+   productId:id,
+   price:Number(nr)
+  });
+
+  await setDoc(doc(db,"wholesalePrices",id),{
+   productId:id,
+   price:Number(nw)
+  });
+
+  alert("Prices updated.");
+
+  await loadAdminProducts();
+
+ } catch(e) {
+  alert(err(e));
+ }
+};
+
+
+/* DELETE PRODUCT */
+
+window.deleteProduct=async id=>{
+ if(!isAdmin||!confirm("Delete this product and its prices?")) return;
+
+ try {
+  await deleteDoc(doc(db,"products",id));
+  await deleteDoc(doc(db,"retailPrices",id));
+  await deleteDoc(doc(db,"wholesalePrices",id));
+
+  await loadAdminProducts();
+
+ } catch(e) {
+  alert(err(e));
+ }
+};
+
+
+/* CUSTOMER MANAGEMENT */
+
+async function loadAdminCustomers() {
+ if(!isAdmin) return;
+
+ const s=await getDocs(collection(db,"users"));
+
+ customers=s.docs
+  .map(d=>({id:d.id,...d.data()}))
+  .filter(c=>c.role==="customer");
+
+ $("customersList").innerHTML=customers.map(c=>`
+  <div class="card">
+
+   <h3>${esc(c.name||"Customer")}</h3>
+   <p>Email: ${esc(c.email||"")}</p>
+   <p>Phone: ${esc(c.phone||c.Phone||"")}</p>
+   <p>Type: ${esc(c.accountType||"")}</p>
+
+   <p>
+    Wholesale:
+    <span class="badge">
+     ${esc(c.wholesaleStatus||"")}
+    </span>
+   </p>
+
+   ${
+    c.accountType==="wholesale"&&c.wholesaleStatus!=="approved"
+     ? `<button class="small"
+          onclick="window.approveWholesale('${c.id}')">
+          Approve Wholesale
+        </button>`
+     : ""
+   }
+
+  </div>
+ `).join("")||"<p>No customers found.</p>";
+
+ $("paymentCustomer").innerHTML=
+  '<option value="">Select customer</option>'+
+  customers.map(c=>
+   `<option value="${c.id}">${esc(c.name||c.email)}</option>`
+  ).join("");
+}
+
+$("refreshCustomers").onclick=loadAdminCustomers;
+
+
+/* APPROVE WHOLESALE CUSTOMER */
+
+window.approveWholesale=async uid=>{
+ if(!isAdmin) return;
+
+ try {
+  await updateDoc(doc(db,"users",uid),{
+   wholesaleStatus:"approved"
+  });
+
+  alert("Wholesale customer approved.");
+
+  await loadAdminCustomers();
+
+ } catch(e) {
+  alert(err(e));
+ }
+};
+
+
+/* DEBTS */
+
+async function loadDebts() {
+ if(!isAdmin) return;
+
+ const s=await getDocs(collection(db,"confirmedOrders"));
+
+ confirmedOrders=s.docs.map(d=>({
+  id:d.id,
+  ...d.data()
+ }));
+
+ $("debtsList").innerHTML=confirmedOrders.map(o=>`
+  <div class="card">
+
+   <h3>${esc(o.customerName||"Customer")}</h3>
+   <p>Order: ${esc(o.id)}</p>
+   <p>Total: ${money(o.total)}</p>
+   <p>Paid: ${money(o.paid)}</p>
+   <p>Balance: <b>${money(o.balance)}</b></p>
+   <p>Status: ${esc(o.paymentStatus||"")}</p>
+
+  </div>
+ `).join("")||"<p>No confirmed orders.</p>";
+
+ updatePaymentOrderOptions();
+}
+
+
+/* PAYMENT ORDER OPTIONS */
+
+$("paymentCustomer").onchange=updatePaymentOrderOptions;
+
+function updatePaymentOrderOptions() {
+ const uid=$("paymentCustomer").value;
+
+ const list=confirmedOrders.filter(o=>
+  o.customerUid===uid&&Number(o.balance||0)>0
+ );
+
+ $("paymentOrder").innerHTML=
+  '<option value="">Select order</option>'+
+  list.map(o=>
+   `<option value="${o.id}">
+    ${esc(o.id)} — Balance ${money(o.balance)}
+   </option>`
+  ).join("");
+}
+
+
+/* RECORD PAYMENT */
+
+$("recordPayment").onclick=async()=>{
+ if(!isAdmin) return;
+
+ const orderId=$("paymentOrder").value;
+ const amount=Number($("paymentAmount").value);
+ const method=$("paymentMethod").value;
+ const reference=$("paymentReference").value.trim();
+
+ if(!orderId||!Number.isFinite(amount)||amount<=0) {
+  alert("Select an order and enter a valid payment amount.");
+  return;
+ }
+
+ $("recordPayment").disabled=true;
+
+ try {
+  await runTransaction(db,async tx=>{
+   const ref=doc(db,"confirmedOrders",orderId);
+   const s=await tx.get(ref);
+
+   if(!s.exists()) {
+    throw Error("Order not found.");
+   }
+
+   const o=s.data();
+
+   const paid=Number(o.paid||0);
+   const balance=Number(o.balance||0);
+
+   if(amount>balance) {
+    throw Error("Payment cannot exceed the outstanding balance.");
+   }
+
+   const newPaid=paid+amount;
+   const newBalance=Math.max(0,Number(o.total)-newPaid);
+
+   tx.update(ref,{
+    paid:newPaid,
+    balance:newBalance,
+    paymentStatus:newBalance===0?"paid":"partially_paid"
+   });
+
+   tx.set(doc(collection(db,"payments")),{
+    orderId,
+    customerUid:o.customerUid,
+    customerName:o.customerName||"",
+    amount,
+    method,
+    reference,
+    recordedAt:serverTimestamp()
+   });
+  });
+
+  alert("Payment recorded.");
+
+  $("paymentAmount").value="";
+  $("paymentReference").value="";
+
+  await loadDebts();
+  await refreshAdmin();
+
+ } catch(e) {
+  alert(err(e));
+ } finally {
+  $("recordPayment").disabled=false;
+ }
+};
+
+
+/* SALES REPORTS */
+
+async function loadReports() {
+ if(!isAdmin) return;
+
+ const [os,ps]=await Promise.all([
+  getDocs(collection(db,"confirmedOrders")),
+  getDocs(collection(db,"payments"))
+ ]);
+
+ const orders=os.docs.map(d=>d.data());
+ const payments=ps.docs.map(d=>d.data());
+
+ let sales=0;
+ let received=0;
+ let debt=0;
+
+ const totals={};
+
+ orders.forEach(o=>{
+  const t=Number(o.total||0);
+
+  sales+=t;
+  debt+=Number(o.balance||0);
+
+  const n=o.customerName||"Unknown";
+
+  totals[n]=(totals[n]||0)+t;
+ });
+
+ payments.forEach(p=>{
+  received+=Number(p.amount||0);
+ });
+
+ $("reportSales").textContent=money(sales);
+ $("reportReceived").textContent=money(received);
+ $("reportDebt").textContent=money(debt);
+
+ $("customerSalesReport").innerHTML=
+  Object.entries(totals).map(([n,t])=>`
+   <div class="card">
+    <b>${esc(n)}</b>
+    <p>Total purchases: ${money(t)}</p>
+   </div>
+  `).join("")||"<p>No sales recorded.</p>";
+
+ $("paymentReport").innerHTML=
+  payments.map(p=>`
+   <div class="card">
+    <b>${esc(p.customerName||"Customer")}</b>
+    <p>Amount: ${money(p.amount)}</p>
+    <p>Method: ${esc(p.method||"")}</p>
+    <p>Reference: ${esc(p.reference||"")}</p>
+    <p>Order: ${esc(p.orderId||"")}</p>
+   </div>
+  `).join("")||"<p>No payments recorded.</p>";
+}
+
+$("refreshReports").onclick=loadReports;
+
+$("printReport").onclick=()=>{
+ if(isAdmin) window.print();
+};
+
+</script>
+</body>
+</html>
