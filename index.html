@@ -116,6 +116,7 @@ const $=id=>document.getElementById(id);
 const ADMIN_UID="BzTy6OPheYNFPfhEBgRZavmm0cu2";
 const CLOUDINARY_NAME="d5jjbbjp";
 const CLOUDINARY_PRESET="mary_cereal_upload";
+const ORDER_EMAIL_WEB_APP_URL="https://script.google.com/macros/s/AKfycbybsrZ55ZeUZshy0sVUYVveK3TbNCjhjCz5utJ8umaY3WxSKgodph6w25CNOifHGRYd_A/exec";
 let app=null,auth=null,db=null,currentUser=null,me=null,isAdmin=false,products=[],customers=[],confirmedOrders=[];
 let authListenerStarted=false;
 
@@ -226,8 +227,36 @@ $("submitOrder").onclick=async()=>{
  document.querySelectorAll(".quantityInput").forEach(i=>{const q=Number(i.value);if(q>0)items.push({productId:i.dataset.id,productName:i.dataset.name,unit:i.dataset.unit,quantity:q,unitPrice:i.dataset.price===""?null:Number(i.dataset.price)})});
  if(!items.length){alert("Select at least one product.");return}
  try{
-  await addDoc(collection(db,"orderRequests"),{customerUid:currentUser.uid,customerName:me.name||"",customerPhone:String(me.phone||me.Phone||""),accountType:me.accountType||"retail",items,notes:$("orderNotes").value.trim(),status:"awaiting_admin_review",createdAt:serverTimestamp()});
-  alert("Order request submitted.");$("orderNotes").value="";document.querySelectorAll(".quantityInput").forEach(i=>i.value=0);await loadMyOrders();
+  const orderData={customerUid:currentUser.uid,customerName:me.name||"",customerPhone:String(me.phone||me.Phone||""),accountType:me.accountType||"retail",items,notes:$("orderNotes").value.trim(),status:"awaiting_admin_review",createdAt:serverTimestamp()};
+  const orderRef=await addDoc(collection(db,"orderRequests"),orderData);
+
+  // Send an email alert after Firestore has successfully saved the order.
+  // text/plain avoids a browser CORS preflight; Apps Script receives the JSON body.
+  let emailAttempted=false;
+  try{
+   const itemLines=items.map(i=>`${i.productName} x ${i.quantity} ${i.unit||""}`).join("\\n");
+   const total=items.reduce((sum,i)=>sum+(Number(i.unitPrice||0)*Number(i.quantity||0)),0);
+   await fetch(ORDER_EMAIL_WEB_APP_URL,{
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify({
+     orderId:orderRef.id,
+     customerName:orderData.customerName,
+     customerPhone:orderData.customerPhone,
+     items:itemLines,
+     total:total.toFixed(2)
+    })
+   });
+   emailAttempted=true;
+  }catch(emailError){
+   console.error("Order saved, but email notification request failed:",emailError);
+  }
+
+  alert(emailAttempted
+   ?"Order request submitted. An email notification request has been sent to the administrator."
+   :"Order request saved, but the email notification could not be requested. Please contact the administrator.");
+  $("orderNotes").value="";document.querySelectorAll(".quantityInput").forEach(i=>i.value=0);await loadMyOrders();
  }catch(e){alert("Order failed: "+err(e))}
 };
 async function loadMyOrders(){
