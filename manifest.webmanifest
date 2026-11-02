@@ -1,0 +1,11 @@
+{
+  "name": "Mary Cereal Mix",
+  "short_name": "Mary Cereal",
+  "description": "Mary Cereal Mix - Customer Ordering and Sales Management",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#174b3a"
+}
