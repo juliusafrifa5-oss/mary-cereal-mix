@@ -2,21 +2,28 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
-    function userDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
-    function admin() { return signedIn() && userDoc().role == "admin"; }
-    function approvedWholesale() {
-      return signedIn() && userDoc().accountType == "wholesale"
-        && userDoc().wholesaleStatus == "approved";
+    function admin() { return signedIn() && request.auth.uid == "BzTy6OPheYNFPfhEBgRZavmm0cu2"; }
+    function own(uid) { return signedIn() && request.auth.uid == uid; }
+    function profile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function wholesaleApproved() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && profile().accountType == "wholesale"
+        && profile().wholesaleStatus == "approved";
     }
 
     match /users/{uid} {
-      allow create: if signedIn() && request.auth.uid == uid
+      allow create: if own(uid)
+        && request.resource.data.uid == uid
         && request.resource.data.role == "customer"
-        && request.resource.data.accountType in ["retail", "wholesale"]
-        && (request.resource.data.accountType != "wholesale"
-            || request.resource.data.wholesaleStatus == "pending");
-      allow read: if signedIn() && (request.auth.uid == uid || admin());
-      allow update, delete: if admin();
+        && request.resource.data.wholesaleStatus in ["pending", "not_applicable"];
+      allow read: if own(uid) || admin();
+      allow update: if admin() || (own(uid)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.accountType == resource.data.accountType
+        && request.resource.data.wholesaleStatus == resource.data.wholesaleStatus);
+      allow delete: if admin();
     }
 
     match /products/{id} {
@@ -24,36 +31,77 @@ service cloud.firestore {
       allow write: if admin();
     }
     match /retailPrices/{id} {
-      allow read: if signedIn() && (admin() ||
-        (userDoc().accountType == "retail" && userDoc().role == "customer"));
+      allow read: if signedIn();
       allow write: if admin();
     }
     match /wholesalePrices/{id} {
-      allow read: if admin() || approvedWholesale();
+      allow read: if admin() || wholesaleApproved();
       allow write: if admin();
     }
 
-    // Customer requests contain product IDs/names and quantities only.
-    // They contain no trusted prices, totals, credit approval or payment fields.
     match /orderRequests/{id} {
-      allow create: if signedIn()
-        && request.resource.data.customerUid == request.auth.uid
-        && request.resource.data.status == "awaiting_admin_review"
-        && !("total" in request.resource.data)
-        && !("paid" in request.resource.data)
-        && !("balance" in request.resource.data)
-        && !("creditApproved" in request.resource.data);
+      allow create: if signedIn() && request.resource.data.customerUid == request.auth.uid;
       allow read: if admin() || (signedIn() && resource.data.customerUid == request.auth.uid);
       allow update, delete: if admin();
     }
-
     match /confirmedOrders/{id} {
+      // Customer checkout creates their own order. For production-grade price/fee
+      // integrity, move order creation to a callable Cloud Function.
+      allow create: if admin() || (signedIn()
+        && request.resource.data.customerUid == request.auth.uid
+        && request.resource.data.orderNo is string
+        && request.resource.data.orderNo.matches('MCM[0-9]{6}')
+        && request.resource.data.paymentStatus == "pending"
+        && request.resource.data.orderStatus == "Order Received");
       allow read: if admin() || (signedIn() && resource.data.customerUid == request.auth.uid);
-      allow create, update, delete: if admin();
+      allow update: if admin();
+      allow delete: if admin();
     }
     match /payments/{id} {
       allow read: if admin() || (signedIn() && resource.data.customerUid == request.auth.uid);
       allow create, update, delete: if admin();
+    }
+
+    match /counters/{id} {
+      // Needed for atomic sequential MCM numbering during customer checkout.
+      allow read: if admin() || (signedIn() && id == "orders");
+      allow create: if admin() || (signedIn() && id == "orders"
+        && request.resource.data.nextNumber == 2);
+      allow update: if admin() || (signedIn() && id == "orders"
+        && request.resource.data.nextNumber == resource.data.nextNumber + 1);
+      allow delete: if admin();
+    }
+    match /deliveryRegions/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /deliveryDistricts/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /deliveryTowns/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /deliveryFees/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /advertisements/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /knowledgeArticles/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+    match /notifications/{id} {
+      allow read: if admin();
+      allow create: if admin() || (signedIn()
+        && request.resource.data.type == "new_order"
+        && exists(/databases/$(database)/documents/confirmedOrders/$(request.resource.data.orderId))
+        && get(/databases/$(database)/documents/confirmedOrders/$(request.resource.data.orderId)).data.customerUid == request.auth.uid);
+      allow update, delete: if admin();
     }
   }
 }
