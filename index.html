@@ -307,31 +307,38 @@ window.saveProduct=async()=>{
  try{
   let imageUrl=$("pImage").value||"";
   if(file){
-   const form=new FormData();
-   form.append("file",file);
-   form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-   let response,lastNetworkError;
    const uploadUrl=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
-   // Retry transient mobile-network failures twice. Only retry when fetch itself fails;
-   // Cloudinary HTTP errors are returned to the user without an automatic repeat.
-   for(let attempt=1;attempt<=3;attempt++){
-    try{
-     response=await fetch(uploadUrl,{method:"POST",body:form,cache:"no-store"});
-     lastNetworkError=null;
-     break;
-    }catch(networkError){
-     lastNetworkError=networkError;
-     if(attempt<3) await new Promise(resolve=>setTimeout(resolve,700*attempt));
+   // Use XMLHttpRequest for browser-native multipart upload and a real HTTP response.
+   // Build a fresh FormData for each attempt so a failed request cannot reuse a consumed body.
+   const uploadOnce=()=>new Promise((resolve,reject)=>{
+    const form=new FormData();
+    form.append("file",file,file.name||"product-image");
+    form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+    const xhr=new XMLHttpRequest();
+    xhr.open("POST",uploadUrl,true);
+    xhr.timeout=90000;
+    xhr.onload=()=>{
+     let payload={};
+     try{payload=JSON.parse(xhr.responseText||"{}");}catch(_){return reject(new Error(`Cloudinary returned an unreadable response (HTTP ${xhr.status}).`));}
+     if(xhr.status<200||xhr.status>=300) return reject(new Error(payload?.error?.message||`Cloudinary rejected the image (HTTP ${xhr.status}).`));
+     if(!payload.secure_url) return reject(new Error("Cloudinary completed the request but returned no secure image URL."));
+     resolve(payload);
+    };
+    xhr.onerror=()=>reject(new Error("Browser network error while contacting Cloudinary. The upload did not receive an HTTP response."));
+    xhr.ontimeout=()=>reject(new Error("Cloudinary upload timed out after 90 seconds. Try a smaller image or a more stable connection."));
+    xhr.onabort=()=>reject(new Error("Cloudinary upload was cancelled."));
+    xhr.send(form);
+   });
+   let result,lastUploadError;
+   for(let attempt=1;attempt<=2;attempt++){
+    try{result=await uploadOnce();lastUploadError=null;break;}
+    catch(uploadError){lastUploadError=uploadError;
+     // Do not repeat a Cloudinary HTTP rejection (e.g. preset/format/size errors).
+     if(!String(uploadError.message).includes("Browser network error")||attempt===2) break;
+     await new Promise(resolve=>setTimeout(resolve,1000));
     }
    }
-   if(!response){
-    const detail=lastNetworkError?.message||"Network request failed";
-    throw new Error(`Could not reach Cloudinary after 3 attempts (${detail}). Check your internet connection or try switching between Wi-Fi and mobile data.`);
-   }
-   let result={};
-   try{result=await response.json();}catch(parseError){throw new Error("Cloudinary returned an unreadable response. Please retry.");}
-   if(!response.ok) throw new Error(result?.error?.message || `Cloudinary upload failed (${response.status}).`);
-   if(!result.secure_url) throw new Error("Cloudinary did not return an image URL.");
+   if(!result) throw lastUploadError||new Error("Image upload failed for an unknown reason.");
    imageUrl=result.secure_url;
   }
   const data={name,unit:$("pUnit").value.trim(),retailPrice:price,stockQuantity:stock,imageUrl,description:$("pDesc").value.trim(),updatedAt:serverTimestamp()};
@@ -346,7 +353,7 @@ window.saveProduct=async()=>{
  }catch(e){
   console.error("Product save failed:",e);
   let detail=e?.message||String(e);
-  if(String(detail).toLowerCase().includes("upload preset") || String(detail).toLowerCase().includes("cloudinary")) detail="Cloudinary upload failed: "+detail+" Check the cloud name and ensure mary_cereal_upload is an unsigned upload preset.";
+  if(String(detail).toLowerCase().includes("cloudinary") || String(detail).toLowerCase().includes("browser network error")) detail="Cloudinary image upload: "+detail;
   else if(e?.code==="permission-denied")detail="Firestore permission denied. Confirm you are signed in with the configured administrator account and the products rule allows admin writes.";
   show("Could not save product: "+detail,false);
  }finally{if(btn){btn.disabled=false;btn.textContent="Save product";}}
