@@ -129,6 +129,7 @@ button{background:#f68b1e;border-radius:4px}button.secondary{background:#f2f2f2;
   setTimeout(showStartup,2500);
 })();
 </script>
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -395,7 +396,7 @@ function publicPromosHTML(){
  const live=promos.filter(p=>{const n=Date.now();return(!p.startAt||new Date(p.startAt).getTime()<=n)&&(!p.endAt||new Date(p.endAt).getTime()>=n)}).sort((a,b)=>(b.priority||0)-(a.priority||0));
  return `<section class="public-promotions"><div class="promo-heading"><span class="promo-kicker">MARY CEREAL MIX</span><h1>Offers & Promotions</h1><p>Discover our latest offers and shop your favourites.</p></div>${live.map(p=>`<article class="public-promo-card">${p.imageUrl?`<img class="public-promo-image" src="${esc(p.imageUrl)}" alt="${esc(p.title||'Mary Cereal Mix promotion')}">`:''}<div class="public-promo-actions"><div><h2>${esc(p.title||"Special Offer")}</h2>${p.description?`<p>${esc(p.description)}</p>`:''}</div><button onclick="go('shop')">Shop Now</button>${p.productId?`<button class="secondary" onclick="addProduct('${p.productId}')">View linked product</button>`:''}</div></article>`).join("")||'<div class="empty">No current promotions. Please check again soon.</div>'}</section>`;
 }
-function promosHTML(){return `<h1>Advertisements & Promotions</h1><p class="muted">Create and manage promotion banners. Recommended banner size: 1200 × 500 pixels.</p><div class="panel"><input id="adEditId" type="hidden"><input id="adCurrentImage" type="hidden"><h2 id="adFormHeading">Add a promotion</h2><div class="grid"><div class="field"><label>Promotion title</label><input id="adTitle" placeholder="Mary Cereal Mix – Special Offer"></div><div class="field"><label>Promotion description</label><textarea id="adDesc" placeholder="Buy 5 packs or more and enjoy a special discount. Nationwide delivery available."></textarea></div><div class="field"><label>Promotion flyer / banner <span class="muted">(select a new image only if replacing it)</span></label><input id="adImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,.gif" onchange="previewPromoImage(event)"><small class="muted">JPG, PNG, WebP or animated GIF. Maximum 5 MB.</small><img id="adImagePreview" class="hidden" style="max-width:100%;max-height:220px;object-fit:contain;border:1px solid #ddd;padding:4px" alt="Promotion preview"></div><div class="field"><label>Linked product (optional)</label><select id="adProduct"><option value="">No product link</option>${products.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join("")}</select></div><div class="field"><label>Priority</label><input id="adPriority" type="number" value="1"></div><div class="field"><label>Start date (optional)</label><input id="adStart" type="date"></div><div class="field"><label>End date (optional)</label><input id="adEnd" type="date"></div></div><div class="actions"><button id="publishPromoBtn" onclick="savePromo()">Upload & publish promotion</button><button class="secondary" onclick="clearPromoForm()">Clear form</button></div><p id="promoSaveStatus" class="notice hidden" role="status" aria-live="polite"></p></div><h2>Existing promotions</h2>${promos.map(p=>`<div class="card" style="margin:8px 0"><div class="between" style="gap:12px;align-items:center">${p.imageUrl?`<img src="${esc(p.imageUrl)}" style="width:120px;height:70px;object-fit:contain">`:""}<div style="flex:1;min-width:0"><b>${esc(p.title||"Promotion")}</b><p>${esc(p.description||"")}</p><span class="badge">${p.active===false?"Inactive":"Active"}</span></div><div class="actions"><button class="secondary" onclick="editPromo('${p.id}')">Edit</button><button class="${p.active===false?"gold":"danger"}" onclick="togglePromo('${p.id}',${p.active===false?"true":"false"})">${p.active===false?"Activate":"Deactivate"}</button></div></div></div>`).join("")||'<div class="empty">No promotions have been published yet.</div>'}` }
+function promosHTML(){return `<h1>Advertisements & Promotions</h1><p class="muted">Create and manage promotion banners. Recommended banner size: 1200 × 500 pixels.</p><div class="panel"><input id="adEditId" type="hidden"><input id="adCurrentImage" type="hidden"><h2 id="adFormHeading">Add a promotion</h2><div class="grid"><div class="field"><label>Promotion title</label><input id="adTitle" placeholder="Mary Cereal Mix – Special Offer"></div><div class="field"><label>Promotion description</label><textarea id="adDesc" placeholder="Buy 5 packs or more and enjoy a special discount. Nationwide delivery available."></textarea></div><div class="field"><label>Promotion flyer / banner <span class="muted">(select a new image only if replacing it)</span></label><input id="adImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,.gif" onchange="previewPromoImage(event)"><small class="muted">JPG, PNG, WebP or animated GIF. Maximum 5 MB. After pressing publish, Cloudinary will open to select the same flyer for secure upload.</small><img id="adImagePreview" class="hidden" style="max-width:100%;max-height:220px;object-fit:contain;border:1px solid #ddd;padding:4px" alt="Promotion preview"></div><div class="field"><label>Linked product (optional)</label><select id="adProduct"><option value="">No product link</option>${products.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join("")}</select></div><div class="field"><label>Priority</label><input id="adPriority" type="number" value="1"></div><div class="field"><label>Start date (optional)</label><input id="adStart" type="date"></div><div class="field"><label>End date (optional)</label><input id="adEnd" type="date"></div></div><div class="actions"><button id="publishPromoBtn" onclick="savePromo()">Upload & publish promotion</button><button class="secondary" onclick="clearPromoForm()">Clear form</button></div><p id="promoSaveStatus" class="notice hidden" role="status" aria-live="polite"></p></div><h2>Existing promotions</h2>${promos.map(p=>`<div class="card" style="margin:8px 0"><div class="between" style="gap:12px;align-items:center">${p.imageUrl?`<img src="${esc(p.imageUrl)}" style="width:120px;height:70px;object-fit:contain">`:""}<div style="flex:1;min-width:0"><b>${esc(p.title||"Promotion")}</b><p>${esc(p.description||"")}</p><span class="badge">${p.active===false?"Inactive":"Active"}</span></div><div class="actions"><button class="secondary" onclick="editPromo('${p.id}')">Edit</button><button class="${p.active===false?"gold":"danger"}" onclick="togglePromo('${p.id}',${p.active===false?"true":"false"})">${p.active===false?"Activate":"Deactivate"}</button></div></div></div>`).join("")||'<div class="empty">No promotions have been published yet.</div>'}` }
 
 window.previewPromoImage=e=>{const f=e.target.files?.[0],img=$("adImagePreview");if(!f){img.classList.add("hidden");return}if(!/^image\/(jpeg|png|webp|gif)$/.test(f.type)||f.size>5*1024*1024){e.target.value="";img.classList.add("hidden");return toast("Choose a JPG, PNG, WebP or GIF image under 5 MB.")}img.src=URL.createObjectURL(f);img.classList.remove("hidden")};
 window.clearPromoForm=()=>{["adTitle","adDesc","adProduct","adStart","adEnd","adEditId","adCurrentImage"].forEach(id=>{if($(id))$(id).value=""});if($("adPriority"))$("adPriority").value="1";if($("adImageFile"))$("adImageFile").value="";if($("adImagePreview")){ $("adImagePreview").src="";$("adImagePreview").classList.add("hidden")}if($("adFormHeading"))$("adFormHeading").textContent="Add a promotion";if($("publishPromoBtn"))$("publishPromoBtn").textContent="Upload & publish promotion";if($("promoSaveStatus"))$("promoSaveStatus").classList.add("hidden")};
@@ -424,19 +425,35 @@ async function preparePromotionUploadFile(file){
  }catch(err){console.warn("Promotion image compression skipped:",err);return file;}
 }
 function uploadPromotionToCloudinary(file){
- const uploadUrl=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
- const uploadOnce=()=>new Promise((resolve,reject)=>{
-  const form=new FormData();form.append("file",file);form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-  const xhr=new XMLHttpRequest();xhr.open("POST",uploadUrl,true);xhr.timeout=90000;
-  xhr.onload=()=>{let data={};try{data=JSON.parse(xhr.responseText||"{}")}catch(_){return reject(new Error(`Cloudinary returned an unreadable response (HTTP ${xhr.status}).`))}
-   if(xhr.status<200||xhr.status>=300)return reject(new Error(data?.error?.message||`Cloudinary rejected the flyer (HTTP ${xhr.status}).`));
-   if(!data.secure_url)return reject(new Error("Cloudinary completed the upload but returned no image URL."));resolve(data.secure_url);
-  };
-  xhr.onerror=()=>reject(new Error("Network error (no HTTP response) while contacting Cloudinary."));
-  xhr.ontimeout=()=>reject(new Error("Cloudinary upload timed out after 90 seconds."));
-  xhr.onabort=()=>reject(new Error("The Cloudinary upload was cancelled."));xhr.send(form);
+ // Use Cloudinary's official Upload Widget instead of a hand-built XHR request.
+ // This uses the same unsigned preset but lets Cloudinary manage browser upload/CORS details.
+ return new Promise((resolve,reject)=>{
+  if(!window.cloudinary||typeof window.cloudinary.createUploadWidget!=="function"){
+   reject(new Error("Cloudinary Upload Widget did not load. Refresh the page and try again."));return;
+  }
+  let settled=false;
+  const widget=window.cloudinary.createUploadWidget({
+   cloudName:CLOUDINARY_CLOUD_NAME,
+   uploadPreset:CLOUDINARY_UPLOAD_PRESET,
+   sources:["local"],
+   multiple:false,
+   maxFileSize:5*1024*1024,
+   clientAllowedFormats:["jpg","jpeg","png","webp","gif"],
+   showAdvancedOptions:false,
+   cropping:false,
+   showPoweredBy:false,
+   defaultSource:"local"
+  },(error,result)=>{
+   if(error){if(!settled){settled=true;reject(new Error(error.message||"Cloudinary widget upload failed."));}return;}
+   if(result&&result.event==="success"){
+    const url=result.info?.secure_url;
+    if(!settled){settled=true;if(url)resolve(url);else reject(new Error("Cloudinary uploaded the flyer but did not return its secure URL."));}
+   }
+   if(result&&result.event==="abort"&&!settled){settled=true;reject(new Error("Flyer upload was cancelled."));}
+   if(result&&result.event==="close"&&!settled){settled=true;reject(new Error("Upload window closed before the flyer was uploaded."));}
+  });
+  widget.open();
  });
- return (async()=>{let last;for(let attempt=1;attempt<=3;attempt++){try{return await uploadOnce()}catch(err){last=err;const msg=String(err.message||err);const isNetwork=/Network error|timed out/i.test(msg);if(!isNetwork||attempt===3)break;await new Promise(r=>setTimeout(r,1200*attempt));}}throw last||new Error("Cloudinary upload failed.")})();
 }
 window.savePromo=async()=>{
  const btn=$("publishPromoBtn"),status=$("promoSaveStatus"),sourceFile=$("adImageFile")?.files?.[0],editId=$("adEditId")?.value||"";
