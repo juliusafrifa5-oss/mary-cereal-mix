@@ -310,11 +310,23 @@ window.saveProduct=async()=>{
    const form=new FormData();
    form.append("file",file);
    form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-   let response;
-   try{
-    response=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,{method:"POST",body:form});
-   }catch(networkError){
-    throw new Error("Could not reach Cloudinary. Check your internet connection, then retry. If the connection is working, verify the cloud name and upload preset.");
+   let response,lastNetworkError;
+   const uploadUrl=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+   // Retry transient mobile-network failures twice. Only retry when fetch itself fails;
+   // Cloudinary HTTP errors are returned to the user without an automatic repeat.
+   for(let attempt=1;attempt<=3;attempt++){
+    try{
+     response=await fetch(uploadUrl,{method:"POST",body:form,cache:"no-store"});
+     lastNetworkError=null;
+     break;
+    }catch(networkError){
+     lastNetworkError=networkError;
+     if(attempt<3) await new Promise(resolve=>setTimeout(resolve,700*attempt));
+    }
+   }
+   if(!response){
+    const detail=lastNetworkError?.message||"Network request failed";
+    throw new Error(`Could not reach Cloudinary after 3 attempts (${detail}). Check your internet connection or try switching between Wi-Fi and mobile data.`);
    }
    let result={};
    try{result=await response.json();}catch(parseError){throw new Error("Cloudinary returned an unreadable response. Please retry.");}
