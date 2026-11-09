@@ -345,12 +345,43 @@ function adminOrdersHTML(){const pending=orders.filter(o=>(o.orderStatus||"Order
 let orderFilter="all";
 window.showOrderFilter=f=>{orderFilter=f;window.filterOrders()};
 window.filterOrders=()=>{const v=($("orderSearch")?.value||"").toLowerCase();const list=orders.filter(o=>{const text=(o.orderNo+" "+o.customerName+" "+o.customerPhone).toLowerCase();const match=text.includes(v);const pending=(o.orderStatus||"Order Received")==="Order Received";return match&&(orderFilter==="pending"?pending:orderFilter==="unpaid"?o.paymentStatus!=="paid":true)});$("orderResults").innerHTML=list.map(o=>orderCard(o,true)).join("")||'<div class="empty">No matching orders.</div>'};
-function adminHTML(){const users=window._adminUsers||[];const pending=users.filter(x=>x.accountType==="wholesale"&&x.wholesaleStatus==="pending");return `<h1>Administrator Dashboard</h1><div class="panel"><h2>Order control centre</h2><p>Review new customer orders, confirm or reject them, update delivery progress and verify payments.</p><div class="actions"><button onclick="go('orders')">Open Orders & Confirm / Reject</button><button class="secondary" onclick="go('reports')">Payment & Sales Reports</button><button class="secondary" onclick="document.getElementById('adminPromotions').scrollIntoView({behavior:'smooth'})">Advertisements & Promotions</button><button class="secondary" onclick="go('locations')">Delivery Areas</button></div></div><div class="grid"><div class="card"><div class="muted">Orders loaded</div><div class="stat">${orders.length}</div></div><div class="card"><div class="muted">Pending payment</div><div class="stat">${orders.filter(o=>o.paymentStatus!=="paid").length}</div></div><div class="card"><div class="muted">Customer accounts</div><div class="stat">${users.length}</div></div><div class="card"><div class="muted">Products</div><div class="stat">${products.length}</div></div></div><div class="panel"><h2 id="productFormTitle">Add Product</h2><input id="pEditId" type="hidden"><div class="grid"><div class="field"><label>Product name</label><input id="pName"></div><div class="field"><label>Unit / pack size</label><input id="pUnit"></div><div class="field"><label>Retail price (GH₵)</label><input id="pPrice" type="number" step=".01" min="0"></div><div class="field"><label>Stock quantity</label><input id="pStock" type="number" min="0"></div><div class="field"><label>Product picture</label><input id="pImageFile" type="file" accept="image/*" onchange="previewProductImage(event)"><small class="muted">Upload JPG, PNG or WebP image (max 5 MB).</small><img id="pImagePreview" class="hidden" style="max-width:150px;max-height:130px;object-fit:contain;border:1px solid #ddd;padding:4px" alt="Product preview"><input id="pImage" type="hidden"></div><div class="field"><label>Description</label><textarea id="pDesc"></textarea></div></div><div class="actions"><button id="saveProductBtn" type="button" onclick="saveProduct()">Save product</button><button class="secondary" type="button" onclick="resetProductForm()">Clear form</button></div><p id="productSaveStatus" class="notice hidden" role="status" aria-live="polite"></p></div><div class="panel"><h2>Products – Edit details and pictures</h2>${products.map(p=>`<div class="between card" style="margin:8px 0"><div class="row" style="align-items:center">${p.imageUrl?`<img src="${esc(p.imageUrl)}" style="width:66px;height:66px;object-fit:contain;background:#fafafa">`:`<div class="order-image-placeholder">NO IMAGE</div>`}<div><b>${esc(p.name)}</b><div>${money(priceFor(p))} · Stock ${p.stockQuantity||0} · <span class="badge">${p.active===false?"Inactive":"Active"}</span></div></div></div><div class="actions"><button class="secondary" onclick="editProduct('${p.id}')">Edit</button><button class="${p.active===false?"gold":"danger"}" onclick="toggleProduct('${p.id}',${p.active===false?"true":"false"})">${p.active===false?"Activate":"Deactivate"}</button></div></div>`).join("")||'<div class="empty">No products added yet.</div>'}</div><div class="panel"><h2>Delivery & Discount Controls</h2><p class="muted">Manage free delivery and customer discounts. These settings apply to new orders only.</p><label class="row"><input id="freeDeliveryToggle" type="checkbox" ${window._checkoutSettings?.freeDelivery?"checked":""}> Activate free delivery</label><div class="grid"><div class="field"><label>Discount type</label><select id="discountType"><option value="percent">Percentage (%)</option><option value="fixed">Fixed amount (GH₵)</option></select></div><div class="field"><label>Discount value</label><input id="discountValue" type="number" min="0" step=".01" value="${Number(window._checkoutSettings?.discountValue||0)}"></div></div><label class="row"><input id="discountToggle" type="checkbox" ${window._checkoutSettings?.discountActive?"checked":""}> Activate discount</label><button onclick="saveCheckoutSettings()">Save delivery & discount settings</button></div><div class="panel" id="adminPromotions">${promosHTML()}</div><div class="panel"><h2>Wholesale approvals</h2>${pending.map(x=>`<div class="between card"><span>${esc(x.name)} · ${esc(x.phone)}</span><button onclick="approveWholesale('${x.uid}')">Approve</button></div>`).join("")||"No pending approvals."}</div><div class="panel"><h2>Live notification centre</h2><div id="notifications">${(window._notifications||[]).map(n=>`<div class="card"><b>${esc(n.title)}</b><p>${esc(n.message)}</p></div>`).join("")||"No notifications."}</div></div>`}
+function adminHTML(){const users=window._adminUsers||[];const pending=users.filter(x=>x.accountType==="wholesale"&&x.wholesaleStatus==="pending");return `<h1>Administrator Dashboard</h1><div class="panel"><h2>Order control centre</h2><p>Review new customer orders, confirm or reject them, update delivery progress and verify payments.</p><div class="actions"><button onclick="go('orders')">Open Orders & Confirm / Reject</button><button class="secondary" onclick="go('reports')">Payment & Sales Reports</button><button class="secondary" onclick="document.getElementById('adminPromotions').scrollIntoView({behavior:'smooth'})">Advertisements & Promotions</button><button class="secondary" onclick="go('locations')">Delivery Areas</button></div></div><div class="grid"><div class="card"><div class="muted">Orders loaded</div><div class="stat">${orders.length}</div></div><div class="card"><div class="muted">Pending payment</div><div class="stat">${orders.filter(o=>o.paymentStatus!=="paid").length}</div></div><div class="card"><div class="muted">Customer accounts</div><div class="stat">${users.length}</div></div><div class="card"><div class="muted">Products</div><div class="stat">${products.length}</div></div></div><div class="panel"><h2 id="productFormTitle">Add Product</h2><input id="pEditId" type="hidden"><div class="grid"><div class="field"><label>Product name</label><input id="pName"></div><div class="field"><label>Unit / pack size</label><input id="pUnit"></div><div class="field"><label>Retail price (GH₵)</label><input id="pPrice" type="number" step=".01" min="0"></div><div class="field"><label>Stock quantity</label><input id="pStock" type="number" min="0"></div><div class="field"><label>Product picture</label><input id="pImageFile" type="file" accept="image/*" onchange="previewProductImage(event)"><small class="muted">Upload JPG, PNG or WebP image (max 5 MB). After Save, Cloudinary will open; select the same image to upload it securely.</small><img id="pImagePreview" class="hidden" style="max-width:150px;max-height:130px;object-fit:contain;border:1px solid #ddd;padding:4px" alt="Product preview"><input id="pImage" type="hidden"></div><div class="field"><label>Description</label><textarea id="pDesc"></textarea></div></div><div class="actions"><button id="saveProductBtn" type="button" onclick="saveProduct()">Save product</button><button class="secondary" type="button" onclick="resetProductForm()">Clear form</button></div><p id="productSaveStatus" class="notice hidden" role="status" aria-live="polite"></p></div><div class="panel"><h2>Products – Edit details and pictures</h2>${products.map(p=>`<div class="between card" style="margin:8px 0"><div class="row" style="align-items:center">${p.imageUrl?`<img src="${esc(p.imageUrl)}" style="width:66px;height:66px;object-fit:contain;background:#fafafa">`:`<div class="order-image-placeholder">NO IMAGE</div>`}<div><b>${esc(p.name)}</b><div>${money(priceFor(p))} · Stock ${p.stockQuantity||0} · <span class="badge">${p.active===false?"Inactive":"Active"}</span></div></div></div><div class="actions"><button class="secondary" onclick="editProduct('${p.id}')">Edit</button><button class="${p.active===false?"gold":"danger"}" onclick="toggleProduct('${p.id}',${p.active===false?"true":"false"})">${p.active===false?"Activate":"Deactivate"}</button></div></div>`).join("")||'<div class="empty">No products added yet.</div>'}</div><div class="panel"><h2>Delivery & Discount Controls</h2><p class="muted">Manage free delivery and customer discounts. These settings apply to new orders only.</p><label class="row"><input id="freeDeliveryToggle" type="checkbox" ${window._checkoutSettings?.freeDelivery?"checked":""}> Activate free delivery</label><div class="grid"><div class="field"><label>Discount type</label><select id="discountType"><option value="percent">Percentage (%)</option><option value="fixed">Fixed amount (GH₵)</option></select></div><div class="field"><label>Discount value</label><input id="discountValue" type="number" min="0" step=".01" value="${Number(window._checkoutSettings?.discountValue||0)}"></div></div><label class="row"><input id="discountToggle" type="checkbox" ${window._checkoutSettings?.discountActive?"checked":""}> Activate discount</label><button onclick="saveCheckoutSettings()">Save delivery & discount settings</button></div><div class="panel" id="adminPromotions">${promosHTML()}</div><div class="panel"><h2>Wholesale approvals</h2>${pending.map(x=>`<div class="between card"><span>${esc(x.name)} · ${esc(x.phone)}</span><button onclick="approveWholesale('${x.uid}')">Approve</button></div>`).join("")||"No pending approvals."}</div><div class="panel"><h2>Live notification centre</h2><div id="notifications">${(window._notifications||[]).map(n=>`<div class="card"><b>${esc(n.title)}</b><p>${esc(n.message)}</p></div>`).join("")||"No notifications."}</div></div>`}
 
 window.saveCheckoutSettings=async()=>{const cfg={freeDelivery:$("freeDeliveryToggle").checked,discountActive:$("discountToggle").checked,discountType:$("discountType").value,discountValue:Number($("discountValue").value||0),updatedAt:serverTimestamp()};await setDoc(doc(db,"appSettings","checkout"),cfg,{merge:true});window._checkoutSettings=cfg;toast("Checkout settings saved.")};
 window.previewProductImage=e=>{const f=e.target.files?.[0],img=$("pImagePreview");if(!f){img.classList.add("hidden");return}if(!f.type.startsWith("image/")||f.size>5*1024*1024){e.target.value="";toast("Choose an image under 5 MB.");return}img.src=URL.createObjectURL(f);img.classList.remove("hidden")};
 window.resetProductForm=()=>{["pEditId","pName","pUnit","pPrice","pStock","pImage","pDesc","pImageFile"].forEach(id=>$(id).value="");$("pImagePreview").classList.add("hidden");$("productFormTitle").textContent="Add Product"};
 window.editProduct=id=>{const p=products.find(x=>x.id===id);if(!p)return;$("pEditId").value=p.id;$("pName").value=p.name||"";$("pUnit").value=p.unit||"";$("pPrice").value=Number(p.retailPrice??p.price??0);$("pStock").value=Number(p.stockQuantity||0);$("pImage").value=p.imageUrl||"";$("pDesc").value=p.description||"";$("pImageFile").value="";if(p.imageUrl){$("pImagePreview").src=p.imageUrl;$("pImagePreview").classList.remove("hidden")}else $("pImagePreview").classList.add("hidden");$("productFormTitle").textContent="Edit Product: "+p.name;document.getElementById("productFormTitle").scrollIntoView({behavior:"smooth",block:"center"})};
+async function prepareProductUploadFile(file){
+ if(!file) throw new Error("Choose a product image first.");
+ if(!file.type.startsWith("image/")) throw new Error("Choose a valid image file.");
+ if(file.size>5*1024*1024) throw new Error("The product image is larger than 5 MB. Choose a smaller image.");
+ return file;
+}
+function uploadCloudinaryWithWidget(file){
+ return new Promise((resolve,reject)=>{
+  if(!window.cloudinary||typeof window.cloudinary.createUploadWidget!=="function"){
+   reject(new Error("Cloudinary upload window did not load. Check your internet connection, refresh the page and try again."));return;
+  }
+  let settled=false;
+  const widget=window.cloudinary.createUploadWidget({
+   cloudName:CLOUDINARY_CLOUD_NAME,
+   uploadPreset:CLOUDINARY_UPLOAD_PRESET,
+   sources:["local"],multiple:false,maxFileSize:5*1024*1024,
+   clientAllowedFormats:["jpg","jpeg","png","webp"],
+   showAdvancedOptions:false,cropping:false,showPoweredBy:false,defaultSource:"local"
+  },(error,result)=>{
+   if(error&&!settled){settled=true;reject(new Error(error.message||"Cloudinary product image upload failed."));return;}
+   if(result&&result.event==="success"&&!settled){
+    const url=result.info?.secure_url;
+    settled=true;
+    if(url)resolve(url);else reject(new Error("Cloudinary uploaded the image but returned no secure URL."));
+   }
+   if(result&&result.event==="abort"&&!settled){settled=true;reject(new Error("Product image upload was cancelled."));}
+   if(result&&result.event==="close"&&!settled){settled=true;reject(new Error("Upload window closed before the product image was uploaded."));}
+  });
+  widget.open();
+ });
+}
 window.saveProduct=async()=>{
  const btn=$("saveProductBtn"),status=$("productSaveStatus");
  const show=(message,ok=false)=>{if(status){status.textContent=message;status.className="notice "+(ok?"success":"error");status.classList.remove("hidden");}toast(message)};
@@ -363,39 +394,12 @@ window.saveProduct=async()=>{
  try{
   let imageUrl=$("pImage").value||"";
   if(file){
-   const uploadUrl=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
-   // Use XMLHttpRequest for browser-native multipart upload and a real HTTP response.
-   // Build a fresh FormData for each attempt so a failed request cannot reuse a consumed body.
-   const uploadOnce=()=>new Promise((resolve,reject)=>{
-    const form=new FormData();
-    form.append("file",file,file.name||"product-image");
-    form.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-    const xhr=new XMLHttpRequest();
-    xhr.open("POST",uploadUrl,true);
-    xhr.timeout=90000;
-    xhr.onload=()=>{
-     let payload={};
-     try{payload=JSON.parse(xhr.responseText||"{}");}catch(_){return reject(new Error(`Cloudinary returned an unreadable response (HTTP ${xhr.status}).`));}
-     if(xhr.status<200||xhr.status>=300) return reject(new Error(payload?.error?.message||`Cloudinary rejected the image (HTTP ${xhr.status}).`));
-     if(!payload.secure_url) return reject(new Error("Cloudinary completed the request but returned no secure image URL."));
-     resolve(payload);
-    };
-    xhr.onerror=()=>reject(new Error("Browser network error while contacting Cloudinary. The upload did not receive an HTTP response."));
-    xhr.ontimeout=()=>reject(new Error("Cloudinary upload timed out after 90 seconds. Try a smaller image or a more stable connection."));
-    xhr.onabort=()=>reject(new Error("Cloudinary upload was cancelled."));
-    xhr.send(form);
-   });
-   let result,lastUploadError;
-   for(let attempt=1;attempt<=2;attempt++){
-    try{result=await uploadOnce();lastUploadError=null;break;}
-    catch(uploadError){lastUploadError=uploadError;
-     // Do not repeat a Cloudinary HTTP rejection (e.g. preset/format/size errors).
-     if(!String(uploadError.message).includes("Browser network error")||attempt===2) break;
-     await new Promise(resolve=>setTimeout(resolve,1000));
-    }
-   }
-   if(!result) throw lastUploadError||new Error("Image upload failed for an unknown reason.");
-   imageUrl=result.secure_url;
+   // Use Cloudinary's official Upload Widget for product images as well.
+   // The previous raw XMLHttpRequest upload was failing on some mobile browsers
+   // before Cloudinary returned an HTTP response (network/CORS-level failure).
+   // The widget handles the upload flow and returns the secure URL on success.
+   const prepared=await prepareProductUploadFile(file);
+   imageUrl=await uploadCloudinaryWithWidget(prepared);
   }
   const data={name,unit:$("pUnit").value.trim(),retailPrice:price,stockQuantity:stock,imageUrl,description:$("pDesc").value.trim(),updatedAt:serverTimestamp()};
   let savedId=id;
