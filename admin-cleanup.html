@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mary Cereal Mix — Admin Data Cleanup</title>
+<style>
+body{font:16px Arial,sans-serif;background:#f4f6f4;color:#18251e;margin:0;padding:20px}.box{max-width:720px;margin:25px auto;background:white;padding:24px;border-radius:14px;box-shadow:0 4px 20px #0001}h1{font-size:24px}label{display:block;margin:12px 0 5px}input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #bbb;border-radius:7px}button{padding:12px 16px;border:0;border-radius:7px;background:#176b43;color:white;font-weight:bold;margin:10px 8px 0 0}button.danger{background:#a51e27}button:disabled{opacity:.5}.muted{color:#59665e}.warning{background:#fff2df;padding:14px;border-left:4px solid #d88917}.result{white-space:pre-wrap;background:#f1f4f2;padding:14px;border-radius:8px;margin-top:16px}.hidden{display:none}
+</style></head><body><main class="box">
+<h1>Mary Cereal Mix — Launch Cleanup</h1>
+<p class="muted">Administrator-only tool. Review the preview carefully before authorising deletion.</p>
+<div id="login">
+<h3>Administrator sign-in</h3>
+<label>Email</label><input id="email" type="email" autocomplete="username">
+<label>Password</label><input id="password" type="password" autocomplete="current-password">
+<button id="signIn">Sign in</button>
+</div>
+<div id="panel" class="hidden">
+<p id="identity"></p>
+<div class="warning"><b>Records targeted:</b> customer accounts and profiles, all confirmed orders, customer-linked payment records and addresses, and order notifications. The administrator profile, products, prices, stock, images, delivery setup, advertisements, knowledge articles, settings and order counter are intended to remain.</div>
+<button id="preview">Preview records — no deletion</button>
+<div id="previewResult" class="result hidden"></div>
+<div id="executeArea" class="hidden">
+<h3>Final confirmation</h3>
+<p>Only continue after reviewing the preview. This action is permanent.</p>
+<label>Type exactly: DELETE ALL CUSTOMER DATA</label>
+<input id="confirmation" autocomplete="off">
+<button class="danger" id="execute">Permanently delete listed data</button>
+</div>
+<button id="signOut" style="background:#555">Sign out</button>
+</div>
+<div id="status" class="result hidden" role="status"></div>
+</main>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const cfg={apiKey:"AIzaSyAH5WgA9zPVtOm1S8xYp0JhRXXprtyOxNA",authDomain:"mary-cereal-mix.firebaseapp.com",projectId:"mary-cereal-mix",storageBucket:"mary-cereal-mix.firebasestorage.app",messagingSenderId:"108550919620",appId:"1:108550919620:web:23ccc6c818165870870091"};
+const ADMIN_UID="BzTy6OPheYNFPfhEBgRZavmm0cu2";
+const auth=getAuth(initializeApp(cfg));
+const $=id=>document.getElementById(id);
+function status(x){$("status").textContent=x;$("status").classList.remove("hidden")}
+async function request(action,confirmation){
+ const token=await auth.currentUser.getIdToken(true);
+ const res=await fetch("/.netlify/functions/admin-cleanup",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({action,confirmation})});
+ const data=await res.json();if(!res.ok||!data.ok)throw Error(data.error||"Request failed");return data;
+}
+onAuthStateChanged(auth,u=>{
+ const ok=!!u&&u.uid===ADMIN_UID;
+ $("login").classList.toggle("hidden",!!u);
+ $("panel").classList.toggle("hidden",!ok);
+ $("identity").textContent=ok?"Signed in as the authorised administrator.":u?"This account is not authorised. Sign out and use the administrator account.":"";
+ if(u&&!ok)signOut(auth);
+});
+$("signIn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);status("Signed in. Only the designated administrator account can use this tool.");}catch(e){status(e.message)}};
+$("preview").onclick=async()=>{try{$("preview").disabled=true;const d=await request("preview");$("previewResult").textContent=JSON.stringify(d,null,2);$("previewResult").classList.remove("hidden");$("executeArea").classList.remove("hidden");}catch(e){status(e.message)}finally{$("preview").disabled=false}};
+$("execute").onclick=async()=>{if($("confirmation").value!=="DELETE ALL CUSTOMER DATA"){status("Confirmation phrase does not match.");return}if(!confirm("This permanently deletes customer accounts and order data. Continue?"))return;try{$("execute").disabled=true;const d=await request("execute",$("confirmation").value);status("Cleanup completed.\\n"+JSON.stringify(d,null,2));$("executeArea").classList.add("hidden");}catch(e){status("Cleanup error: "+e.message)}finally{$("execute").disabled=false}};
+$("signOut").onclick=()=>signOut(auth);
+</script></body></html>
