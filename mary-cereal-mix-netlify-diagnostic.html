@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mary Cereal Mix – Netlify Diagnostic</title>
+<style>
+body{font:16px Arial,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;color:#222}
+button{display:block;width:100%;padding:14px;margin:12px 0;background:#176b45;color:white;border:0;border-radius:8px;font-size:16px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f1f1;padding:14px;border-radius:8px}
+.small{color:#555;font-size:14px}
+</style>
+</head>
+<body>
+<h2>Mary Cereal Mix – Netlify Diagnostic</h2>
+<p class="small">These checks do not create an order, change stock, or write to Firebase.</p>
+<button id="get">1. Test simple GET (checks whether Netlify response allows this website origin)</button>
+<button id="post">2. Test POST preflight (uses a deliberately invalid token; cannot create an order)</button>
+<pre id="out">Ready. Run test 1 first.</pre>
+<script>
+const endpoint="https://mary-cereal-mix.netlify.app/.netlify/functions/submit-order";
+const out=document.getElementById("out");
+async function run(method){
+ out.textContent="Testing "+method+" from origin: "+location.origin+"\nPlease wait…";
+ try{
+  const opts=method==="GET"
+   ? {method:"GET"}
+   : {method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer diagnostic-invalid-token"},body:"{}"};
+  const r=await fetch(endpoint,opts);
+  const body=await r.text();
+  out.textContent=method+" RESPONSE RECEIVED\nHTTP status: "+r.status+
+   "\nBrowser CORS access: PASSED\nResponse body: "+body+
+   (method==="POST"?"\n\nThe token was deliberately invalid. No order was created.":"");
+ }catch(e){
+  out.textContent=method+" FAILED IN BROWSER\n"+(e.message||String(e))+
+   "\n\nNo order was created. This browser error does not reveal whether the cause is CORS, network/TLS, or a function response failure.";
+ }
+}
+document.getElementById("get").onclick=()=>run("GET");
+document.getElementById("post").onclick=()=>run("POST");
+</script>
+</body>
+</html>
