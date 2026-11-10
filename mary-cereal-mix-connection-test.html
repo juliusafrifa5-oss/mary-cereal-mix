@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mary Cereal Mix – Checkout Connection Test</title>
+<style>
+body{font:16px Arial,sans-serif;max-width:680px;margin:28px auto;padding:0 16px;color:#222}
+button{padding:13px 18px;background:#176b45;color:white;border:0;border-radius:8px;font-size:16px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f2f2;padding:14px;border-radius:8px}
+</style>
+</head>
+<body>
+<h2>Mary Cereal Mix – Checkout Connection Test</h2>
+<p>This sends a harmless test request. It does not create an order or change stock.</p>
+<button id="run">Run connection test</button>
+<pre id="result">Ready.</pre>
+<script>
+const endpoint="https://mary-cereal-mix.netlify.app/.netlify/functions/submit-order";
+document.getElementById("run").addEventListener("click",async()=>{
+ const out=document.getElementById("result");
+ out.textContent="Testing from: "+location.origin+"\nPlease wait…";
+ try{
+  const response=await fetch(endpoint,{
+   method:"POST",
+   headers:{"Content-Type":"application/json","Authorization":"Bearer cors-diagnostic-invalid-token"},
+   body:JSON.stringify({})
+  });
+  const body=await response.text();
+  out.textContent="CONNECTION REACHED\nHTTP status: "+response.status+
+   "\nBROWSER CORS CHECK: PASSED"+
+   "\nServer response: "+body+
+   (response.status===401?"\n\nExpected: the test token is deliberately invalid. No order was submitted.":"");
+ }catch(error){
+  out.textContent="BROWSER COULD NOT READ THE RESPONSE\nError: "+(error.message||String(error))+
+   "\n\nPossible causes: CORS, network/TLS, or function runtime failure. No order was submitted.";
+ }
+});
+</script>
+</body>
+</html>
