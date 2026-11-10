@@ -322,42 +322,7 @@ window.checkoutAddressNext=async()=>{const region=regions.find(x=>x.id===$("coRe
 window.checkoutDeliveryNext=()=>{checkoutState.deliveryMethod=document.querySelector('input[name="deliveryMethod"]:checked')?.value||"home_delivery";checkoutState.step=3;renderCheckoutStep()};
 window.checkoutPaymentNext=()=>{checkoutState.paymentMethod=document.querySelector('input[name="paymentMethod"]:checked')?.value||"momo";checkoutState.step=4;renderCheckoutStep()};
 window.checkoutBack=n=>{checkoutState.step=n;renderCheckoutStep()};
-// Secure checkout: prices, discounts, delivery fees and order numbers are recalculated by Netlify.
-const ORDER_API_URL="https://mary-cereal-mix.netlify.app/.netlify/functions/submit-order";
-window.placeOrder=async()=>{
- const confirmBtn=document.querySelector('button[onclick="placeOrder()"]');
- try{
-  if(!user)throw Error("Please sign in again before placing your order.");
-  if(!cart.length)throw Error("Your cart is empty.");
-  validateCartStock();
-  const a=checkoutState.address;
-  if(!a?.regionId||!a?.districtId||!a?.townId)throw Error("Your delivery address is incomplete.");
-  if(confirmBtn){confirmBtn.disabled=true;confirmBtn.textContent="Submitting order…";}
-  toast("Submitting your order securely. Please wait…");
-  const idToken=await user.getIdToken(true);
-  const response=await fetch(ORDER_API_URL,{
-   method:"POST",
-   headers:{"Content-Type":"application/json","Authorization":"Bearer "+idToken},
-   body:JSON.stringify({
-    items:cart.map(x=>({productId:String(x.id),quantity:Math.floor(Number(x.qty))})),
-    address:{name:a.name||profile?.name||"",phone:a.phone||profile?.phone||"",regionId:a.regionId,districtId:a.districtId,townId:a.townId,extra:a.extra||""},
-    deliveryMethod:checkoutState.deliveryMethod==="pickup"?"pickup":"home_delivery",
-    paymentMethod:checkoutState.paymentMethod==="cod"?"cash":"momo"
-   })
-  });
-  let result={};
-  try{result=await response.json();}catch(_){throw Error("The order service returned an unreadable response. Please try again.");}
-  if(!response.ok||result.ok!==true)throw Error(result.error||"Order submission failed. Please try again.");
-  cart=[];saveCart();
-  toast("Order received: "+result.orderNo+" · "+money(result.total));
-  await loadData();activeTab="myorders";nav();render();
- }catch(e){
-  console.error("Secure checkout error:",e);
-  toast("Order was not submitted: "+(e.message||"Please try again."));
- }finally{
-  if(confirmBtn){confirmBtn.disabled=false;confirmBtn.textContent="Confirm Order";}
- }
-};
+window.placeOrder=async()=>{const confirmBtn=document.querySelector('button[onclick="placeOrder()"]');try{if(confirmBtn){confirmBtn.disabled=true;confirmBtn.textContent="Submitting order…"}toast("Submitting your order. Please wait…");const a=checkoutState.address,region=regions.find(x=>x.id===a.regionId),district=districts.find(x=>x.id===a.districtId),town=towns.find(x=>x.id===a.townId);if(!region||!district||!town)throw Error("Your delivery address is incomplete.");if(!cart.length)throw Error("Your cart is empty.");const fee=checkoutState.deliveryMethod==="pickup"||checkoutState.settings?.freeDelivery?0:await feeFor(district.id);if(fee===null)throw Error("Delivery fee is not configured for this district.");const tot=checkoutTotals(fee),order=await runTransaction(db,async tx=>{const counterRef=doc(db,"counters","orders"),counter=await tx.get(counterRef),next=(counter.exists()?Number(counter.data().nextNumber||1):1),orderNo="MCM"+String(next).padStart(6,"0"),ref=doc(collection(db,"confirmedOrders"));const data={orderNo,customerUid:user.uid,customerName:a.name,customerEmail:user.email||"",customerPhone:a.phone,accountType:profile.accountType,delivery:{regionId:region.id,region:region.name,districtId:district.id,district:district.name,townId:town.id,town:town.name,address:a.extra||""},deliveryMethod:checkoutState.deliveryMethod,pickupLocation:checkoutState.deliveryMethod==="pickup"?"Mary Cereal Mix shed":"",items:cart.map(x=>({productId:x.id,name:x.name,unit:x.unit,quantity:x.qty,unitPrice:x.price,lineTotal:x.price*x.qty})),subtotal:tot.subtotal,discount:tot.discount,discountSnapshot:checkoutState.settings,deliveryFee:tot.delivery,baseDeliveryFee:tot.baseDeliveryFee,deliveryMultiplier:tot.deliveryMultiplier,deliveryItemCount:tot.itemCount,deliveryFeeTier:tot.itemCount>=31?"bulk_5x":tot.itemCount>=5?"medium_2x":"standard_1x",total:tot.total,paymentMethod:checkoutState.paymentMethod,paymentProvider:checkoutState.paymentMethod==="momo"?"MTN Mobile Money":"Cash",momoNumber:checkoutState.paymentMethod==="momo"?MOMO:"",momoAccountName:checkoutState.paymentMethod==="momo"?MOMO_NAME:"",paymentReference:orderNo,paymentStatus:"pending",paidAmount:0,balance:tot.total,orderStatus:"Order Received",status:"confirmed",createdAt:serverTimestamp(),updatedAt:serverTimestamp()};tx.set(ref,data);tx.set(counterRef,{nextNumber:next+1,updatedAt:serverTimestamp()},{merge:true});return {id:ref.id,orderNo,total:data.total}});cart=[];saveCart();try{await addDoc(collection(db,"notifications"),{type:"new_order",title:"New order received",message:order.orderNo+" · "+money(order.total),orderId:order.id,orderNo:order.orderNo,read:false,createdAt:serverTimestamp()})}catch(e){console.warn("Notification creation failed",e)}toast("Order confirmed: "+order.orderNo);await loadData();activeTab="myorders";nav();render()}catch(e){console.error("Checkout error",e);toast("Order was not submitted: "+(e.message||"Please try again."))}finally{if(confirmBtn){confirmBtn.disabled=false;confirmBtn.textContent="Confirm Order"}}};
 let customerOrderFilter="ongoing";
 window.setCustomerOrderFilter=(v)=>{customerOrderFilter=v;render()};
 window.toggleCustomerOrderDetails=(id)=>{const el=$("customer-order-detail-"+id);if(el)el.classList.toggle("hidden")};
