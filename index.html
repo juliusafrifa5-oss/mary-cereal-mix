@@ -331,8 +331,8 @@ try{
   body:JSON.stringify({orderId:order.id})
  });
  const emailResult=await emailResponse.json().catch(()=>({}));
- if(!emailResponse.ok||!emailResult.ok)console.warn("Order email was not sent:",emailResult.error||emailResponse.status);
-}catch(emailError){console.warn("Order email request failed:",emailError)}
+ if(!emailResponse.ok||!emailResult.ok){console.warn("Order email diagnostic:",emailResult);toast("Order saved. Email issue: "+(emailResult.stage||"request")+" — "+(emailResult.error||("HTTP "+emailResponse.status)));}
+}catch(emailError){console.error("Order email request failed:",emailError);toast("Order saved. Email request failed: "+(emailError?.message||"Network error"));}
 toast("Order confirmed: "+order.orderNo);await loadData();activeTab="myorders";nav();render()}catch(e){console.error("Checkout error",e);toast("Order was not submitted: "+(e.message||"Please try again."))}finally{if(confirmBtn){confirmBtn.disabled=false;confirmBtn.textContent="Confirm Order"}}};
 let customerOrderFilter="ongoing";
 window.setCustomerOrderFilter=(v)=>{customerOrderFilter=v;render()};
